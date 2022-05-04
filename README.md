@@ -1,5 +1,7 @@
 # sphmall-client
 
+> 尚品汇商城前台部分
+
 ## Project setup
 
 ```
