@@ -54,15 +54,12 @@
         methods: {
             search() {
                 if (this.keyword) {
+                    // if (this.keyword && (this.$route.query.keyword !== this.keyword)) {
                     this.$router.push({
                         path: '/search',
                         query: {
                             keyword: this.keyword,
                         },
-                        params: {
-                            haha: 'haha',
-                            xixi: 'xixi',
-                        }
                     });
                     this.$refs.searchBox.blur();
                 }
