@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <h1>Search</h1>
+        <TypeNav/>
         <ul>
             <li>{{ $route.query.keyword }}</li>
             <li>{{ $route.query.keyword }}</li>

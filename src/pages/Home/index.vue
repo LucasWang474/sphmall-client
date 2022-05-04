@@ -12,7 +12,6 @@
 </template>
 
 <script>
-    import TypeNav from '@/pages/Home/TypeNav';
     import ListContainer from '@/pages/Home/ListContainer';
     import RecommendedToday from '@/pages/Home/RecommendedToday';
     import Ranking from '@/pages/Home/Ranking';
@@ -23,11 +22,7 @@
     export default {
         name: 'Home',
         components: {
-            Brands, GeneralFloor, GuessYouLike, Ranking, RecommendedToday, ListContainer, TypeNav
+            Brands, GeneralFloor, GuessYouLike, Ranking, RecommendedToday, ListContainer
         },
     };
 </script>
-
-<style lang="less" scoped>
-
-</style>

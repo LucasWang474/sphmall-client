@@ -1,6 +1,8 @@
 # sphmall-client
 
 > 尚品汇商城前台部分
+>
+> API: http://gmall-h5-api.atguigu.cn/
 
 ## Project setup
 
