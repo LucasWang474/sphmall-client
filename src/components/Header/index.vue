@@ -33,9 +33,10 @@
             </h1>
             <div class="searchArea">
                 <form action="javascript:" class="searchForm">
-                    <input id="autocomplete" class="input-error input-xxlarge" type="text"/>
-                    <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
-                    <!--TODO-->
+                    <input id="autocomplete" ref="searchBox" v-model.lazy.trim="keyword"
+                           class="input-error input-xxlarge"
+                           type="text" @keyup.enter="search"/>
+                    <button class="sui-btn btn-xlarge btn-danger" type="button" @click="search">搜索</button>
                 </form>
             </div>
         </div>
@@ -44,7 +45,29 @@
 
 <script>
     export default {
-        name: 'Header'
+        name: 'Header',
+        data() {
+            return {
+                keyword: '',
+            };
+        },
+        methods: {
+            search() {
+                if (this.keyword) {
+                    this.$router.push({
+                        path: '/search',
+                        query: {
+                            keyword: this.keyword,
+                        },
+                        params: {
+                            haha: 'haha',
+                            xixi: 'xixi',
+                        }
+                    });
+                    this.$refs.searchBox.blur();
+                }
+            }
+        },
     };
 </script>
 
