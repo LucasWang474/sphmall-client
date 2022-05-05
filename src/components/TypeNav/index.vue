@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import service from '@/api/ajax';
+    import {getBaseCategoryList} from '@/api';
     
     export default {
         name: 'TypeNav',
@@ -72,17 +72,18 @@
             };
         },
         methods: {
-            async getBaseCategoryList() {
+            setBaseCategoryList() {
                 const TOTAL_HEIGHT = 461; // HEIGHT OF '.sort'
                 const ROW_HEIGHT = 30; // HEIGHT OF '.item'
                 const ROW_COUNT = Math.floor(TOTAL_HEIGHT / ROW_HEIGHT); // ROW COUNT to SHOW
                 
-                const ALL_CATEGORIES = (await service.get('/api/product/getBaseCategoryList')).data;
-                this.categories = ALL_CATEGORIES.slice(0, ROW_COUNT);
+                getBaseCategoryList().then(response => {
+                    this.categories = response.data.slice(0, ROW_COUNT);
+                });
             },
         },
         mounted() {
-            this.getBaseCategoryList();
+            this.setBaseCategoryList();
         }
     };
 </script>
