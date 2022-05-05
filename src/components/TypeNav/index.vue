@@ -2,47 +2,50 @@
     <div class="type-nav">
         <div ref="container" class="container">
             <!--左侧标题 + 下方绝对定位的三级导航-->
-            <div class="left-wrap">
+            <div ref="leftWrap" class="left-wrap">
                 <h2 class="all"
                     @mouseenter="h2IsHovered = true" @mouseleave="h2IsHovered = false">
                     全部商品分类
                 </h2>
                 
-                <!--下方三级导航，具体内容取决于实际数据-->
-                <div ref="triNav" :class="{'search': $route.name === 'search'}" class="sort">
-                    <div class="all-sort-list2">
-                        <!--一级导航 开始-->
-                        <div v-for="cate1 in categoryList"
-                             :key="cate1['categoryId']" class="item">
-                            <h3>
-                                <a href="javascript:">{{ cate1['categoryName'] }}</a>
-                            </h3>
-                            
-                            <!--二级导航 开始-->
-                            <div class="item-list clearfix">
-                                <div class="subitem">
-                                    <dl v-for="cate2 in cate1['categoryChild']"
-                                        :key="cate2['categoryId']" class="fore">
-                                        <dt>
-                                            <a href="javascript:">{{ cate2['categoryName'] }}</a>
-                                        </dt>
-                                        
-                                        <!--三级导航 开始-->
-                                        <dd>
-                                            <em v-for="cate3 in cate2['categoryChild']"
-                                                :key="cate3['categoryId']">
-                                                <a href="javascript:">{{ cate3['categoryName'] }}</a>
-                                            </em>
-                                        </dd>
-                                        <!--三级导航 结束-->
-                                    </dl>
+                <transition name="fade">
+                    <!--下方三级导航，具体内容取决于实际数据-->
+                    <!--<div v-show="isShowTriNav" ref="triNav" :class="{'search': $route.name === 'search'}" class="sort">-->
+                    <div v-show="isShowTriNav" ref="triNav" class="sort">
+                        <div class="all-sort-list2">
+                            <!--一级导航 开始-->
+                            <div v-for="cate1 in categoryList"
+                                 :key="cate1['categoryId']" class="item">
+                                <h3>
+                                    <a href="javascript:">{{ cate1['categoryName'] }}</a>
+                                </h3>
+                                
+                                <!--二级导航 开始-->
+                                <div class="item-list clearfix">
+                                    <div class="subitem">
+                                        <dl v-for="cate2 in cate1['categoryChild']"
+                                            :key="cate2['categoryId']" class="fore">
+                                            <dt>
+                                                <a href="javascript:">{{ cate2['categoryName'] }}</a>
+                                            </dt>
+                                            
+                                            <!--三级导航 开始-->
+                                            <dd>
+                                                <em v-for="cate3 in cate2['categoryChild']"
+                                                    :key="cate3['categoryId']">
+                                                    <a href="javascript:">{{ cate3['categoryName'] }}</a>
+                                                </em>
+                                            </dd>
+                                            <!--三级导航 结束-->
+                                        </dl>
+                                    </div>
                                 </div>
+                                <!--二级导航 结束-->
                             </div>
-                            <!--二级导航 结束-->
+                            <!--一级导航 结束-->
                         </div>
-                        <!--一级导航 结束-->
                     </div>
-                </div>
+                </transition>
             </div>
             
             <!--右侧导航-->
@@ -66,6 +69,11 @@
     
     export default {
         name: 'TypeNav',
+        data() {
+            return {
+                isShowTriNav: this.$route.name !== 'search',
+            };
+        },
         computed: {
             ...mapState({
                 categoryList: state => state.home.categoryList
@@ -80,30 +88,36 @@
                     },
                 });
             },
-            setupTriNavClickEvent() {
-                // When A tag in triNav is click, hide the triNav
-                const triNav = this.$refs.triNav;
-                triNav.addEventListener('click', (e) => {
-                    if (e.target.tagName === 'A') {
-                        // Hide triNav when tag A is clicked in triNav
-                        triNav.style.display = 'none';
-                        
-                        // And remove display none immediately after the click
-                        setTimeout(() => triNav.style.display = '');
-                    }
+            
+            setupLeftWrapShowHide() {
+                const leftWrap = this.$refs.leftWrap;
+                // When the mouse enter the leftWrap, set isShowTriNav to true
+                leftWrap.addEventListener('mouseenter', () => {
+                    this.isShowTriNav = true;
+                });
+                // When the mouse leave the leftWrap, set isShowTriNav to false
+                leftWrap.addEventListener('mouseleave', () => {
+                    this.isShowTriNav = this.$route.name !== 'search';
                 });
             },
+            
             setupATagClickEvent() {
                 // Use event delegation to listen to click event on A tag
                 // When A tag is clicked, jump to search page
                 const container = this.$refs.container;
                 container.addEventListener('click', (e) => {
-                    if (e.target.tagName === 'A') this.search(e);
+                    if (e.target.tagName === 'A') {
+                        this.search(e);
+                        
+                        // Also, when A tag in triNav is click, set isShowTriNav to false
+                        // triNav is in the container, so we can use container to listen to click event
+                        this.isShowTriNav = false;
+                    }
                 });
             },
         },
         mounted() {
-            this.setupTriNavClickEvent();
+            this.setupLeftWrapShowHide();
             this.setupATagClickEvent();
         },
     };
@@ -233,7 +247,22 @@
                             }
                         }
                     }
+                    
+                    
+                    // 设置过渡效果
+                    &.fade-enter-active {
+                        transition: all 0.7s;
+                    }
+                    
+                    &.fade-enter {
+                        opacity: 0;
+                    }
+                    
+                    &.fade-enter-to {
+                        opacity: 1;
+                    }
                 }
+                
                 
                 .sort.search {
                     display: none;
