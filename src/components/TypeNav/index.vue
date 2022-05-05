@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import service from '@/api/ajax';
     
     export default {
         name: 'TypeNav',
@@ -72,18 +72,13 @@
             };
         },
         methods: {
-            getBaseCategoryList() {
+            async getBaseCategoryList() {
                 const TOTAL_HEIGHT = 461; // HEIGHT OF '.sort'
                 const ROW_HEIGHT = 30; // HEIGHT OF '.item'
                 const ROW_COUNT = Math.floor(TOTAL_HEIGHT / ROW_HEIGHT); // ROW COUNT to SHOW
                 
-                axios.get('/api/product/getBaseCategoryList')
-                    .then(response => {
-                        this.categories = response.data.data.slice(0, ROW_COUNT);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                const ALL_CATEGORIES = (await service.get('/api/product/getBaseCategoryList')).data;
+                this.categories = ALL_CATEGORIES.slice(0, ROW_COUNT);
             },
         },
         mounted() {
@@ -208,6 +203,7 @@
                 &:hover {
                     .sort.search {
                         display: block;
+                        text-align: left;
                     }
                 }
             }
