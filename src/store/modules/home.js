@@ -8,7 +8,7 @@ const state = {
 const mutations = {
     SET_CATEGORY_LIST(state, categoryList) {
         state.categoryList = categoryList;
-    }
+    },
 };
 
 const actions = {
@@ -19,7 +19,7 @@ const actions = {
         } else {
             console.log('获取分类列表失败', response);
         }
-    }
+    },
 };
 
 

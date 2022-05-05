@@ -1,6 +1,6 @@
 <template>
     <div class="type-nav">
-        <div class="container">
+        <div ref="container" class="container">
             <!--左侧标题 + 下方绝对定位的三级导航-->
             <div class="left-wrap">
                 <h2 class="all"
@@ -9,7 +9,7 @@
                 </h2>
                 
                 <!--下方三级导航，具体内容取决于实际数据-->
-                <div :class="{'search': $route.name === 'search'}" class="sort">
+                <div ref="triNav" :class="{'search': $route.name === 'search'}" class="sort">
                     <div class="all-sort-list2">
                         <!--一级导航 开始-->
                         <div v-for="cate1 in categoryList"
@@ -70,7 +70,42 @@
             ...mapState({
                 categoryList: state => state.home.categoryList
             }),
-        }
+        },
+        methods: {
+            search(event) {
+                this.$router.push({
+                    path: '/search',
+                    query: {
+                        keyword: event.target.innerText.trim()
+                    },
+                });
+            },
+            setupTriNavClickEvent() {
+                // When A tag in triNav is click, hide the triNav
+                const triNav = this.$refs.triNav;
+                triNav.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') {
+                        // Hide triNav when tag A is clicked in triNav
+                        triNav.style.display = 'none';
+                        
+                        // And remove display none immediately after the click
+                        setTimeout(() => triNav.style.display = '');
+                    }
+                });
+            },
+            setupATagClickEvent() {
+                // Use event delegation to listen to click event on A tag
+                // When A tag is clicked, jump to search page
+                const container = this.$refs.container;
+                container.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') this.search(e);
+                });
+            },
+        },
+        mounted() {
+            this.setupTriNavClickEvent();
+            this.setupATagClickEvent();
+        },
     };
 </script>
 

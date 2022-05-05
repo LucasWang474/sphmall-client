@@ -3,5 +3,5 @@ import user from './user';
 
 export default {
     home,
-    user
+    user,
 };
