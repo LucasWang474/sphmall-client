@@ -2,6 +2,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import './config';
 
+import Home from '@/pages/Home';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import Search from '@/pages/Search';
+
+
 Vue.use(VueRouter);
 
 
@@ -11,17 +17,17 @@ const router = new VueRouter({
         {
             name: 'index',
             path: '/',
-            component: () => import('@/pages/Home'),
+            component: Home,
         },
         {
             name: 'home',
             path: '/home',
-            component: () => import('@/pages/Home'),
+            component: Home,
         },
         {
             name: 'login',
             path: '/login',
-            component: () => import('@/pages/Login'),
+            component: Login,
             meta: {
                 title: '登录',
                 showShortFooter: true,
@@ -30,7 +36,7 @@ const router = new VueRouter({
         {
             name: 'register',
             path: '/register',
-            component: () => import('@/pages/Register'),
+            component: Register,
             meta: {
                 title: '注册',
                 showShortFooter: true,
@@ -39,7 +45,7 @@ const router = new VueRouter({
         {
             name: 'search',
             path: '/search',
-            component: () => import('@/pages/Search'),
+            component: Search,
             meta: {
                 title: '搜索'
             }

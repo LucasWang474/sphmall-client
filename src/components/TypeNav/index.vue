@@ -12,10 +12,10 @@
                 <div :class="{'search': $route.name === 'search'}" class="sort">
                     <div class="all-sort-list2">
                         <!--一级导航 开始-->
-                        <div v-for="cate1 in categories"
+                        <div v-for="cate1 in categoryList"
                              :key="cate1['categoryId']" class="item">
                             <h3>
-                                <a href="">{{ cate1['categoryName'] }}</a>
+                                <a href="javascript:">{{ cate1['categoryName'] }}</a>
                             </h3>
                             
                             <!--二级导航 开始-->
@@ -24,14 +24,14 @@
                                     <dl v-for="cate2 in cate1['categoryChild']"
                                         :key="cate2['categoryId']" class="fore">
                                         <dt>
-                                            <a href="">{{ cate2['categoryName'] }}</a>
+                                            <a href="javascript:">{{ cate2['categoryName'] }}</a>
                                         </dt>
                                         
                                         <!--三级导航 开始-->
                                         <dd>
                                             <em v-for="cate3 in cate2['categoryChild']"
                                                 :key="cate3['categoryId']">
-                                                <a href="">{{ cate3['categoryName'] }}</a>
+                                                <a href="javascript:">{{ cate3['categoryName'] }}</a>
                                             </em>
                                         </dd>
                                         <!--三级导航 结束-->
@@ -61,29 +61,15 @@
 </template>
 
 <script>
-    import {getBaseCategoryList} from '@/api';
+    
+    import {mapState} from 'vuex';
     
     export default {
         name: 'TypeNav',
-        data() {
-            return {
-                // 共三级导航，即这是一个三维数组
-                categories: [],
-            };
-        },
-        methods: {
-            setBaseCategoryList() {
-                const TOTAL_HEIGHT = 461; // HEIGHT OF '.sort'
-                const ROW_HEIGHT = 30; // HEIGHT OF '.item'
-                const ROW_COUNT = Math.floor(TOTAL_HEIGHT / ROW_HEIGHT); // ROW COUNT to SHOW
-                
-                getBaseCategoryList().then(response => {
-                    this.categories = response.data.slice(0, ROW_COUNT);
-                });
-            },
-        },
-        mounted() {
-            this.setBaseCategoryList();
+        computed: {
+            ...mapState({
+                categoryList: state => state.home.categoryList
+            }),
         }
     };
 </script>
@@ -120,10 +106,20 @@
                     z-index: 999;
                     
                     .all-sort-list2 {
+                        // 16 = Math.round(461 / 30)
+                        & > :nth-child(n + 16) {
+                            display: none;
+                        }
+                        
                         .item {
+                            &:hover {
+                                background-color: #cccccc;
+                            }
+                            
                             h3 {
                                 line-height: 30px;
                                 font-size: 14px;
+                                
                                 font-weight: 400;
                                 overflow: hidden;
                                 padding: 0 20px;
@@ -136,6 +132,7 @@
                             
                             .item-list {
                                 display: none;
+                                box-sizing: border-box;
                                 position: absolute;
                                 width: 734px;
                                 min-height: 460px;
@@ -147,10 +144,13 @@
                                 
                                 .subitem {
                                     float: left;
-                                    width: 650px;
+                                    // width: 650px;
+                                    box-sizing: border-box;
+                                    width: 100%;
                                     padding: 0 4px 0 8px;
                                     
                                     dl {
+                                        box-sizing: border-box;
                                         border-top: 1px solid #eee;
                                         padding: 6px 0;
                                         overflow: hidden;
@@ -162,6 +162,7 @@
                                         
                                         dt {
                                             float: left;
+                                            box-sizing: border-box;
                                             width: 54px;
                                             line-height: 22px;
                                             text-align: right;
@@ -171,7 +172,9 @@
                                         
                                         dd {
                                             float: left;
-                                            width: 415px;
+                                            box-sizing: border-box;
+                                            // width: 415px;
+                                            width: calc(100% - 54px);
                                             padding: 3px 0 0;
                                             overflow: hidden;
                                             
@@ -217,6 +220,7 @@
                     font-size: 16px;
                     color: #333;
                 }
+                
             }
         }
     }
