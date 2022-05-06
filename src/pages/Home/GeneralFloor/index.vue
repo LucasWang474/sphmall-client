@@ -2,29 +2,12 @@
     <div class="general-floor">
         <div class="py-container">
             <div class="title clearfix">
-                <h3 class="fl">家用电器</h3>
+                <h3 class="fl">{{ floor.name }}</h3>
                 <div class="fr">
                     <ul class="nav-tabs clearfix">
-                        <li class="active">
-                            <a data-toggle="tab" href="javascript:">热门</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="javascript:">大家电</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="javascript:">生活电器</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="javascript:">厨房电器</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="javascript:">应季电器</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="javascript:">空气/净水</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="javascript:">高端电器</a>
+                        <li v-for="(nav, index) in floor.navList" :key="nav.text"
+                            :class="{active: index === 0}">
+                            <a :href="nav.url" data-toggle="tab">{{ nav.text }}</a>
                         </li>
                     </ul>
                 </div>
@@ -34,28 +17,18 @@
                     <div class="floor-1">
                         <div class="blockgary">
                             <ul class="jd-list">
-                                <li>节能补贴</li>
-                                <li>4K电视</li>
-                                <li>空气净化器</li>
-                                <li>IH电饭煲</li>
-                                <li>滚筒洗衣机</li>
-                                <li>电热水器</li>
+                                <li v-for="keyword in floor.keywords" :key="keyword">
+                                    {{ keyword }}
+                                </li>
                             </ul>
-                            <img alt="" src="./images/floor-1-1.png"/>
+                            <img :src="floor.imgUrl" alt=""/>
                         </div>
                         <div class="floorBanner">
                             <div id="floor1Swiper" class="swiper-container">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img alt="" src="./images/floor-1-b01.png">
+                                    <div v-for="carousel in floor.carouselList" :key="carousel.id" class="swiper-slide">
+                                        <img :src="carousel.imgUrl" alt="">
                                     </div>
-                                    <!--TODO-->
-                                    <!--<div class="swiper-slide">-->
-                                    <!--    <img alt="" src="./images/floor-1-b02.png">-->
-                                    <!--</div>-->
-                                    <!--<div class="swiper-slide">-->
-                                    <!--    <img alt="" src="./images/floor-1-b03.png">-->
-                                    <!--</div>-->
                                 </div>
                                 <!-- 如果需要分页器 -->
                                 <div class="swiper-pagination"></div>
@@ -68,22 +41,22 @@
                         <div class="split">
                             <span class="floor-x-line"></span>
                             <div class="floor-conver-pit">
-                                <img alt="" src="./images/floor-1-2.png"/>
+                                <img :src="floor.recommendList[0]" alt=""/>
                             </div>
                             <div class="floor-conver-pit">
-                                <img alt="" src="./images/floor-1-3.png"/>
+                                <img :src="floor.recommendList[1]" alt=""/>
                             </div>
                         </div>
                         <div class="split center">
-                            <img alt="" src="./images/floor-1-4.png"/>
+                            <img :src="floor.bigImg" alt=""/>
                         </div>
                         <div class="split">
                             <span class="floor-x-line"></span>
                             <div class="floor-conver-pit">
-                                <img alt="" src="./images/floor-1-5.png"/>
+                                <img :src="floor.recommendList[2]" alt=""/>
                             </div>
                             <div class="floor-conver-pit">
-                                <img alt="" src="./images/floor-1-6.png"/>
+                                <img :src="floor.recommendList[3]" alt=""/>
                             </div>
                         </div>
                     </div>
@@ -96,6 +69,7 @@
 <script>
     export default {
         name: 'GeneralFloor',
+        props: ['floor'],
     };
 </script>
 

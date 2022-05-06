@@ -5,19 +5,9 @@
                 <!--banner轮播-->
                 <div id="mySwiper" class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img alt="" src="./images/banner1.jpg"/>
+                        <div v-for="banner in bannerList" :key="banner.id" class="swiper-slide">
+                            <img :src="banner.imgUrl" alt=""/>
                         </div>
-                        <!--TODO-->
-                        <!--<div class="swiper-slide">-->
-                        <!--    <img alt="" src="./images/banner2.jpg"/>-->
-                        <!--</div>-->
-                        <!--<div class="swiper-slide">-->
-                        <!--    <img alt="" src="./images/banner3.jpg"/>-->
-                        <!--</div>-->
-                        <!--<div class="swiper-slide">-->
-                        <!--    <img alt="" src="./images/banner4.jpg"/>-->
-                        <!--</div>-->
                     </div>
                     <!-- 如果需要分页器 -->
                     <div class="swiper-pagination"></div>
@@ -103,7 +93,7 @@
                     </li>
                 </ul>
                 <div class="ads">
-                    <img alt="" src="./images/ad1.png"/>
+                    <img alt="" src="/images/ad1.png"/>
                 </div>
             </div>
         </div>
@@ -111,8 +101,18 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+    
     export default {
         name: 'ListContainer',
+        mounted() {
+            this.$store.dispatch('getBannerList');
+        },
+        computed: {
+            ...mapState({
+                bannerList: state => state.home.bannerList
+            })
+        }
     };
 </script>
 
@@ -187,7 +187,7 @@
                         width: 25%;
                         
                         .list-item {
-                            background-image: url(./images/icons.png);
+                            background-image: url(/images/icons.png);
                             width: 61px;
                             height: 40px;
                             display: block;

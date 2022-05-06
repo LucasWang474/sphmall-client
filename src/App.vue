@@ -19,7 +19,7 @@
         name: 'App',
         components: {Footer, Header},
         mounted() {
-            this.$store.dispatch('GET_CATEGORY_LIST');
+            this.$store.dispatch('getCategoryList');
         }
     };
 </script>

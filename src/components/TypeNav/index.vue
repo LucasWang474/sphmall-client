@@ -15,25 +15,25 @@
                         <div class="all-sort-list2">
                             <!--一级导航 开始-->
                             <div v-for="cate1 in categoryList"
-                                 :key="cate1['categoryId']" class="item">
+                                 :key="cate1.categoryId" class="item">
                                 <h3>
-                                    <a href="javascript:">{{ cate1['categoryName'] }}</a>
+                                    <a href="javascript:">{{ cate1.categoryName }}</a>
                                 </h3>
                                 
                                 <!--二级导航 开始-->
                                 <div class="item-list clearfix">
                                     <div class="subitem">
-                                        <dl v-for="cate2 in cate1['categoryChild']"
-                                            :key="cate2['categoryId']" class="fore">
+                                        <dl v-for="cate2 in cate1.categoryChild"
+                                            :key="cate2.categoryId" class="fore">
                                             <dt>
-                                                <a href="javascript:">{{ cate2['categoryName'] }}</a>
+                                                <a href="javascript:">{{ cate2.categoryName }}</a>
                                             </dt>
                                             
                                             <!--三级导航 开始-->
                                             <dd>
-                                                <em v-for="cate3 in cate2['categoryChild']"
-                                                    :key="cate3['categoryId']">
-                                                    <a href="javascript:">{{ cate3['categoryName'] }}</a>
+                                                <em v-for="cate3 in cate2.categoryChild"
+                                                    :key="cate3.categoryId">
+                                                    <a href="javascript:">{{ cate3.categoryName }}</a>
                                                 </em>
                                             </dd>
                                             <!--三级导航 结束-->

@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <div v-show="!$route.meta['showShortFooter']" class="long-footer">
+        <div v-show="!$route.meta.showShortFooter" class="long-footer">
             <div class="footer-container">
                 <div class="footerList">
                     <div class="footerItem">
@@ -96,7 +96,7 @@
             </div>
         </div>
         
-        <div v-show="$route.meta['showShortFooter']" class="short-footer">
+        <div v-show="$route.meta.showShortFooter" class="short-footer">
             <div class="copyright">
                 <ul>
                     <li>关于我们</li>
