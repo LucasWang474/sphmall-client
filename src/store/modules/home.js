@@ -22,6 +22,7 @@ const mutations = {
 const actions = {
     async getCategoryList({commit}) {
         const response = await getBaseCategoryList();
+        // const response = await getBaseCategoryListMock();
         if (response.code === 200) {
             commit('SET_CATEGORY_LIST', response.data);
         } else {
