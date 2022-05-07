@@ -25,20 +25,7 @@
                         </div>
                         
                         <div class="floorBanner">
-                            <!--banner轮播 开始-->
-                            <div ref="swiperContainer" class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <div v-for="carousel in carouselList" :key="carousel.id" class="swiper-slide">
-                                        <img :src="carousel.imgUrl" alt="">
-                                    </div>
-                                </div>
-                                <!-- Add Pagination -->
-                                <div class="swiper-pagination"></div>
-                                <!-- Add Arrows -->
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
-                            </div>
-                            <!--banner轮播 结束-->
+                            <MySwiper :bannerList="floor.carouselList"/>
                         </div>
                         
                         <div class="split">
@@ -70,45 +57,12 @@
 </template>
 
 <script>
-    import 'swiper/css/swiper.min.css';
-    import Swiper from 'swiper';
-    
+    import MySwiper from '@/components/MySwiper';
     
     export default {
         name: 'GeneralFloor',
+        components: {MySwiper},
         props: ['floor'],
-        computed: {
-            carouselList() {
-                return this.floor.carouselList;
-            },
-        },
-        watch: {
-            carouselList: {
-                immediate: true,
-                handler() {
-                    this.initSwiper();
-                },
-            }
-        },
-        methods: {
-            initSwiper() {
-                this.$nextTick(() => {
-                    new Swiper(this.$refs.swiperContainer, {
-                        // slidesPerView: 1,
-                        // spaceBetween: 30,
-                        loop: true,
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true,
-                        },
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                    });
-                });
-            }
-        }
     };
 </script>
 

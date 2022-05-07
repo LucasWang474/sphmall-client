@@ -2,21 +2,7 @@
     <div class="list-container">
         <div class="sortList clearfix">
             <div class="center">
-                <!--banner轮播 开始-->
-                <div ref="swiperContainer" class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div v-for="banner in bannerList" :key="banner.id"
-                             class="swiper-slide">
-                            <img :src="banner.imgUrl" alt=""/>
-                        </div>
-                    </div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination"></div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-                <!--banner轮播 结束-->
+                <MySwiper :bannerList="bannerList"/>
             </div>
             <div class="right">
                 <div class="news">
@@ -103,62 +89,19 @@
 
 <script>
     import {mapState} from 'vuex';
-    
-    import 'swiper/css/swiper.min.css';
-    import Swiper from 'swiper';
-    
+    import MySwiper from '@/components/MySwiper';
     
     export default {
         name: 'ListContainer',
+        components: {MySwiper},
         mounted() {
             this.$store.dispatch('getBannerList');
-            
-            // 下面的方法也可以正常创建 Swiper 对象，但不通用
-            // this.$store.dispatch('getBannerList').finally(() => {
-            //     new Swiper('.swiper-container', {
-            //         slidesPerView: 1,
-            //         spaceBetween: 30,
-            //         loop: true,
-            //         pagination: {
-            //             el: '.swiper-pagination',
-            //             clickable: true,
-            //         },
-            //         navigation: {
-            //             nextEl: '.swiper-button-next',
-            //             prevEl: '.swiper-button-prev',
-            //         },
-            //     });
-            // });
         },
         computed: {
             ...mapState({
                 bannerList: state => state.home.bannerList
             })
         },
-        watch: {
-            bannerList() {
-                this.initSwiper();
-            }
-        },
-        methods: {
-            initSwiper() {
-                this.$nextTick(() => {
-                    new Swiper(this.$refs.swiperContainer, {
-                        // slidesPerView: 1,
-                        // spaceBetween: 30,
-                        loop: true,
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true,
-                        },
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                    });
-                });
-            }
-        }
     };
 </script>
 
