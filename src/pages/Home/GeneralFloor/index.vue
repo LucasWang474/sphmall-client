@@ -23,21 +23,24 @@
                             </ul>
                             <img :src="floor.imgUrl" alt=""/>
                         </div>
+                        
                         <div class="floorBanner">
-                            <div id="floor1Swiper" class="swiper-container">
+                            <!--banner轮播 开始-->
+                            <div ref="swiperContainer" class="swiper-container">
                                 <div class="swiper-wrapper">
-                                    <div v-for="carousel in floor.carouselList" :key="carousel.id" class="swiper-slide">
+                                    <div v-for="carousel in carouselList" :key="carousel.id" class="swiper-slide">
                                         <img :src="carousel.imgUrl" alt="">
                                     </div>
                                 </div>
-                                <!-- 如果需要分页器 -->
+                                <!-- Add Pagination -->
                                 <div class="swiper-pagination"></div>
-                                
-                                <!-- 如果需要导航按钮 -->
-                                <div class="swiper-button-prev"></div>
+                                <!-- Add Arrows -->
                                 <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
+                            <!--banner轮播 结束-->
                         </div>
+                        
                         <div class="split">
                             <span class="floor-x-line"></span>
                             <div class="floor-conver-pit">
@@ -67,9 +70,45 @@
 </template>
 
 <script>
+    import 'swiper/css/swiper.min.css';
+    import Swiper from 'swiper';
+    
+    
     export default {
         name: 'GeneralFloor',
         props: ['floor'],
+        computed: {
+            carouselList() {
+                return this.floor.carouselList;
+            },
+        },
+        watch: {
+            carouselList: {
+                immediate: true,
+                handler() {
+                    this.initSwiper();
+                },
+            }
+        },
+        methods: {
+            initSwiper() {
+                this.$nextTick(() => {
+                    new Swiper(this.$refs.swiperContainer, {
+                        // slidesPerView: 1,
+                        // spaceBetween: 30,
+                        loop: true,
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                    });
+                });
+            }
+        }
     };
 </script>
 
