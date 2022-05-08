@@ -79,15 +79,6 @@
             }),
         },
         methods: {
-            search(event) {
-                this.$router.push({
-                    path: '/search',
-                    query: {
-                        keyword: event.target.innerText.trim()
-                    },
-                });
-            },
-            
             setupLeftWrapShowHide() {
                 const leftWrap = this.$refs.leftWrap;
                 // When the mouse enter the leftWrap, set isShowTriNav to true
@@ -99,15 +90,20 @@
                     this.isShowTriNav = this.$route.name !== 'search';
                 });
             },
-            
             setupTriNavATagClickEvent() {
                 // Use event delegation to listen to click event on A tag
                 // When A tag is clicked, jump to search page
-                this.$refs.triNav.addEventListener('click', (e) => {
-                    if (e.target.tagName === 'A') {
-                        this.search(e);
+                this.$refs.triNav.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'A') {
                         this.isShowTriNav = false;
+                        this.goToSearchPage(event.target.innerText.trim());
                     }
+                });
+            },
+            goToSearchPage(keyword) {
+                this.$router.push({
+                    path: '/search',
+                    query: {keyword},
                 });
             },
         },
