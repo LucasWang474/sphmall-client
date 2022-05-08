@@ -1,10 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import modules from './modules';
+
+import home from './home';
+import search from './search';
 
 Vue.use(Vuex);
 
 
 export default new Vuex.Store({
-    modules
+    modules: {
+        home,
+        search
+    }
 });
