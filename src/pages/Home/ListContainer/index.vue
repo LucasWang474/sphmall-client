@@ -80,7 +80,7 @@
                     </li>
                 </ul>
                 <div class="ads">
-                    <img alt="" src="/images/ad1.png"/>
+                    <img alt="" src="./images/ad1.png"/>
                 </div>
             </div>
         </div>

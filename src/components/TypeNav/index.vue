@@ -10,7 +10,6 @@
                 
                 <transition name="fade">
                     <!--下方三级导航，具体内容取决于实际数据-->
-                    <!--<div v-show="isShowTriNav" ref="triNav" :class="{'search': $route.name === 'search'}" class="sort">-->
                     <div v-show="isShowTriNav" ref="triNav" class="sort">
                         <div class="all-sort-list2">
                             <!--一级导航 开始-->

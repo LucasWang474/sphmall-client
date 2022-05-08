@@ -19,11 +19,13 @@ const mutations = {
     }
 };
 
+const SUCCESS = 200;
+
 const actions = {
     async getCategoryList({commit}) {
         const response = await getBaseCategoryList();
         // const response = await getBaseCategoryListMock();
-        if (response.code === 200) {
+        if (response.code === SUCCESS) {
             commit('SET_CATEGORY_LIST', response.data);
         } else {
             console.log('获取分类列表失败', response);
@@ -31,7 +33,7 @@ const actions = {
     },
     async getBannerList({commit}) {
         const response = await getBanners();
-        if (response.code === 200) {
+        if (response.code === SUCCESS) {
             commit('SET_BANNER_LIST', response.data);
         } else {
             console.log('获取轮播图列表失败', response);
@@ -39,7 +41,7 @@ const actions = {
     },
     async getFloorList({commit}) {
         const response = await getFloors();
-        if (response.code === 200) {
+        if (response.code === SUCCESS) {
             commit('SET_FLOOR_LIST', response.data);
         } else {
             console.log('获取楼层列表失败', response);
@@ -49,7 +51,7 @@ const actions = {
 
 
 export default {
-    namespace: true,
+    // namespace: true,
     state,
     mutations,
     actions,

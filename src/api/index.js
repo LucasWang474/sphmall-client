@@ -6,4 +6,4 @@ export const getBaseCategoryList = () => ajax('/api/product/getBaseCategoryList'
 
 export const getBanners = () => mockAjax('/mock/banners');
 export const getFloors = () => mockAjax('/mock/floors');
-export const getBaseCategoryListMock = () => mockAjax('/api/product/getBaseCategoryList');
+// export const getBaseCategoryListMock = () => mockAjax('/api/product/getBaseCategoryList');
