@@ -1,6 +1,6 @@
 <template>
     <div class="type-nav">
-        <div ref="container" class="container">
+        <div class="container">
             <!--左侧标题 + 下方绝对定位的三级导航-->
             <div ref="leftWrap" class="left-wrap">
                 <h2 class="all"
@@ -100,16 +100,12 @@
                 });
             },
             
-            setupATagClickEvent() {
+            setupTriNavATagClickEvent() {
                 // Use event delegation to listen to click event on A tag
                 // When A tag is clicked, jump to search page
-                const container = this.$refs.container;
-                container.addEventListener('click', (e) => {
+                this.$refs.triNav.addEventListener('click', (e) => {
                     if (e.target.tagName === 'A') {
                         this.search(e);
-                        
-                        // Also, when A tag in triNav is click, set isShowTriNav to false
-                        // triNav is in the container, so we can use container to listen to click event
                         this.isShowTriNav = false;
                     }
                 });
@@ -117,7 +113,7 @@
         },
         mounted() {
             this.setupLeftWrapShowHide();
-            this.setupATagClickEvent();
+            this.setupTriNavATagClickEvent();
         },
     };
 </script>
