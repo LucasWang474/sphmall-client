@@ -1,6 +1,6 @@
 <template>
     <div class="type-nav">
-        <div class="container">
+        <div ref="container" class="container">
             <!--左侧标题 + 下方绝对定位的三级导航-->
             <div ref="leftWrap" class="left-wrap">
                 <h2 class="all"
@@ -16,9 +16,7 @@
                             <div v-for="cate1 in categoryList"
                                  :key="cate1.categoryId" class="item">
                                 <h3>
-                                    <a :data-category1Id="cate1.categoryId" href="javascript:">
-                                        {{ cate1.categoryName }}
-                                    </a>
+                                    <a href="javascript:">{{ cate1.categoryName }}</a>
                                 </h3>
                                 
                                 <!--二级导航 开始-->
@@ -27,18 +25,14 @@
                                         <dl v-for="cate2 in cate1.categoryChild"
                                             :key="cate2.categoryId" class="fore">
                                             <dt>
-                                                <a :data-category2Id="cate2.categoryId" href="javascript:">
-                                                    {{ cate2.categoryName }}
-                                                </a>
+                                                <a href="javascript:">{{ cate2.categoryName }}</a>
                                             </dt>
                                             
                                             <!--三级导航 开始-->
                                             <dd>
                                                 <em v-for="cate3 in cate2.categoryChild"
                                                     :key="cate3.categoryId">
-                                                    <a :data-category3Id="cate3.categoryId" href="javascript:">
-                                                        {{ cate3.categoryName }}
-                                                    </a>
+                                                    <a href="javascript:">{{ cate3.categoryName }}</a>
                                                 </em>
                                             </dd>
                                             <!--三级导航 结束-->
@@ -85,6 +79,15 @@
             }),
         },
         methods: {
+            search(event) {
+                this.$router.push({
+                    path: '/search',
+                    query: {
+                        keyword: event.target.innerText.trim()
+                    },
+                });
+            },
+            
             setupLeftWrapShowHide() {
                 const leftWrap = this.$refs.leftWrap;
                 // When the mouse enter the leftWrap, set isShowTriNav to true
@@ -96,44 +99,25 @@
                     this.isShowTriNav = this.$route.name !== 'search';
                 });
             },
-            setupTriNavATagClickEvent() {
+            
+            setupATagClickEvent() {
                 // Use event delegation to listen to click event on A tag
                 // When A tag is clicked, jump to search page
-                this.$refs.triNav.addEventListener('click', (event) => {
-                        const target = event.target;
-                        if (target.tagName === 'A') {
-                            this.isShowTriNav = false;
-                            
-                            const categoryName = target.innerText.trim();
-                            const searchParams = {
-                                keyword: categoryName,
-                                categoryName,
-                            };
-                            
-                            this.$store.dispatch('getSearchResults', searchParams).then(
-                                () => {
-                                    console.log('searchResults', this.$store.state.search.searchResults);
-                                }
-                            );
-                            
-                            // TODO: Jump to search page
-                            this.jumpToSearchPage(event);
-                        }
+                const container = this.$refs.container;
+                container.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') {
+                        this.search(e);
+                        
+                        // Also, when A tag in triNav is click, set isShowTriNav to false
+                        // triNav is in the container, so we can use container to listen to click event
+                        this.isShowTriNav = false;
                     }
-                );
-            },
-            jumpToSearchPage(event) {
-                this.$router.push({
-                    path: '/search',
-                    query: {
-                        keyword: event.target.innerText.trim()
-                    },
                 });
             },
         },
         mounted() {
             this.setupLeftWrapShowHide();
-            this.setupTriNavATagClickEvent();
+            this.setupATagClickEvent();
         },
     };
 </script>
