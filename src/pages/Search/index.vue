@@ -4,7 +4,7 @@
         
         <div class="main">
             <div v-if="searchResults.total > 0" class="py-container">
-                <!--bread-->
+                <!--已选搜索参数列表 开始-->
                 <div class="bread">
                     <ul class="fl sui-breadcrumb">
                         <li>
@@ -17,16 +17,30 @@
                             {{ $route.query.categoryName }}<i>×</i>
                         </li>
                         <li v-if="$route.query.trademark" class="with-x"
-                            @click="updateTrademark('')">
+                            @click="searchByTrademark('')">
                             {{ $route.query.trademark.split(':')[1] }}<i>×</i>
+                        </li>
+                        
+                        
+                        <li v-for="attr in $route.query.props" :key="attr"
+                            class="with-x" @click="removeAttr(attr)">
+                            {{ attr.split(':')[1] }}<i>×</i>
                         </li>
                     </ul>
                 </div>
+                <!--已选搜索参数列表 结束-->
                 
-                <!--selector-->
-                <SearchSelector @updateTrademark="updateTrademark"/>
                 
-                <!--details-->
+                <!--商品参数选项 开始-->
+                <SearchSelector
+                    @removeAttrProps="removeAttr"
+                    @updateAttrProps="searchByAttr"
+                    @updateTrademark="searchByTrademark"
+                />
+                <!--商品参数选项 结束-->
+                
+                
+                <!--商品具体展示 开始-->
                 <div class="details clearfix">
                     <!--排序导航 开始-->
                     <div class="sui-navbar">
@@ -123,6 +137,7 @@
                     </div>
                     <!--分页器 结束-->
                 </div>
+                <!--商品具体展示 结束-->
             </div>
             
             <div v-else class="py-container">
@@ -154,6 +169,8 @@
             generateSearchParams() {
                 return {
                     // 商品属性的数组
+                    // 商品属性的数组: ["属性 ID:属性值:属性名"]
+                    // 示例: ["2:6.0~6.24 英寸:屏幕尺寸"]
                     'props': this.$route.query.props || [],
                     
                     'category1Id': this.$route.query.category1Id || '',
@@ -182,12 +199,39 @@
                 this.$store.dispatch('getSearchResults', this.generateSearchParams());
                 this.$bus.$emit('updateSearchBoxKeyword', this.$route.query.keyword);
             },
-            updateTrademark(trademark) {
+            searchByTrademark(trademark) {
                 this.$router.push({
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
                         trademark,
+                    }
+                });
+            },
+            searchByAttr(attr) {
+                const props = this.$route.query.props || [];
+                
+                // First check whether the attr is already in the props array
+                if (!props.includes(attr)) {
+                    this.$router.push({
+                        path: this.$route.path,
+                        query: {
+                            ...this.$route.query,
+                            props: [...props, attr],
+                        }
+                    });
+                }
+            },
+            removeAttr(attr) {
+                const props = this.$route.query.props || [];
+                
+                // 因为是对现成的 attr 进行删除，所以 index 一定是 >= 0 的
+                const index = props.indexOf(attr);
+                this.$router.push({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        props: [...props.slice(0, index), ...props.slice(index + 1)],
                     }
                 });
             },

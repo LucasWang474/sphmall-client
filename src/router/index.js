@@ -44,7 +44,7 @@ const router = new VueRouter({
         },
         {
             name: 'search',
-            path: '/search',
+            path: '/searchByKeyword',
             component: Search,
             meta: {
                 title: '搜索'

@@ -26,7 +26,9 @@
             <div class="fl value">
                 <ul class="type-list">
                     <li v-for="attrValue in attr.attrValueList" :key="attrValue">
-                        <a>{{ attrValue }}</a>
+                        <a @click.prevent="addAttr(`${attr.attrId}:${attrValue}:${attr.attrName}`)">
+                            {{ attrValue }}
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -53,6 +55,11 @@
                     this.$emit('updateTrademark', trademark);
                 }
             });
+        },
+        methods: {
+            addAttr(attr) {
+                this.$emit('updateAttrProps', attr);
+            },
         }
     };
 </script>

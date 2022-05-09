@@ -35,8 +35,8 @@
                 <form action="javascript:" class="searchForm">
                     <input id="autocomplete" ref="searchBox" v-model.lazy.trim="keyword"
                            class="input-error input-xxlarge"
-                           type="text" @keyup.enter="search"/>
-                    <button class="sui-btn btn-xlarge btn-danger" type="button" @click="search">搜索</button>
+                           type="text" @keyup.enter="searchByKeyword"/>
+                    <button class="sui-btn btn-xlarge btn-danger" type="button" @click="searchByKeyword">搜索</button>
                 </form>
             </div>
         </div>
@@ -52,10 +52,10 @@
             };
         },
         methods: {
-            search() {
+            searchByKeyword() {
                 if (this.keyword && (this.$route.query.keyword !== this.keyword)) {
                     this.$router.push({
-                        path: '/search',
+                        path: '/searchByKeyword',
                         query: {
                             keyword: this.keyword,
                         },
