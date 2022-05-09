@@ -3,7 +3,7 @@
         <TypeNav/>
         
         <div class="main">
-            <div class="py-container">
+            <div v-show="searchResults.total > 0" class="py-container">
                 <!--bread-->
                 <div class="bread">
                     <ul class="fl sui-breadcrumb">
