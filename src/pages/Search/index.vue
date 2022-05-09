@@ -133,47 +133,40 @@
         components: {
             SearchSelector
         },
-        data() {
-            return {
-                searchParams: {
+        computed: {
+            ...mapState({
+                searchResults: state => state.search.searchResults,
+            }),
+        },
+        methods: {
+            generateSearchParams() {
+                return {
                     // 商品属性的数组
-                    'props': [],
+                    'props': this.$route.query.props || [],
                     
-                    'category1Id': '',
-                    'category2Id': '',
-                    'category3Id': '',
-                    'categoryName': '',
-                    'trademark': '',
+                    'category1Id': this.$route.query.category1Id || '',
+                    'category2Id': this.$route.query.category2Id || '',
+                    'category3Id': this.$route.query.category3Id || '',
+                    'categoryName': this.$route.query.categoryName || '',
+                    'trademark': this.$route.query.trademark || '',
+                    'keyword': this.$route.query.keyword || '',
                     
                     // 页码，表示搜索第一页的结果
-                    'pageNo': 1,
+                    'pageNo': this.$route.query.pageNo || 1,
                     // 每页显示的商品数量，默认为 10
-                    'pageSize': 20,
+                    'pageSize': this.$route.query.pageSize || 10,
                     
                     // 排序方式：
                     // 1: 综合, 2: 价格
                     // asc: 升序, desc: 降序
                     // Example: 1:desc
-                    'order': '1:desc',
-                }
-            };
-        },
-        computed: {
-            ...mapState({
-                searchResults: state => state.search.searchResults,
-            }),
-            keyword() {
-                return this.$route.query.keyword || '';
-            }
+                    'order': this.$route.query.order || '1:desc',
+                };
+            },
         },
         watch: {
-            keyword: {
-                immediate: true,
-                handler(newVal, oldVal) {
-                    console.log(newVal, oldVal);
-                    this.searchParams.keyword = this.keyword;
-                    this.$store.dispatch('getSearchResults', this.searchParams);
-                }
+            $route() {
+                this.$store.dispatch('getSearchResults', this.generateSearchParams());
             }
         },
     };
