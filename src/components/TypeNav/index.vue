@@ -16,7 +16,9 @@
                             <div v-for="cate1 in categoryList"
                                  :key="cate1.categoryId" class="item">
                                 <h3>
-                                    <a href="javascript:">{{ cate1.categoryName }}</a>
+                                    <a :data-category1id="cate1.categoryId" href="javascript:">
+                                        {{ cate1.categoryName }}
+                                    </a>
                                 </h3>
                                 
                                 <!--二级导航 开始-->
@@ -25,14 +27,18 @@
                                         <dl v-for="cate2 in cate1.categoryChild"
                                             :key="cate2.categoryId" class="fore">
                                             <dt>
-                                                <a href="javascript:">{{ cate2.categoryName }}</a>
+                                                <a :data-category2id="cate2.categoryId" href="javascript:">
+                                                    {{ cate2.categoryName }}
+                                                </a>
                                             </dt>
                                             
                                             <!--三级导航 开始-->
                                             <dd>
                                                 <em v-for="cate3 in cate2.categoryChild"
                                                     :key="cate3.categoryId">
-                                                    <a href="javascript:">{{ cate3.categoryName }}</a>
+                                                    <a :data-category3id="cate3.categoryId" href="javascript:">
+                                                        {{ cate3.categoryName }}
+                                                    </a>
                                                 </em>
                                             </dd>
                                             <!--三级导航 结束-->
@@ -96,15 +102,20 @@
                 this.$refs.triNav.addEventListener('click', ({target}) => {
                     if (target.tagName === 'A') {
                         this.isShowTriNav = false;
-                        this.goToSearchPage(target.innerText.trim());
+                        this.goToSearchPage(target);
                     }
                 });
             },
-            goToSearchPage(keyword) {
+            goToSearchPage(target) {
+                const keyword = target.innerText.trim();
                 this.$router.push({
                     path: '/search',
                     query: {
-                        keyword
+                        keyword,
+                        categoryName: keyword,
+                        category1Id: target.dataset.category1id,
+                        category2Id: target.dataset.category2id,
+                        category3Id: target.dataset.category3id,
                     },
                 });
             },

@@ -3,7 +3,7 @@
         <TypeNav/>
         
         <div class="main">
-            <div v-show="searchResults.total > 0" class="py-container">
+            <div v-if="searchResults.total > 0" class="py-container">
                 <!--bread-->
                 <div class="bread">
                     <ul class="fl sui-breadcrumb">
@@ -120,6 +120,14 @@
                     <!--分页器 结束-->
                 </div>
             </div>
+            
+            <div v-else class="py-container">
+                <!--搜索无结果-->
+                <div class="search-no-results">
+                    <h2>抱歉，没有找到相关产品！</h2>
+                    <p>换个词试试？</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -165,8 +173,11 @@
             },
         },
         watch: {
-            $route() {
-                this.$store.dispatch('getSearchResults', this.generateSearchParams());
+            $route: {
+                immediate: true,
+                handler() {
+                    this.$store.dispatch('getSearchResults', this.generateSearchParams());
+                }
             }
         },
     };
@@ -514,6 +525,13 @@
                         }
                     }
                 }
+            }
+            
+            .search-no-results {
+                margin-top: 20px;
+                text-align: center;
+                font-size: 14px;
+                color: #999;
             }
         }
     }
