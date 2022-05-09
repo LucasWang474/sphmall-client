@@ -93,17 +93,19 @@
             setupTriNavATagClickEvent() {
                 // Use event delegation to listen to click event on A tag
                 // When A tag is clicked, jump to search page
-                this.$refs.triNav.addEventListener('click', (event) => {
-                    if (event.target.tagName === 'A') {
+                this.$refs.triNav.addEventListener('click', ({target}) => {
+                    if (target.tagName === 'A') {
                         this.isShowTriNav = false;
-                        this.goToSearchPage(event.target.innerText.trim());
+                        this.goToSearchPage(target.innerText.trim());
                     }
                 });
             },
             goToSearchPage(keyword) {
                 this.$router.push({
                     path: '/search',
-                    query: {keyword},
+                    query: {
+                        keyword
+                    },
                 });
             },
         },

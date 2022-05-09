@@ -15,8 +15,6 @@ const SUCCESS_CODE = 200;
 
 const actions = {
     async getSearchResults({commit}, searchParams) {
-        console.log('getSearchResults, searchParams: ', searchParams);
-
         const response = await reqSearchResults(searchParams);
         if (response.code === SUCCESS_CODE) {
             commit('SET_SEARCH_RESULTS', response.data);
@@ -27,10 +25,22 @@ const actions = {
     }
 };
 
+const getters = {
+    // attrsList({searchResults}) {
+    //     return searchResults.attrsList || [];
+    // },
+    // goodsList({searchResults}) {
+    //     return searchResults.goodsList || [];
+    // },
+    // trademarkList({searchResults}) {
+    //     return searchResults.trademarkList || [];
+    // }
+};
+
 
 export default {
-    // namespace: true,
     state,
     mutations,
     actions,
+    getters
 };
