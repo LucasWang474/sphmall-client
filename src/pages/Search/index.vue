@@ -12,15 +12,19 @@
                         </li>
                     </ul>
                     <ul class="fl sui-tag">
-                        <li class="with-x">手机</li>
-                        <li class="with-x">iphone<i>×</i></li>
-                        <li class="with-x">华为<i>×</i></li>
-                        <li class="with-x">OPPO<i>×</i></li>
+                        <li v-if="$route.query.categoryName" class="with-x"
+                            @click="removeCategoryName">
+                            {{ $route.query.categoryName }}<i>×</i>
+                        </li>
+                        <li v-if="$route.query.trademark" class="with-x"
+                            @click="updateTrademark('')">
+                            {{ $route.query.trademark.split(':')[1] }}<i>×</i>
+                        </li>
                     </ul>
                 </div>
                 
                 <!--selector-->
-                <SearchSelector/>
+                <SearchSelector @updateTrademark="updateTrademark"/>
                 
                 <!--details-->
                 <div class="details clearfix">
@@ -156,8 +160,11 @@
                     'category2Id': this.$route.query.category2Id || '',
                     'category3Id': this.$route.query.category3Id || '',
                     'categoryName': this.$route.query.categoryName || '',
-                    'trademark': this.$route.query.trademark || '',
                     'keyword': this.$route.query.keyword || '',
+                    
+                    // 品牌: ID:品牌名称
+                    // 示例: 1:苹果
+                    'trademark': this.$route.query.trademark || '',
                     
                     // 页码，表示搜索第一页的结果
                     'pageNo': this.$route.query.pageNo || 1,
@@ -171,12 +178,34 @@
                     'order': this.$route.query.order || '1:desc',
                 };
             },
+            getSearchResults() {
+                this.$store.dispatch('getSearchResults', this.generateSearchParams());
+                this.$bus.$emit('updateSearchBoxKeyword', this.$route.query.keyword);
+            },
+            updateTrademark(trademark) {
+                this.$router.push({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        trademark,
+                    }
+                });
+            },
+            removeCategoryName() {
+                this.$router.push({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        categoryName: '',
+                    }
+                });
+            },
         },
         watch: {
             $route: {
                 immediate: true,
                 handler() {
-                    this.$store.dispatch('getSearchResults', this.generateSearchParams());
+                    this.getSearchResults();
                 }
             }
         },

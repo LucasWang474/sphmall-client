@@ -64,6 +64,13 @@
                 }
             }
         },
+        mounted() {
+            this.$bus.$on('updateSearchBoxKeyword', (newKeyword) => {
+                if (newKeyword && newKeyword !== this.keyword) {
+                    this.keyword = newKeyword;
+                }
+            });
+        }
     };
 </script>
 

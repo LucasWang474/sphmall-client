@@ -5,8 +5,9 @@
             <div class="fl key brand">品牌</div>
             
             <div class="value logos">
-                <ul class="logo-list">
-                    <li v-for="trademark in searchResults.trademarkList" :key="trademark.tmId">
+                <ul ref="logoList" class="logo-list">
+                    <li v-for="trademark in searchResults.trademarkList" :key="trademark.tmId"
+                        :data-id="trademark.tmId" :data-name="trademark.tmName">
                         {{ trademark.tmName }}
                     </li>
                 </ul>
@@ -44,6 +45,14 @@
             ...mapState({
                 searchResults: state => state.search.searchResults,
             }),
+        },
+        mounted() {
+            this.$refs.logoList.addEventListener('click', ({target}) => {
+                if (target.tagName === 'LI') {
+                    const trademark = `${target.dataset.id}:${target.dataset.name}`;
+                    this.$emit('updateTrademark', trademark);
+                }
+            });
         }
     };
 </script>
