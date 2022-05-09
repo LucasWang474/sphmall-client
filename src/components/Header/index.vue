@@ -53,8 +53,7 @@
         },
         methods: {
             search() {
-                if (this.keyword) {
-                    // if (this.keyword && (this.$route.query.keyword !== this.keyword)) {
+                if (this.keyword && (this.$route.query.keyword !== this.keyword)) {
                     this.$router.push({
                         path: '/search',
                         query: {

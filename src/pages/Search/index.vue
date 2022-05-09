@@ -24,6 +24,7 @@
                 
                 <!--details-->
                 <div class="details clearfix">
+                    <!--排序导航 开始-->
                     <div class="sui-navbar">
                         <div class="navbar-inner filter">
                             <ul class="sui-nav">
@@ -48,7 +49,9 @@
                             </ul>
                         </div>
                     </div>
+                    <!--排序导航 结束-->
                     
+                    <!--商品列表 开始-->
                     <div class="goods-list">
                         <ul class="yui3-g">
                             <li v-for="product in searchResults.goodsList" :key="product.id" class="yui3-u-1-5">
@@ -82,7 +85,9 @@
                             </li>
                         </ul>
                     </div>
+                    <!--商品列表 结束-->
                     
+                    <!--分页器 开始-->
                     <div class="fr page">
                         <div class="sui-pagination clearfix">
                             <ul>
@@ -112,6 +117,7 @@
                             <div><span>共 {{ searchResults.totalPages }} 页</span></div>
                         </div>
                     </div>
+                    <!--分页器 结束-->
                 </div>
             </div>
         </div>
@@ -130,35 +136,46 @@
         data() {
             return {
                 searchParams: {
+                    // 商品属性的数组
+                    'props': [],
+                    
                     'category1Id': '',
                     'category2Id': '',
                     'category3Id': '',
                     'categoryName': '',
-                    'keyword': '',
-                    
-                    // 页码
-                    'pageNo': 1,
-                    // 每页显示数量
-                    'pageSize': 10,
-                    
                     'trademark': '',
-                    'props': [],
+                    
+                    // 页码，表示搜索第一页的结果
+                    'pageNo': 1,
+                    // 每页显示的商品数量，默认为 10
+                    'pageSize': 20,
                     
                     // 排序方式：
                     // 1: 综合, 2: 价格
-                    // asc: 升序,desc: 降序
+                    // asc: 升序, desc: 降序
+                    // Example: 1:desc
                     'order': '1:desc',
                 }
             };
-        },
-        mounted() {
-            this.$store.dispatch('getSearchResults', {});
         },
         computed: {
             ...mapState({
                 searchResults: state => state.search.searchResults,
             }),
-        }
+            keyword() {
+                return this.$route.query.keyword || '';
+            }
+        },
+        watch: {
+            keyword: {
+                immediate: true,
+                handler(newVal, oldVal) {
+                    console.log(newVal, oldVal);
+                    this.searchParams.keyword = this.keyword;
+                    this.$store.dispatch('getSearchResults', this.searchParams);
+                }
+            }
+        },
     };
 </script>
 
