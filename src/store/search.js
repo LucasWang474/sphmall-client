@@ -25,17 +25,7 @@ const actions = {
     }
 };
 
-const getters = {
-    // attrsList({searchResults}) {
-    //     return searchResults.attrsList || [];
-    // },
-    // goodsList({searchResults}) {
-    //     return searchResults.goodsList || [];
-    // },
-    // trademarkList({searchResults}) {
-    //     return searchResults.trademarkList || [];
-    // }
-};
+const getters = {};
 
 
 export default {

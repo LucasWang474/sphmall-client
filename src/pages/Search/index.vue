@@ -114,16 +114,12 @@
                     </div>
                     <!--商品列表 结束-->
                     
-                    <!--分页器 开始-->
                     <Pagination
                         :pageNo="searchResults.pageNo"
                         :pageSize="searchResults.pageSize"
                         :total="searchResults.total"
                         :totalPages="searchResults.totalPages"
-                        @changePageNo="changePageNo"
-                        @changePageSize="changePageSize"
                     />
-                    <!--分页器 结束-->
                 </div>
                 <!--商品具体展示 结束-->
             </div>
@@ -200,6 +196,7 @@
                     query: {
                         ...this.$route.query,
                         trademark: trademark || undefined,
+                        pageNo: 1,
                     }
                 });
             },
@@ -213,6 +210,7 @@
                         query: {
                             ...this.$route.query,
                             props: [...props, attr],
+                            pageNo: 1,
                         }
                     });
                 }
@@ -270,27 +268,6 @@
                         order
                     }
                 });
-            },
-            
-            changePageSize(newPageSize) {
-                this.$router.replace({
-                    path: this.$route.path,
-                    query: {
-                        ...this.$route.query,
-                        pageSize: newPageSize,
-                    }
-                });
-            },
-            changePageNo(newPageNo) {
-                if (newPageNo <= this.searchResults.totalPages) {
-                    this.$router.replace({
-                        path: this.$route.path,
-                        query: {
-                            ...this.$route.query,
-                            pageNo: newPageNo,
-                        }
-                    });
-                }
             },
         },
         watch: {
