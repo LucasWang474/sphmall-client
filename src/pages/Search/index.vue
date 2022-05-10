@@ -8,7 +8,7 @@
                 <div class="bread">
                     <ul class="fl sui-breadcrumb">
                         <li>
-                            <a href="#">全部结果</a>
+                            <a href="javascript:">全部结果</a>
                         </li>
                     </ul>
                     <ul class="fl sui-tag">
@@ -47,22 +47,22 @@
                         <div class="navbar-inner filter">
                             <ul class="sui-nav">
                                 <li class="active">
-                                    <a href="#">综合</a>
+                                    <a href="javascript:" @click="sortByDefault">综合</a>
                                 </li>
                                 <li>
-                                    <a href="#">销量</a>
+                                    <a href="javascript:">销量</a>
                                 </li>
                                 <li>
-                                    <a href="#">新品</a>
+                                    <a href="javascript:">新品</a>
                                 </li>
                                 <li>
-                                    <a href="#">评价</a>
+                                    <a href="javascript:">评价</a>
                                 </li>
                                 <li>
-                                    <a href="#">价格⬆</a>
+                                    <a href="javascript:" @click="sortByPrice(1)">价格⬆</a>
                                 </li>
                                 <li>
-                                    <a href="#">价格⬇</a>
+                                    <a href="javascript:" @click="sortByPrice(-1)">价格⬇</a>
                                 </li>
                             </ul>
                         </div>
@@ -110,26 +110,26 @@
                         <div class="sui-pagination clearfix">
                             <ul>
                                 <li class="prev disabled">
-                                    <a href="#">«上一页</a>
+                                    <a href="javascript:">«上一页</a>
                                 </li>
                                 <li class="active">
-                                    <a href="#">1</a>
+                                    <a href="javascript:">1</a>
                                 </li>
                                 <li>
-                                    <a href="#">2</a>
+                                    <a href="javascript:">2</a>
                                 </li>
                                 <li>
-                                    <a href="#">3</a>
+                                    <a href="javascript:">3</a>
                                 </li>
                                 <li>
-                                    <a href="#">4</a>
+                                    <a href="javascript:">4</a>
                                 </li>
                                 <li>
-                                    <a href="#">5</a>
+                                    <a href="javascript:">5</a>
                                 </li>
                                 <li class="dotted"><span>...</span></li>
                                 <li class="next">
-                                    <a href="#">下一页»</a>
+                                    <a href="javascript:">下一页»</a>
                                 </li>
                             </ul>
                             <div><span>共 {{ searchResults.totalPages }} 页</span></div>
@@ -184,7 +184,7 @@
                     trademark: this.$route.query.trademark,
                     
                     
-                    // 页码，表示搜索第一页的结果
+                    // 页码，表示搜索第几页的结果，默认为 1
                     pageNo: this.$route.query.pageNo || 1,
                     // 每页显示的商品数量，默认为 10
                     pageSize: this.$route.query.pageSize || 10,
@@ -200,6 +200,7 @@
                 this.$store.dispatch('getSearchResults', this.generateSearchParams());
                 this.$bus.$emit('updateSearchBoxKeyword', this.$route.query.keyword);
             },
+            
             searchByTrademark(trademark) {
                 this.$router.replace({
                     path: this.$route.path,
@@ -223,6 +224,7 @@
                     });
                 }
             },
+            
             removeAttr(attr) {
                 const props = this.$route.query.props || [];
                 
@@ -245,6 +247,35 @@
                     }
                 });
             },
+            
+            sortByPrice(ranking) {
+                // ranking: 1 means asc, -1 means desc
+                const order = ranking === 1 ? '2:asc' : '2:desc';
+                if (order !== this.$route.query.order) {
+                    this.$router.replace({
+                        path: this.$route.path,
+                        query: {
+                            ...this.$route.query,
+                            order
+                        }
+                    });
+                }
+            },
+            sortByDefault() {
+                // Toggle between asc and desc
+                const cases = {
+                    '1:asc': '1:desc',
+                    '1:desc': '1:asc',
+                    undefined: '1:asc',
+                };
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        order: cases[this.$route.query.order],
+                    }
+                });
+            }
         },
         watch: {
             $route: {
