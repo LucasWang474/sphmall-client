@@ -57,11 +57,8 @@
 </template>
 
 <script>
-    import MySwiper from '@/components/MySwiper';
-    
     export default {
         name: 'GeneralFloor',
-        components: {MySwiper},
         props: ['floor'],
     };
 </script>

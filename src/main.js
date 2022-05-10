@@ -8,6 +8,8 @@ import '@/mock';
 
 Vue.config.productionTip = false;
 Vue.component('TypeNav', () => import('@/components/TypeNav'));
+Vue.component('MySwiper', () => import('@/components/MySwiper'));
+Vue.component('Pagination', () => import('@/components/Pagination'));
 
 
 new Vue({
