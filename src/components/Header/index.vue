@@ -53,7 +53,7 @@
         },
         methods: {
             searchByKeyword() {
-                if (this.keyword && (this.$route.query.keyword !== this.keyword)) {
+                if (this.keyword) {
                     this.$router.push({
                         path: '/search',
                         query: {
@@ -61,14 +61,14 @@
                         },
                     });
                     this.$refs.searchBox.blur();
+                } else {
+                    this.$router.push('/search');
                 }
             }
         },
         mounted() {
             this.$bus.$on('updateSearchBoxKeyword', (newKeyword) => {
-                if (newKeyword && newKeyword !== this.keyword) {
-                    this.keyword = newKeyword;
-                }
+                this.keyword = newKeyword;
             });
         }
     };

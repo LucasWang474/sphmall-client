@@ -115,35 +115,14 @@
                     <!--商品列表 结束-->
                     
                     <!--分页器 开始-->
-                    <div class="fr page">
-                        <div class="sui-pagination clearfix">
-                            <ul>
-                                <li class="prev disabled">
-                                    <a href="javascript:">«上一页</a>
-                                </li>
-                                <li class="active">
-                                    <a href="javascript:">1</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:">2</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:">3</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:">4</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:">5</a>
-                                </li>
-                                <li class="dotted"><span>...</span></li>
-                                <li class="next">
-                                    <a href="javascript:">下一页»</a>
-                                </li>
-                            </ul>
-                            <div><span>共 {{ searchResults.totalPages }} 页</span></div>
-                        </div>
-                    </div>
+                    <Pagination
+                        :pageNo="searchResults.pageNo"
+                        :pageSize="searchResults.pageSize"
+                        :total="searchResults.total"
+                        :totalPages="searchResults.totalPages"
+                        @changePageNo="changePageNo"
+                        @changePageSize="changePageSize"
+                    />
                     <!--分页器 结束-->
                 </div>
                 <!--商品具体展示 结束-->
@@ -161,7 +140,7 @@
 </template>
 
 <script>
-    import './css/iconfont.css';
+    import './font/iconfont.css';
     import SearchSelector from '@/pages/Search/SearchSelector';
     import {mapState} from 'vuex';
     
@@ -291,7 +270,28 @@
                         order
                     }
                 });
-            }
+            },
+            
+            changePageSize(newPageSize) {
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        pageSize: newPageSize,
+                    }
+                });
+            },
+            changePageNo(newPageNo) {
+                if (newPageNo <= this.searchResults.totalPages) {
+                    this.$router.replace({
+                        path: this.$route.path,
+                        query: {
+                            ...this.$route.query,
+                            pageNo: newPageNo,
+                        }
+                    });
+                }
+            },
         },
         watch: {
             $route: {
@@ -301,6 +301,10 @@
                 }
             }
         },
+        beforeRouteLeave(to, from, next) {
+            this.$bus.$emit('updateSearchBoxKeyword', '');
+            next();
+        }
     };
 </script>
 
@@ -548,100 +552,6 @@
                                         }
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-                
-                .page {
-                    width: 733px;
-                    height: 66px;
-                    overflow: hidden;
-                    float: right;
-                    
-                    .sui-pagination {
-                        margin: 18px 0;
-                        
-                        display: flex;
-                        align-items: center;
-                        
-                        ul {
-                            margin-left: 0;
-                            margin-bottom: 0;
-                            vertical-align: middle;
-                            width: 490px;
-                            float: left;
-                            
-                            li {
-                                line-height: 18px;
-                                display: inline-block;
-                                
-                                a {
-                                    position: relative;
-                                    float: left;
-                                    line-height: 18px;
-                                    text-decoration: none;
-                                    background-color: #fff;
-                                    border: 1px solid #e0e9ee;
-                                    margin-left: -1px;
-                                    font-size: 14px;
-                                    padding: 9px 18px;
-                                    color: #333;
-                                }
-                                
-                                &.active {
-                                    a {
-                                        background-color: #fff;
-                                        color: #e1251b;
-                                        border-color: #fff;
-                                        cursor: default;
-                                    }
-                                }
-                                
-                                &.prev {
-                                    a {
-                                        background-color: #fafafa;
-                                    }
-                                }
-                                
-                                &.disabled {
-                                    a {
-                                        color: #999;
-                                        cursor: default;
-                                    }
-                                }
-                                
-                                &.dotted {
-                                    span {
-                                        // margin-left: -1px;
-                                        position: relative;
-                                        float: left;
-                                        line-height: 18px;
-                                        text-decoration: none;
-                                        background-color: #fff;
-                                        font-size: 14px;
-                                        border: 0;
-                                        padding: 9px 18px;
-                                        color: #333;
-                                    }
-                                }
-                                
-                                &.next {
-                                    a {
-                                        background-color: #fafafa;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        div {
-                            color: #333;
-                            font-size: 14px;
-                            float: right;
-                            width: 241px;
-                            
-                            span {
-                            
                             }
                         }
                     }
