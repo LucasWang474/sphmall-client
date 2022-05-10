@@ -52,13 +52,13 @@
             this.$refs.logoList.addEventListener('click', ({target}) => {
                 if (target.tagName === 'LI') {
                     const trademark = `${target.dataset.id}:${target.dataset.name}`;
-                    this.$emit('updateTrademark', trademark);
+                    this.$emit('searchByTrademark', trademark);
                 }
             });
         },
         methods: {
             addAttr(attr) {
-                this.$emit('updateAttrProps', attr);
+                this.$emit('searchByAttr', attr);
             },
         }
     };

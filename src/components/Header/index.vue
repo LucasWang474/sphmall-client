@@ -55,7 +55,7 @@
             searchByKeyword() {
                 if (this.keyword && (this.$route.query.keyword !== this.keyword)) {
                     this.$router.push({
-                        path: '/searchByKeyword',
+                        path: '/search',
                         query: {
                             keyword: this.keyword,
                         },

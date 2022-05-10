@@ -34,8 +34,8 @@
                 <!--商品参数选项 开始-->
                 <SearchSelector
                     @removeAttrProps="removeAttr"
-                    @updateAttrProps="searchByAttr"
-                    @updateTrademark="searchByTrademark"
+                    @searchByAttr="searchByAttr"
+                    @searchByTrademark="searchByTrademark"
                 />
                 <!--商品参数选项 结束-->
                 
@@ -144,7 +144,7 @@
                 <!--搜索无结果-->
                 <div class="search-no-results">
                     <h2>抱歉，没有找到相关产品！</h2>
-                    <p>换个词试试？</p>
+                    <h3>其实只能搜索手机</h3>
                 </div>
             </div>
         </div>
@@ -171,28 +171,29 @@
                     // 商品属性的数组
                     // 商品属性的数组: ["属性 ID:属性值:属性名"]
                     // 示例: ["2:6.0~6.24 英寸:屏幕尺寸"]
-                    'props': this.$route.query.props || [],
+                    props: this.$route.query.props,
                     
-                    'category1Id': this.$route.query.category1Id || '',
-                    'category2Id': this.$route.query.category2Id || '',
-                    'category3Id': this.$route.query.category3Id || '',
-                    'categoryName': this.$route.query.categoryName || '',
-                    'keyword': this.$route.query.keyword || '',
+                    category1Id: this.$route.query.category1Id,
+                    category2Id: this.$route.query.category2Id,
+                    category3Id: this.$route.query.category3Id,
+                    categoryName: this.$route.query.categoryName,
+                    keyword: this.$route.query.keyword,
                     
                     // 品牌: ID:品牌名称
                     // 示例: 1:苹果
-                    'trademark': this.$route.query.trademark || '',
+                    trademark: this.$route.query.trademark,
+                    
                     
                     // 页码，表示搜索第一页的结果
-                    'pageNo': this.$route.query.pageNo || 1,
+                    pageNo: this.$route.query.pageNo || 1,
                     // 每页显示的商品数量，默认为 10
-                    'pageSize': this.$route.query.pageSize || 10,
+                    pageSize: this.$route.query.pageSize || 10,
                     
                     // 排序方式：
                     // 1: 综合, 2: 价格
                     // asc: 升序, desc: 降序
                     // Example: 1:desc
-                    'order': this.$route.query.order || '1:desc',
+                    order: this.$route.query.order || '1:desc',
                 };
             },
             getSearchResults() {
@@ -200,11 +201,11 @@
                 this.$bus.$emit('updateSearchBoxKeyword', this.$route.query.keyword);
             },
             searchByTrademark(trademark) {
-                this.$router.push({
+                this.$router.replace({
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
-                        trademark,
+                        trademark: trademark || undefined,
                     }
                 });
             },
@@ -213,7 +214,7 @@
                 
                 // First check whether the attr is already in the props array
                 if (!props.includes(attr)) {
-                    this.$router.push({
+                    this.$router.replace({
                         path: this.$route.path,
                         query: {
                             ...this.$route.query,
@@ -227,7 +228,7 @@
                 
                 // 因为是对现成的 attr 进行删除，所以 index 一定是 >= 0 的
                 const index = props.indexOf(attr);
-                this.$router.push({
+                this.$router.replace({
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
@@ -236,11 +237,11 @@
                 });
             },
             removeCategoryName() {
-                this.$router.push({
+                this.$router.replace({
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
-                        categoryName: '',
+                        categoryName: undefined,
                     }
                 });
             },

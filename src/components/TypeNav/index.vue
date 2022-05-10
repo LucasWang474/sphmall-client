@@ -98,7 +98,7 @@
             },
             setupTriNavATagClickEvent() {
                 // Use event delegation to listen to click event on A tag
-                // When A tag is clicked, jump to searchByKeyword page
+                // When A tag is clicked, jump to search page
                 this.$refs.triNav.addEventListener('click', ({target}) => {
                     if (target.tagName === 'A') {
                         this.isShowTriNav = false;
@@ -108,16 +108,22 @@
             },
             goToSearchPage(target) {
                 const keyword = target.innerText.trim();
-                this.$router.push({
-                    path: '/searchByKeyword',
+                const location = {
+                    path: '/search',
                     query: {
                         keyword,
                         categoryName: keyword,
                         category1Id: target.dataset.category1id,
                         category2Id: target.dataset.category2id,
                         category3Id: target.dataset.category3id,
-                    },
-                });
+                    }
+                };
+                
+                if (this.$route.path === '/home' || this.$route.path === '/') {
+                    this.$router.push(location);
+                } else {
+                    this.$router.replace(location);
+                }
             },
         },
         mounted() {

@@ -44,7 +44,7 @@ const router = new VueRouter({
         },
         {
             name: 'search',
-            path: '/searchByKeyword',
+            path: '/search',
             component: Search,
             meta: {
                 title: '搜索'
@@ -56,6 +56,16 @@ const router = new VueRouter({
             redirect: '/',
         }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    // 解决 Vue Router 数组由 2 => 1 时值会从数组变成字符串的 bug
+    const props = to.query.props;
+    if (typeof props === 'string') {
+        to.query.props = [props];
+    }
+
+    next();
 });
 
 router.afterEach((to) => {
