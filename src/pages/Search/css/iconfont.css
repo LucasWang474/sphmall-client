@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'iconfont'; /* Project id  */
+    src: url('iconfont.ttf?t=1652188574094') format('truetype');
+}
+
+.iconfont {
+    /*noinspection CssNoGenericFontName*/
+    font-family: 'iconfont' !important;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-long-arrow-down:before {
+    content: '\e83e';
+}
+
+.icon-long-arrow-up:before {
+    content: '\e83f';
+}

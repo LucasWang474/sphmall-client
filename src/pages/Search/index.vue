@@ -46,8 +46,14 @@
                     <div class="sui-navbar">
                         <div class="navbar-inner filter">
                             <ul class="sui-nav">
-                                <li class="active">
-                                    <a href="javascript:" @click="sortByDefault">综合</a>
+                                <li :class="{'active': sortOrder.startsWith('1:')}">
+                                    <a href="javascript:" @click="sortByDefault">
+                                        综合
+                                        <span v-if="sortOrder === '1:asc'"
+                                              class="iconfont icon-long-arrow-up"></span>
+                                        <span v-if="sortOrder === '1:desc'"
+                                              class="iconfont icon-long-arrow-down"></span>
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="javascript:">销量</a>
@@ -58,11 +64,14 @@
                                 <li>
                                     <a href="javascript:">评价</a>
                                 </li>
-                                <li>
-                                    <a href="javascript:" @click="sortByPrice(1)">价格⬆</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:" @click="sortByPrice(-1)">价格⬇</a>
+                                <li :class="{'active': sortOrder.startsWith('2:')}">
+                                    <a href="javascript:" @click="sortByPrice">
+                                        价格
+                                        <span v-if="sortOrder === '2:asc'"
+                                              class="iconfont icon-long-arrow-up"></span>
+                                        <span v-if="sortOrder === '2:desc'"
+                                              class="iconfont icon-long-arrow-down"></span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -152,6 +161,7 @@
 </template>
 
 <script>
+    import './css/iconfont.css';
     import SearchSelector from '@/pages/Search/SearchSelector';
     import {mapState} from 'vuex';
     
@@ -164,6 +174,14 @@
             ...mapState({
                 searchResults: state => state.search.searchResults,
             }),
+            
+            sortOrder() {
+                // 排序方式：
+                // 1: 综合, 2: 价格
+                // asc: 升序, desc: 降序
+                // Example (default): 1:desc
+                return this.$route.query.order || '1:desc';
+            },
         },
         methods: {
             generateSearchParams() {
@@ -189,11 +207,7 @@
                     // 每页显示的商品数量，默认为 10
                     pageSize: this.$route.query.pageSize || 10,
                     
-                    // 排序方式：
-                    // 1: 综合, 2: 价格
-                    // asc: 升序, desc: 降序
-                    // Example: 1:desc
-                    order: this.$route.query.order || '1:desc',
+                    order: this.sortOrder
                 };
             },
             getSearchResults() {
@@ -248,31 +262,33 @@
                 });
             },
             
-            sortByPrice(ranking) {
+            sortByPrice() {
                 // ranking: 1 means asc, -1 means desc
-                const order = ranking === 1 ? '2:asc' : '2:desc';
-                if (order !== this.$route.query.order) {
-                    this.$router.replace({
-                        path: this.$route.path,
-                        query: {
-                            ...this.$route.query,
-                            order
-                        }
-                    });
-                }
+                const cases = {
+                    '2:asc': '2:desc',
+                    '2:desc': '2:asc',
+                };
+                const order = cases[this.$route.query.order] || '2:asc';
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        order
+                    }
+                });
             },
             sortByDefault() {
                 // Toggle between asc and desc
                 const cases = {
                     '1:asc': '1:desc',
                     '1:desc': '1:asc',
-                    undefined: '1:asc',
                 };
+                const order = cases[this.$route.query.order] || '1:desc';
                 this.$router.replace({
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
-                        order: cases[this.$route.query.order],
+                        order
                     }
                 });
             }
