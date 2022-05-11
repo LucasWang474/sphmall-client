@@ -12,14 +12,11 @@ const router = new VueRouter({
     mode: 'history',
     routes,
 
-    scrollBehavior(to) {
+    scrollBehavior(to, from, savedPosition) {
         if (to.name === 'detail') {
             return {x: 0, y: 0};
         }
-
-        // If a falsy value or an empty object is returned,
-        // no scrolling will happen.
-        return false;
+        return savedPosition;
     }
 });
 
