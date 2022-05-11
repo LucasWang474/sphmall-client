@@ -12,6 +12,10 @@ export const reqSearchResults = (searchParams) => ajax({
     data: searchParams
 });
 
+// 获取商品详情
+export const reqProductDetail = (productId) => ajax(`/api/product/${productId}`);
+
+
 export const reqBanners = () => mockAjax('/mock/banners');
 export const reqFloors = () => mockAjax('/mock/floors');
 // export const reqBaseCategoryListMock = () => mockAjax('/api/product/getBaseCategoryList');
