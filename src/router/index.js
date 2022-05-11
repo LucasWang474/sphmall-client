@@ -51,6 +51,14 @@ const router = new VueRouter({
             }
         },
         {
+            name: 'detail',
+            path: '/detail/:id',
+            component: () => import('@/pages/Detail'),
+            meta: {
+                title: '商品详情',
+            }
+        },
+        {
             // Redirect to / if no match
             path: '*',
             redirect: '/',

@@ -76,7 +76,7 @@
         name: 'TypeNav',
         data() {
             return {
-                isShowTriNav: this.$route.name !== 'search',
+                isShowTriNav: this.checkShowTriNav(),
             };
         },
         computed: {
@@ -85,15 +85,17 @@
             }),
         },
         methods: {
+            checkShowTriNav() {
+                return ['index', 'home'].includes(this.$route.name);
+            },
             setupLeftWrapShowHide() {
                 const leftWrap = this.$refs.leftWrap;
                 // When the mouse enter the leftWrap, set isShowTriNav to true
                 leftWrap.addEventListener('mouseenter', () => {
                     this.isShowTriNav = true;
                 });
-                // When the mouse leave the leftWrap, set isShowTriNav to false
                 leftWrap.addEventListener('mouseleave', () => {
-                    this.isShowTriNav = this.$route.name !== 'search';
+                    this.isShowTriNav = this.checkShowTriNav();
                 });
             },
             setupTriNavATagClickEvent() {

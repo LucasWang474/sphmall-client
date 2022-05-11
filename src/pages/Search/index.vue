@@ -3,7 +3,9 @@
         <TypeNav/>
         
         <div class="main">
-            <div v-if="searchResults.total > 0" class="py-container">
+            <!--有结果-->
+            <!--为了让点击事件能在 mounted 时绑定上，这里必须用 v-show-->
+            <div v-show="searchResults.total > 0" class="py-container">
                 <!--已选搜索参数列表 开始-->
                 <div class="bread">
                     <ul class="fl sui-breadcrumb">
@@ -79,13 +81,15 @@
                     <!--排序导航 结束-->
                     
                     <!--商品列表 开始-->
-                    <div class="goods-list">
+                    <div ref="goodsList" class="goods-list">
                         <ul class="yui3-g">
-                            <li v-for="product in searchResults.goodsList" :key="product.id" class="yui3-u-1-5">
+                            <li v-for="product in searchResults.goodsList"
+                                :key="product.id" class="yui3-u-1-5">
                                 <div class="list-wrap">
                                     <div class="p-img">
-                                        <a href="item.html" target="_blank">
-                                            <img :src="product.defaultImg" alt=""/>
+                                        <a href="javascript:">
+                                            <img :data-id="product.id" :src="product.defaultImg"
+                                                 alt="" class="to-detail"/>
                                         </a>
                                     </div>
                                     <div class="price">
@@ -95,8 +99,8 @@
                                         </strong>
                                     </div>
                                     <div class="attr">
-                                        <a :title="product.title" href="item.html"
-                                           target="_blank">
+                                        <a :data-id="product.id" :title="product.title"
+                                           class="to-detail" href="javascript:">
                                             {{ product.title }}
                                         </a>
                                     </div>
@@ -126,7 +130,8 @@
                 <!--商品具体展示 结束-->
             </div>
             
-            <div v-else class="py-container">
+            <!--无结果-->
+            <div v-show="searchResults.total <= 0" class="py-container">
                 <!--搜索无结果-->
                 <div class="search-no-results">
                     <h2>抱歉，没有找到相关产品！</h2>
@@ -304,8 +309,18 @@
                 const itemsSoFar = (pageNo - 1) * pageSize + 1;
                 location.query.pageNo = Math.ceil(itemsSoFar / newPageSize);
                 this.routerReplace(location, false);
-            }
+            },
             
+            initGoToDetailPageEvent() {
+                this.$refs?.goodsList.addEventListener('click', ({target}) => {
+                    const {id} = target.dataset;
+                    if (id !== undefined && target.classList.contains('to-detail')) {
+                        this.$router.push({
+                            path: '/detail/' + id,
+                        });
+                    }
+                });
+            },
         },
         watch: {
             $route: {
@@ -319,6 +334,9 @@
         beforeRouteLeave(to, from, next) {
             this.$bus.$emit('updateSearchBoxKeyword', '');
             next();
+        },
+        mounted() {
+            this.initGoToDetailPageEvent();
         }
     };
 </script>
@@ -466,6 +484,7 @@
                                     
                                     a {
                                         color: #666;
+                                        display: block;
                                         
                                         img {
                                             max-width: 100%;
