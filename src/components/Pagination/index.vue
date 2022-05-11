@@ -8,7 +8,7 @@
         <button v-for="(val, index) in paginationNumbers"
                 :key="`${val}:${index}`"
                 :class="{
-                    'active': +val === +curPageNo,
+                    'active': +val === +pageNo,
                     'dots': val === '...',
                     'page-number': Number.isInteger(+val)
                 }">
@@ -111,7 +111,7 @@
                 const LEFT_LENGTH = toEven(Math.trunc(this.maxVisibleNumberButtons / 3));
                 
                 // Special case
-                if (this.curPageNo <= (this.maxVisibleNumberButtons - LEFT_LENGTH) ||
+                if (this.pageNo <= (this.maxVisibleNumberButtons - LEFT_LENGTH) ||
                     this.totalPages <= this.maxVisibleNumberButtons) {
                     const LENGTH = Math.min(this.totalPages, this.maxVisibleNumberButtons);
                     const res = [];
@@ -131,7 +131,7 @@
                 const RIGHT_LENGTH = this.maxVisibleNumberButtons - LEFT_LENGTH;
                 const STEP = Math.floor(RIGHT_LENGTH / 2);
                 const right = [];
-                for (let i = this.curPageNo - STEP; i <= this.curPageNo + STEP; i++) {
+                for (let i = this.pageNo - STEP; i <= this.pageNo + STEP; i++) {
                     right.push(i);
                 }
                 
