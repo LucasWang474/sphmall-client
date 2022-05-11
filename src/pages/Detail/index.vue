@@ -80,10 +80,11 @@
                     
                     <!--商品参数配置 开始-->
                     <div class="choose">
-                        <div class="chooseArea">
+                        <div ref="chooseArea" class="chooseArea" @click="changeAttrActive">
                             <div class="chosen"></div>
                             
-                            <dl v-for="attrs in productAttrList" :key="attrs.id">
+                            <dl v-for="attrs in productAttrList"
+                                :key="attrs.id">
                                 <dt class="title">{{ attrs.saleAttrName }}</dt>
                                 
                                 <dd v-for="attrValue in attrs.spuSaleAttrValueList"
@@ -393,6 +394,12 @@
             changeCurImgIndex(index) {
                 console.log('changeCurImgIndex', index);
                 this.curImgIndex = index;
+            },
+            changeAttrActive({target}) {
+                if (target.tagName === 'DD' && !target.classList.contains('active')) {
+                    target.parentNode.querySelector('dd.active').classList.remove('active');
+                    target.classList.add('active');
+                }
             }
         },
         mounted() {
