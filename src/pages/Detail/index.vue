@@ -89,7 +89,9 @@
                                 
                                 <dd v-for="attrValue in attrs.spuSaleAttrValueList"
                                     :key="attrValue.id"
-                                    :class="{'active': +attrValue.isChecked}">
+                                    :class="{
+                                        'active': +attrValue.isChecked || attrs.spuSaleAttrValueList.length === 1
+                                    }">
                                     {{ attrValue.saleAttrValueName }}
                                 </dd>
                             </dl>
@@ -404,7 +406,7 @@
             },
             changeAttrActive({target}) {
                 if (target.tagName === 'DD' && !target.classList.contains('active')) {
-                    target.parentNode.querySelector('dd.active').classList.remove('active');
+                    target.parentNode.querySelector('dd.active')?.classList.remove('active');
                     target.classList.add('active');
                 }
             }
