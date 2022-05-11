@@ -178,9 +178,9 @@
                 this.$refs.pagination.addEventListener('click', (event) => {
                     const target = event.target;
                     if (target.classList.contains('page-number')) {
-                        const newPageNo = +target.innerText;
-                        if (newPageNo !== this.pageNo) {
-                            this.curPageNo = newPageNo;
+                        const pageNo = +target.innerText;
+                        if (pageNo !== this.pageNo) {
+                            this.changePageNo(pageNo);
                         }
                     }
                 });
