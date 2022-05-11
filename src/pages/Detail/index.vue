@@ -96,9 +96,10 @@
                         
                         <div class="cartWrap">
                             <div class="controls">
-                                <input autocomplete="off" class="buy-num" value="1">
-                                <a class="plus" href="javascript:">+</a>
-                                <a class="minus" href="javascript:">-</a>
+                                <input v-model.number.lazy.trim="buyNum" autocomplete="off" class="buy-num">
+                                <a class="plus" href="javascript:" @click="buyNum += 1">+</a>
+                                <a class="minus" href="javascript:"
+                                   @click="buyNum = Math.max(1, buyNum - 1)">-</a>
                             </div>
                             <div class="add">
                                 <a href="javascript:">加入购物车</a>
@@ -368,7 +369,8 @@
         },
         data() {
             return {
-                curImgIndex: 0
+                curImgIndex: 0,
+                buyNum: 1,
             };
         },
         computed: {
