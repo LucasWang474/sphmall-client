@@ -178,7 +178,6 @@
                     // 示例: 1:苹果
                     trademark: this.$route.query.trademark,
                     
-                    
                     // 页码，表示搜索第几页的结果，默认为 1
                     pageNo: this.$route.query.pageNo || 1,
                     // 每页显示的商品数量，默认为 10
@@ -186,10 +185,6 @@
                     
                     order: this.sortOrder
                 };
-            },
-            getSearchResults() {
-                this.$store.dispatch('getSearchResults', this.generateSearchParams());
-                this.$bus.$emit('updateSearchBoxKeyword', this.$route.query.keyword);
             },
             
             searchByTrademark(trademark) {
@@ -277,8 +272,10 @@
             },
             
             routerReplace(location, resetPageNo = true) {
+                // 用来 replace 之前进行统一配置
+                
                 if (resetPageNo) {
-                    location.query.pageNo = 1;
+                    location.query.pageNo = 1; // 重置 pageNo
                 }
                 this.$router.replace(location);
             },
@@ -314,7 +311,8 @@
             $route: {
                 immediate: true,
                 handler() {
-                    this.getSearchResults();
+                    this.$store.dispatch('getSearchResults', this.generateSearchParams());
+                    this.$bus.$emit('updateSearchBoxKeyword', this.$route.query.keyword);
                 }
             }
         },
