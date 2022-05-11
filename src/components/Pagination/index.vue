@@ -21,11 +21,12 @@
         </button>
         
         <span class="info">
-            <select v-model="curPageSize" class="pageSize">
+            <select class="pageSize"
+                    @change="changePageSize($event.target.value)">
                 <option v-for="size in allPageSizes"
                         :key="size"
                         :disabled="size > total"
-                        :selected="curPageSize === size"
+                        :selected="pageSize === size"
                         :value="size">
                     每页 {{ size }} 条
                 </option>
@@ -81,26 +82,10 @@
         data() {
             return {
                 curPageNo: +this.pageNo,
-                curPageSize: +this.pageSize,
                 allPageSizes: [5, 10, 15, 20],
             };
         },
         computed: {
-            // curPageNo: {
-            //     get() {
-            //         return +this.pageNo;
-            //     },
-            //     set(newPageNo) {
-            //         if (Number.isInteger(newPageNo)
-            //             && newPageNo <= this.totalPages
-            //             && newPageNo >= 1) {
-            //             this.changePageNo(newPageNo);
-            //             return newPageNo;
-            //         } else {
-            //             return +this.pageNo;
-            //         }
-            //     }
-            // },
             totalPages() {
                 return Math.ceil(this.total / this.pageSize);
             },
@@ -159,9 +144,6 @@
         watch: {
             pageNo(newPageNo) {
                 this.curPageNo = +newPageNo;
-            },
-            curPageSize(newPageSize) {
-                this.changePageSize(newPageSize);
             },
             curPageNo(newPageNo) {
                 if (Number.isInteger(newPageNo)
