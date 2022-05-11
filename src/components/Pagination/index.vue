@@ -38,13 +38,14 @@
             
             <span class="jump">
                 到第
-                <input ref="pageNoBox" v-model.lazy.number="curPageNo" :placeholder="curPageNo"
+                <input ref="pageNoBox" :placeholder="pageNo"
                        class="pageNoBox" type="text"
-                       @keyup.enter="changePageNo(curPageNo)"/>
+                       @change="checkInputPageNo"
+                       @keyup.enter="changePageNo($refs.pageNoBox.value)"/>
                 页
             </span>
         </span>
-        <button @click="changePageNo(curPageNo)">确定</button>
+        <button @click="changePageNo($refs.pageNoBox.value)">确定</button>
     </div>
 </template>
 
@@ -81,7 +82,6 @@
         },
         data() {
             return {
-                curPageNo: +this.pageNo,
                 allPageSizes: [5, 10, 15, 20],
             };
         },
@@ -141,21 +141,16 @@
                 return [...left, ...right];
             },
         },
-        watch: {
-            pageNo(newPageNo) {
-                this.curPageNo = +newPageNo;
-            },
-            curPageNo(newPageNo) {
-                if (Number.isInteger(newPageNo)
-                    && newPageNo <= this.totalPages
-                    && newPageNo >= 1) {
-                    this.changePageNo(newPageNo);
-                } else {
-                    this.curPageNo = +this.pageNo;
-                }
-            }
-        },
         methods: {
+            checkInputPageNo(event) {
+                const input = event.target;
+                const newPageNo = +input.value;
+                if (!(Number.isInteger(newPageNo)
+                    && newPageNo <= this.totalPages
+                    && newPageNo >= 1)) {
+                    input.value = this.pageNo;
+                }
+            },
             initButtonClickEvent() {
                 this.$refs.pagination.addEventListener('click', (event) => {
                     const target = event.target;
