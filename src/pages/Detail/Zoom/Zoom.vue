@@ -1,9 +1,9 @@
 <template>
     <div class="spec-preview">
-        <img alt="" src="../images/s1.png"/>
+        <img :src="curImgSrc" alt=""/>
         <div class="event"></div>
         <div class="big">
-            <img alt="" src="../images/s1.png"/>
+            <img :src="curImgSrc" alt=""/>
         </div>
         <div class="mask"></div>
     </div>
@@ -12,6 +12,24 @@
 <script>
     export default {
         name: 'Zoom',
+        props: {
+            productImageList: {
+                type: Array,
+                default: () => []
+            },
+            curImgIndex: {
+                type: Number,
+                default: 0
+            }
+        },
+        computed: {
+            curImgSrc() {
+                if (this.productImageList.length > 0) {
+                    return this.productImageList[this.curImgIndex].imgUrl;
+                }
+                return '';
+            }
+        }
     };
 </script>
 

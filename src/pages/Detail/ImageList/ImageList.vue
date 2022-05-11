@@ -3,7 +3,7 @@
     <div ref="swiperContainer" class="swiper-container">
         <div ref="swiperWrapper" class="swiper-wrapper">
             <div v-for="(image, index) in productImageList" :key="image.spuImgId" class="swiper-slide">
-                <img :class="{'active': index === currentIndex}"
+                <img :class="{'active': index === curImgIndex}"
                      :data-index="index" :src="image.imgUrl" alt=""/>
             </div>
         </div>
@@ -25,12 +25,11 @@
             productImageList: {
                 type: Array,
                 default: () => []
+            },
+            curImgIndex: {
+                type: Number,
+                default: 0
             }
-        },
-        data() {
-            return {
-                currentIndex: 0
-            };
         },
         watch: {
             productImageList: {
@@ -38,20 +37,11 @@
                 handler() {
                     if (this.productImageList.length > 0) {
                         this.initSwiper();
-                        this.currentIndex = this.getDefaultIndex();
                     }
                 }
             }
         },
         methods: {
-            getDefaultIndex() {
-                for (let i = 0; i < this.productImageList.length; i++) {
-                    if (+this.productImageList[i].isDefault) {
-                        return i;
-                    }
-                }
-                return 0;
-            },
             initSwiper() {
                 this.$nextTick(() => {
                     new Swiper(this.$refs.swiperContainer, {
@@ -66,7 +56,10 @@
             initSwiperImageClickEvent() {
                 this.$refs.swiperWrapper.addEventListener('click', ({target}) => {
                     if (target.tagName === 'IMG') {
-                        this.currentIndex = +target.dataset.index;
+                        const index = +target.dataset.index;
+                        if (index !== this.curImgIndex) {
+                            this.$emit('changeCurImgIndex', index);
+                        }
                     }
                 });
             }

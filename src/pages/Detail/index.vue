@@ -19,10 +19,17 @@
                 <!-- 左侧放大镜区域 -->
                 <div class="previewWrap">
                     <!--放大镜效果-->
-                    <Zoom/>
+                    <Zoom
+                        :curImgIndex="curImgIndex"
+                        :productImageList="productImageList"
+                    />
                     
                     <!-- 小图列表 -->
-                    <ImageList :productImageList="productImageList"/>
+                    <ImageList
+                        :curImgIndex="curImgIndex"
+                        :productImageList="productImageList"
+                        @changeCurImgIndex="changeCurImgIndex"
+                    />
                 </div>
                 
                 
@@ -359,6 +366,11 @@
             ImageList,
             Zoom
         },
+        data() {
+            return {
+                curImgIndex: 0
+            };
+        },
         computed: {
             ...mapState({
                 categoryView: state => state.detail.categoryView,
@@ -367,9 +379,25 @@
                 productImageList: state => state.detail.productImageList,
             })
         },
+        methods: {
+            getDefaultIndex() {
+                for (let i = 0; i < this.productImageList.length; i++) {
+                    if (+this.productImageList[i].isDefault) {
+                        return i;
+                    }
+                }
+                return 0;
+            },
+            changeCurImgIndex(index) {
+                console.log('changeCurImgIndex', index);
+                this.curImgIndex = index;
+            }
+        },
         mounted() {
             document.title = this.$refs.infoName.innerText.trim();
-            this.$store.dispatch('initProductDetail', this.$route.params.id);
+            this.$store.dispatch('initProductDetail', this.$route.params.id).finally(() => {
+                this.curImgIndex = this.getDefaultIndex();
+            });
         }
     };
 </script>
