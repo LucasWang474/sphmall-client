@@ -306,7 +306,6 @@
                 const {pageNo, pageSize} = this.searchResults;
                 const itemsSoFar = (pageNo - 1) * pageSize + 1;
                 location.query.pageNo = Math.ceil(itemsSoFar / newPageSize);
-                console.log('location.query.pageNo', location.query.pageNo);
                 this.routerReplace(location, false);
             }
             

@@ -1,6 +1,6 @@
 <template>
     <div ref="pagination" class="pagination">
-        <button :disabled="curPageNo === 1" @click="curPageNo -= 1">
+        <button :disabled="pageNo === 1" @click="changePageNo(pageNo - 1)">
             <span class="iconfont icon-arrow-left"></span>上一页
         </button>
         
@@ -16,7 +16,7 @@
         </button>
         <!--数字按钮 结束-->
         
-        <button :disabled="curPageNo === totalPages" @click="curPageNo += 1">
+        <button :disabled="pageNo === totalPages" @click="changePageNo(pageNo + 1)">
             下一页<span class="iconfont icon-arrow-right"></span>
         </button>
         
