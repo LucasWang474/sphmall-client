@@ -382,6 +382,13 @@
                 productImageList: state => state.detail.productImageList,
             })
         },
+        watch: {
+            buyNum(newVal, oldVal) {
+                if (!Number.isInteger(newVal)) {
+                    this.buyNum = oldVal;
+                }
+            }
+        },
         methods: {
             getDefaultIndex() {
                 for (let i = 0; i < this.productImageList.length; i++) {
