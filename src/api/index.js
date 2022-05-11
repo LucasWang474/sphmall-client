@@ -13,7 +13,7 @@ export const reqSearchResults = (searchParams) => ajax({
 });
 
 // 获取商品详情
-export const reqProductDetail = (productId) => ajax(`/api/product/${productId}`);
+export const reqProductDetail = (productId) => ajax(`/api/item/${productId}`);
 
 
 export const reqBanners = () => mockAjax('/mock/banners');
