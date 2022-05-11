@@ -22,7 +22,12 @@
     
     export default {
         name: 'MySwiper',
-        props: ['bannerList'],
+        props: {
+            bannerList: {
+                type: Array,
+                default: () => []
+            },
+        },
         watch: {
             bannerList: {
                 immediate: true,

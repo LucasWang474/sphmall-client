@@ -3,35 +3,42 @@
         <!-- 商品分类导航 -->
         <TypeNav/>
         
-        <!-- 主要内容区域 -->
+        
+        <!--主要内容区域 开始-->
         <section class="con">
-            <!-- 导航路径区域 -->
+            <!-- 导航路径区域 开始-->
             <div class="product-path">
-                <span>手机、数码、通讯</span>
-                <span>手机</span>
-                <span>Apple苹果</span>
-                <span>iphone 6S系类</span>
+                <span>{{ categoryView.category1Name }}</span>
+                <span>{{ categoryView.category2Name }}</span>
+                <span>{{ categoryView.category3Name }}</span>
             </div>
-            <!-- 主要内容区域 -->
+            <!-- 导航路径区域 结束-->
+            
+            
             <div class="mainCon">
                 <!-- 左侧放大镜区域 -->
                 <div class="previewWrap">
                     <!--放大镜效果-->
                     <Zoom/>
+                    
                     <!-- 小图列表 -->
-                    <ImageList/>
+                    <ImageList :productImageList="productImageList"/>
                 </div>
+                
+                
                 <!-- 右侧选择区域布局 -->
                 <div class="InfoWrap">
                     <div class="goodsDetail">
-                        <h3 ref="infoName" class="infoName">Apple iPhone 6s（A1700）64G玫瑰金色 移动通信电信4G手机</h3>
-                        <p class="news">推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</p>
+                        <h3 ref="infoName" class="infoName">{{ productInfo.skuName }}</h3>
+                        
+                        <p class="news">{{ productInfo.skuDesc }}</p>
+                        
                         <div class="priceArea">
                             <div class="priceArea1">
                                 <div class="title">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</div>
                                 <div class="price">
                                     <i>¥</i>
-                                    <em>5299</em>
+                                    <em>{{ productInfo.price }}</em>
                                     <span>降价通知</span>
                                 </div>
                                 <div class="remark">
@@ -51,6 +58,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="support">
                             <div class="supportArea">
                                 <div class="title">支&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;持</div>
@@ -63,37 +71,25 @@
                         </div>
                     </div>
                     
+                    <!--商品参数配置 开始-->
                     <div class="choose">
                         <div class="chooseArea">
                             <div class="chosen"></div>
-                            <dl>
-                                <dt class="title">选择颜色</dt>
-                                <dd class="active">金色</dd>
-                                <dd>银色</dd>
-                                <dd>黑色</dd>
-                            </dl>
-                            <dl>
-                                <dt class="title">内存容量</dt>
-                                <dd class="active">16G</dd>
-                                <dd>64G</dd>
-                                <dd>128G</dd>
-                                <dd>256G</dd>
-                            </dl>
-                            <dl>
-                                <dt class="title">选择版本</dt>
-                                <dd class="active">公开版</dd>
-                                <dd>移动版</dd>
-                            </dl>
-                            <dl>
-                                <dt class="title">购买方式</dt>
-                                <dd class="active">官方标配</dd>
-                                <dd>优惠移动版</dd>
-                                <dd>电信优惠版</dd>
+                            
+                            <dl v-for="attrs in productAttrList" :key="attrs.id">
+                                <dt class="title">{{ attrs.saleAttrName }}</dt>
+                                
+                                <dd v-for="attrValue in attrs.spuSaleAttrValueList"
+                                    :key="attrValue.id"
+                                    :class="{'active': +attrValue.isChecked}">
+                                    {{ attrValue.saleAttrValueName }}
+                                </dd>
                             </dl>
                         </div>
+                        
                         <div class="cartWrap">
                             <div class="controls">
-                                <input autocomplete="off" class="i-txt">
+                                <input autocomplete="off" class="buy-num" value="1">
                                 <a class="plus" href="javascript:">+</a>
                                 <a class="minus" href="javascript:">-</a>
                             </div>
@@ -102,11 +98,14 @@
                             </div>
                         </div>
                     </div>
+                    <!--商品参数配置 结束-->
                 </div>
             </div>
         </section>
+        <!--主要内容区域 结束-->
         
-        <!-- 内容详情页 -->
+        
+        <!--内容详情页 开始-->
         <section class="product-detail">
             <aside class="aside">
                 <div class="aside-tab-wrap">
@@ -345,12 +344,14 @@
                 </div>
             </div>
         </section>
+        <!--内容详情页 结束-->
     </div>
 </template>
 
 <script>
     import ImageList from './ImageList/ImageList';
     import Zoom from './Zoom/Zoom';
+    import {mapState} from 'vuex';
     
     export default {
         name: 'Detail',
@@ -358,13 +359,17 @@
             ImageList,
             Zoom
         },
-        methods: {
-            setTitle() {
-                document.title = this.$refs.infoName.innerText.trim();
-            }
+        computed: {
+            ...mapState({
+                categoryView: state => state.detail.categoryView,
+                productAttrList: state => state.detail.productAttrList,
+                productInfo: state => state.detail.productInfo,
+                productImageList: state => state.detail.productImageList,
+            })
         },
         mounted() {
-            this.setTitle();
+            document.title = this.$refs.infoName.innerText.trim();
+            this.$store.dispatch('initProductDetail', this.$route.params.id);
         }
     };
 </script>
@@ -535,19 +540,21 @@
                         
                         .cartWrap {
                             .controls {
-                                width: 48px;
+                                width: 58px;
                                 position: relative;
                                 float: left;
                                 margin-right: 15px;
                                 
-                                .i-txt {
-                                    width: 38px;
-                                    height: 37px;
+                                .buy-num {
+                                    width: 48px;
+                                    height: 35px;
                                     border: 1px solid #ddd;
                                     color: #555;
                                     float: left;
                                     border-right: 0;
                                     text-align: center;
+                                    
+                                    // outline: none;
                                 }
                                 
                                 .plus,

@@ -28,10 +28,6 @@ const actions = {
     async initProductDetail({commit}, id) {
         const response = await reqProductDetail(id);
         if (response.code === SUCCESS_CODE) {
-            console.log('-------------------------------------------------------');
-            console.log('initProductDetail', response.data);
-            console.log('-------------------------------------------------------');
-
             const {categoryView, spuSaleAttrList, skuInfo} = response.data;
             commit('SET_CATEGORY_VIEW', categoryView);
             commit('SET_PRODUCT_ATTR_LIST', spuSaleAttrList);
