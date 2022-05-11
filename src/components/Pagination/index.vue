@@ -65,10 +65,6 @@
                 type: Number,
                 default: 0
             },
-            totalPages: {
-                type: Number,
-                default: 1
-            },
             maxVisibleNumberButtons: {
                 type: Number,
                 default: 7,
@@ -90,6 +86,24 @@
             };
         },
         computed: {
+            // curPageNo: {
+            //     get() {
+            //         return +this.pageNo;
+            //     },
+            //     set(newPageNo) {
+            //         if (Number.isInteger(newPageNo)
+            //             && newPageNo <= this.totalPages
+            //             && newPageNo >= 1) {
+            //             this.changePageNo(newPageNo);
+            //             return newPageNo;
+            //         } else {
+            //             return +this.pageNo;
+            //         }
+            //     }
+            // },
+            totalPages() {
+                return Math.ceil(this.total / this.pageSize);
+            },
             paginationNumbers() {
                 // 左侧页码数组
                 // 左侧数组长度取最大页码数的 1/3，取偶数

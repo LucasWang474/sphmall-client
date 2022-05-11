@@ -121,7 +121,6 @@
                         :pageNo="searchResults.pageNo"
                         :pageSize="searchResults.pageSize"
                         :total="searchResults.total"
-                        :totalPages="searchResults.totalPages"
                     />
                 </div>
                 <!--商品具体展示 结束-->
