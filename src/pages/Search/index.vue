@@ -115,6 +115,9 @@
                     <!--商品列表 结束-->
                     
                     <Pagination
+                        :changePageNo="changePageNo"
+                        :changePageSize="changePageSize"
+                        :maxVisibleNumberButtons="7"
                         :pageNo="searchResults.pageNo"
                         :pageSize="searchResults.pageSize"
                         :total="searchResults.total"
@@ -191,28 +194,28 @@
             },
             
             searchByTrademark(trademark) {
-                this.$router.replace({
+                const location = {
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
                         trademark: trademark || undefined,
-                        pageNo: 1,
                     }
-                });
+                };
+                this.routerReplace(location);
             },
             searchByAttr(attr) {
                 const props = this.$route.query.props || [];
                 
                 // First check whether the attr is already in the props array
                 if (!props.includes(attr)) {
-                    this.$router.replace({
+                    const location = {
                         path: this.$route.path,
                         query: {
                             ...this.$route.query,
                             props: [...props, attr],
-                            pageNo: 1,
                         }
-                    });
+                    };
+                    this.routerReplace(location);
                 }
             },
             
@@ -221,22 +224,24 @@
                 
                 // 因为是对现成的 attr 进行删除，所以 index 一定是 >= 0 的
                 const index = props.indexOf(attr);
-                this.$router.replace({
+                const location = {
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
                         props: [...props.slice(0, index), ...props.slice(index + 1)],
                     }
-                });
+                };
+                this.routerReplace(location);
             },
             removeCategoryName() {
-                this.$router.replace({
+                const location = {
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
                         categoryName: undefined,
                     }
-                });
+                };
+                this.routerReplace(location);
             },
             
             sortByPrice() {
@@ -246,13 +251,14 @@
                     '2:desc': '2:asc',
                 };
                 const order = cases[this.$route.query.order] || '2:asc';
-                this.$router.replace({
+                const location = {
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
                         order
                     }
-                });
+                };
+                this.$router.replace(location);
             },
             sortByDefault() {
                 // Toggle between asc and desc
@@ -261,14 +267,50 @@
                     '1:desc': '1:asc',
                 };
                 const order = cases[this.$route.query.order] || '1:desc';
-                this.$router.replace({
+                const location = {
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
                         order
                     }
-                });
+                };
+                this.routerReplace(location);
             },
+            
+            routerReplace(location, resetPageNo = true) {
+                if (resetPageNo) {
+                    location.query.pageNo = 1;
+                }
+                this.$router.replace(location);
+            },
+            
+            changePageNo(newPageNo) {
+                const location = {
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        pageNo: newPageNo,
+                    }
+                };
+                this.routerReplace(location, false);
+            },
+            changePageSize(newPageSize) {
+                const location = {
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        pageSize: newPageSize,
+                    }
+                };
+                
+                // Calculate the new pageNo based on the new pageSize
+                const {pageNo, pageSize} = this.searchResults;
+                const itemsSoFar = (pageNo - 1) * pageSize + 1;
+                location.query.pageNo = Math.ceil(itemsSoFar / newPageSize);
+                console.log('location.query.pageNo', location.query.pageNo);
+                this.routerReplace(location, false);
+            }
+            
         },
         watch: {
             $route: {

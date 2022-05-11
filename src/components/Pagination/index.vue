@@ -39,11 +39,11 @@
                 到第
                 <input ref="pageNoBox" v-model.lazy.number="curPageNo" :placeholder="curPageNo"
                        class="pageNoBox" type="text"
-                       @keyup.enter="changePageNo"/>
+                       @keyup.enter="changePageNo(curPageNo)"/>
                 页
             </span>
         </span>
-        <button @click="changePageNo">确定</button>
+        <button @click="changePageNo(curPageNo)">确定</button>
     </div>
 </template>
 
@@ -52,74 +52,54 @@
     
     export default {
         name: 'Pagination',
-        props: ['pageNo', 'pageSize', 'total', 'totalPages'],
+        props: {
+            pageNo: {
+                type: Number,
+                default: 1
+            },
+            pageSize: {
+                type: Number,
+                default: 10
+            },
+            total: {
+                type: Number,
+                default: 0
+            },
+            totalPages: {
+                type: Number,
+                default: 1
+            },
+            maxVisibleNumberButtons: {
+                type: Number,
+                default: 7,
+            },
+            changePageNo: {
+                type: Function,
+                required: true
+            },
+            changePageSize: {
+                type: Function,
+                required: true
+            }
+        },
         data() {
             return {
-                allPageSizes: [5, 10, 15, 20],
-                
                 curPageNo: +this.pageNo,
                 curPageSize: +this.pageSize,
-                
-                // 最大可见页码数，强烈建议为奇数
-                maxVisibleNumberButtons: 7,
+                allPageSizes: [5, 10, 15, 20],
             };
         },
         computed: {
             paginationNumbers() {
-                return this.getPaginationNumbers(
-                    this.curPageNo,
-                    this.totalPages,
-                    this.maxVisibleNumberButtons,
-                );
-            }
-        },
-        watch: {
-            curPageSize(newPageSize) {
-                this.$router.replace({
-                    path: this.$route.path,
-                    query: {
-                        ...this.$route.query,
-                        pageSize: newPageSize,
-                    }
-                });
-            },
-            curPageNo(newPageNo) {
-                if (Number.isInteger(newPageNo)
-                    && newPageNo <= this.totalPages
-                    && newPageNo >= 1) {
-                    this.changePageNo();
-                } else {
-                    this.curPageNo = this.pageNo;
-                }
-            }
-        },
-        methods: {
-            changePageNo() {
-                if (this.curPageNo !== this.pageNo) {
-                    this.$router.replace({
-                        path: this.$route.path,
-                        query: {
-                            ...this.$route.query,
-                            pageNo: this.curPageNo,
-                        }
-                    });
-                }
-            },
-            getPaginationNumbers(curPageNo, totalPages, maxVisibleNumberButtons) {
-                // 写这个函数用了我一个小时
-                
                 // 左侧页码数组
                 // 左侧数组长度取最大页码数的 1/3，取偶数
                 const toEven = (num) => num % 2 === 0 ? num : num - 1;
-                const LEFT_LENGTH = toEven(Math.trunc(maxVisibleNumberButtons / 3));
+                const LEFT_LENGTH = toEven(Math.trunc(this.maxVisibleNumberButtons / 3));
                 
                 // Special case
-                if (curPageNo <= (maxVisibleNumberButtons - LEFT_LENGTH) ||
-                    totalPages <= maxVisibleNumberButtons) {
-                    const LENGTH = Math.min(totalPages, maxVisibleNumberButtons);
-                    if (LENGTH >= 8) {
-                        alert('警告：页码数量过多，请调整页码数量');
-                    }
+                if (this.curPageNo <= (this.maxVisibleNumberButtons - LEFT_LENGTH) ||
+                    this.totalPages <= this.maxVisibleNumberButtons) {
+                    const LENGTH = Math.min(this.totalPages, this.maxVisibleNumberButtons);
                     const res = [];
                     for (let i = 1; i <= LENGTH; i++) {
                         res.push(i);
@@ -134,10 +114,10 @@
                 
                 
                 // 右侧页码数组
-                const RIGHT_LENGTH = maxVisibleNumberButtons - LEFT_LENGTH;
+                const RIGHT_LENGTH = this.maxVisibleNumberButtons - LEFT_LENGTH;
                 const STEP = Math.floor(RIGHT_LENGTH / 2);
                 const right = [];
-                for (let i = curPageNo - STEP; i <= curPageNo + STEP; i++) {
+                for (let i = this.curPageNo - STEP; i <= this.curPageNo + STEP; i++) {
                     right.push(i);
                 }
                 
@@ -147,7 +127,7 @@
                     right.push(right[RIGHT_LENGTH - 1] + 1);
                 }
                 // 去除不合法页码，过大数字
-                while (right[RIGHT_LENGTH - 1] > totalPages) {
+                while (right[RIGHT_LENGTH - 1] > this.totalPages) {
                     right.pop();
                     right.unshift(right[0] - 1);
                 }
@@ -155,13 +135,31 @@
                 if ((left[LEFT_LENGTH - 1] + 1) < right[0]) {
                     left.push('...');
                 }
-                if (right[RIGHT_LENGTH - 1] < totalPages) {
+                if (right[RIGHT_LENGTH - 1] < this.totalPages) {
                     right.push('...');
                 }
                 
                 return [...left, ...right];
             },
-            
+        },
+        watch: {
+            pageNo(newPageNo) {
+                this.curPageNo = +newPageNo;
+            },
+            curPageSize(newPageSize) {
+                this.changePageSize(newPageSize);
+            },
+            curPageNo(newPageNo) {
+                if (Number.isInteger(newPageNo)
+                    && newPageNo <= this.totalPages
+                    && newPageNo >= 1) {
+                    this.changePageNo(newPageNo);
+                } else {
+                    this.curPageNo = +this.pageNo;
+                }
+            }
+        },
+        methods: {
             initButtonClickEvent() {
                 this.$refs.pagination.addEventListener('click', (event) => {
                     const target = event.target;
