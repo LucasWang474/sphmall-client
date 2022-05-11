@@ -39,12 +39,16 @@
                         this.initSwiper();
                     }
                 }
+            },
+            curImgIndex(newIndex) {
+                // 利用下面能实现图片自动滚动
+                this.swiper.slideTo(newIndex - 1);
             }
         },
         methods: {
             initSwiper() {
                 this.$nextTick(() => {
-                    new Swiper(this.$refs.swiperContainer, {
+                    this.swiper = new Swiper(this.$refs.swiperContainer, {
                         slidesPerView: 5,
                         navigation: {
                             nextEl: '.swiper-button-next',

@@ -1,15 +1,17 @@
 <template>
     <div class="spec-preview">
         <img :src="curImgSrc" alt=""/>
-        <div class="event"></div>
+        <div ref="stage" class="stage" @mousemove="handleMouseMove"></div>
         <div class="big">
-            <img :src="curImgSrc" alt=""/>
+            <img ref="bigImg" :src="curImgSrc" alt=""/>
         </div>
-        <div class="mask"></div>
+        <div ref="mask" class="mask"></div>
     </div>
 </template>
 
 <script>
+    import throttle from 'lodash/throttle';
+    
     export default {
         name: 'Zoom',
         props: {
@@ -28,7 +30,52 @@
                     return this.productImageList[this.curImgIndex].imgUrl;
                 }
                 return '';
-            }
+            },
+            
+            stageWidth() {
+                return this.$refs.stage.offsetWidth;
+            },
+            stageHeight() {
+                return this.$refs.stage.offsetHeight;
+            },
+        },
+        methods: {
+            calcMaskNewLeft(mouseX) {
+                const maskWidth = this.$refs.mask.offsetWidth;
+                const maskMinLeft = 0;
+                const maskMaxLeft = this.stageWidth - maskWidth;
+                
+                let newLeft = mouseX - maskWidth / 2;
+                newLeft = Math.max(newLeft, maskMinLeft);
+                newLeft = Math.min(newLeft, maskMaxLeft);
+                return newLeft;
+            },
+            calcMaskNewTop(mouseY) {
+                const maskHeight = this.$refs.mask.offsetHeight;
+                const maskMinTop = 0;
+                const maskMaxTop = this.stageHeight - maskHeight;
+                
+                let newTop = mouseY - maskHeight / 2;
+                newTop = Math.max(newTop, maskMinTop);
+                newTop = Math.min(newTop, maskMaxTop);
+                return newTop;
+            },
+            
+            handleMouseMove: throttle(function (event) {
+                const {mask, bigImg} = this.$refs;
+                const bigImgScaleFactor = bigImg.offsetWidth / this.stageWidth;
+                
+                // When mouse move, also move the mask
+                const {offsetX: mouseX, offsetY: mouseY} = event;
+                const newLeft = this.calcMaskNewLeft(mouseX);
+                const newTop = this.calcMaskNewTop(mouseY);
+                mask.style.left = `${newLeft}px`;
+                mask.style.top = `${newTop}px`;
+                
+                // When mouse move, also move the big image
+                bigImg.style.left = newLeft * -bigImgScaleFactor + 'px';
+                bigImg.style.top = newTop * -bigImgScaleFactor + 'px';
+            }, 10),
         }
     };
 </script>
@@ -45,13 +92,17 @@
             height: 100%;
         }
         
-        .event {
+        .stage {
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 998;
+            
+            &:hover {
+                cursor: move;
+            }
         }
         
         .mask {
@@ -78,16 +129,16 @@
             
             img {
                 width: 200%;
-                max-width: 200%;
                 height: 200%;
+                max-width: 200%;
                 position: absolute;
                 left: 0;
                 top: 0;
             }
         }
         
-        .event:hover ~ .mask,
-        .event:hover ~ .big {
+        .stage:hover ~ .mask,
+        .stage:hover ~ .big {
             display: block;
         }
     }

@@ -401,7 +401,6 @@
                 return 0;
             },
             changeCurImgIndex(index) {
-                console.log('changeCurImgIndex', index);
                 this.curImgIndex = index;
             },
             changeAttrActive({target}) {
