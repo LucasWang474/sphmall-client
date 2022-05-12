@@ -13,9 +13,11 @@
             </div>
             
             <div class="cart-body">
-                <ul v-for="productInfo in cartList" :key="productInfo.id" class="cart-list">
+                <ul v-for="productInfo in cartList" :key="productInfo.id"
+                    :data-product-id="productInfo.skuId" class="cart-list">
                     <li class="cart-list-con1">
-                        <input name="chk_list" type="checkbox">
+                        <input :checked="+productInfo.isChecked" name="chk_list"
+                               type="checkbox">
                     </li>
                     <li class="cart-list-con2">
                         <img :src="productInfo.imgUrl" alt="">
@@ -26,7 +28,7 @@
                     </li>
                     <li class="cart-list-con4">
                         <a class="minus" href="javascript:">-</a>
-                        <input autocomplete="off" class="i-txt" type="text" value="1">
+                        <input :value="productInfo.skuNum" autocomplete="off" class="i-txt" type="text">
                         <a class="plus" href="javascript:">+</a>
                     </li>
                     <li class="cart-list-con5">
