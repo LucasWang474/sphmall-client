@@ -29,6 +29,12 @@ export const reqCartList = () => ajax('/api/cart/cartList');
 // isChecked: 商品选中状态，0 代表取消选中，1 代表选中
 export const reqChangeChecked = (productId, isChecked) => ajax(`/api/cart/checkCart/${productId}/${isChecked}`);
 
+// 删除购物车中的商品
+export const reqDeleteCart = (productId) => ajax({
+    method: 'DELETE',
+    path: `/api/cart/deleteCart/${productId}`
+});
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
