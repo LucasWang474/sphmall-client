@@ -1,23 +1,18 @@
-import Home from '@/pages/Home';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import Search from '@/pages/Search';
-
 const routes = [
     {
         name: 'index',
         path: '/',
-        component: Home,
+        component: () => import('@/pages/Home'),
     },
     {
         name: 'home',
         path: '/home',
-        component: Home,
+        component: () => import('@/pages/Home'),
     },
     {
         name: 'login',
         path: '/login',
-        component: Login,
+        component: () => import('@/pages/Login'),
         meta: {
             title: '登录',
             showShortFooter: true,
@@ -26,7 +21,7 @@ const routes = [
     {
         name: 'register',
         path: '/register',
-        component: Register,
+        component: () => import('@/pages/Register'),
         meta: {
             title: '注册',
             showShortFooter: true,
@@ -35,7 +30,7 @@ const routes = [
     {
         name: 'search',
         path: '/search',
-        component: Search,
+        component: () => import('@/pages/Search'),
         meta: {
             title: '搜索'
         }
