@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-</template>
+</template>1
 
 <script>
     export default {

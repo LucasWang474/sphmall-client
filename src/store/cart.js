@@ -1,7 +1,7 @@
 import {reqCartList, reqUpdateCart} from '@/api';
 
 const state = {
-    cartList: null,
+    cartList: [],
 };
 
 const mutations = {
@@ -16,7 +16,7 @@ const actions = {
     async updateCartList({commit}) {
         const response = await reqCartList();
         if (response.code === SUCCESS_CODE) {
-            commit('SET_CART_LIST', response.data[0].cartInfoList);
+            commit('SET_CART_LIST', response.data[0].cartInfoList || []);
         } else {
             return Promise.reject('获取购物车列表失败' + response.msg);
         }
