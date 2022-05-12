@@ -17,7 +17,8 @@
                     :data-product-id="productInfo.skuId" class="cart-list">
                     <li class="cart-list-con1">
                         <input :checked="+productInfo.isChecked" name="chk_list"
-                               type="checkbox"/>
+                               type="checkbox"
+                               @change="toggleIsChecked(productInfo.skuId)"/>
                     </li>
                     <li class="cart-list-con2">
                         <img :src="productInfo.imgUrl" alt="">
@@ -27,7 +28,8 @@
                         <span class="price">{{ productInfo.skuPrice }}</span>
                     </li>
                     <li class="cart-list-con4">
-                        <a class="minus" href="javascript:"
+                        <a :class="{disabled: productInfo.skuNum <= 1}" class="minus"
+                           href="javascript:"
                            @click="addToCart(productInfo.skuId, productInfo.skuNum, -1)">
                             -
                         </a>
@@ -89,8 +91,17 @@
             cartList() {
                 return this.$store.state.cart.cartList;
             },
-            allChecked() {
-                return this.cartList.every(item => item.isChecked);
+            allChecked: {
+                get() {
+                    return this.cartList.every(item => item.isChecked);
+                },
+                set(value) {
+                    this.cartList.forEach(item => {
+                        if (+item.isChecked !== +value) {
+                            this.toggleIsChecked(item.skuId);
+                        }
+                    });
+                }
             },
             checkedNum() {
                 return this.cartList
@@ -114,6 +125,7 @@
                     target.value = oldBuyNum;
                 }
             },
+            
             addToCart: throttle(function (productId, oldBuyNum, buyNum) {
                 if (this.lock) {
                     return;
@@ -124,7 +136,6 @@
                     this.lock = false;
                     return;
                 }
-                
                 this.$store.dispatch('addToCart', {
                     productId,
                     buyNum,
@@ -132,6 +143,10 @@
                     this.lock = false;
                 });
             }, 500),
+            
+            toggleIsChecked: function (productId) {
+                this.$store.dispatch('toggleIsChecked', productId);
+            },
         },
         mounted() {
             this.$store.dispatch('updateCartList');
@@ -209,6 +224,11 @@
                     
                     .cart-list-con1 {
                         width: 5%;
+                        
+                        input {
+                            width: 16px;
+                            height: 16px;
+                        }
                     }
                     
                     .cart-list-con2 {
@@ -279,6 +299,10 @@
                             padding: 8px;
                         }
                         
+                        .disabled {
+                            cursor: not-allowed;
+                        }
+                        
                     }
                     
                     .cart-list-con5 {
@@ -320,6 +344,9 @@
                     input {
                         vertical-align: middle;
                         margin-right: 5px;
+                        
+                        width: 16px;
+                        height: 16px;
                     }
                     
                     span {
