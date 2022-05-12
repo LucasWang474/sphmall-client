@@ -23,10 +23,7 @@ ajax.interceptors.response.use(
     },
     (error) => {
         NProgress.done();
-        console.log('发送 Ajax 请求失败！', error);
-
-        // 统一处理错误，直接终止 Promise 链
-        return new Promise(() => undefined);
+        return Promise.reject(error);
     }
 );
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="cart-complete-wrap">
+    <div v-if="productName" class="cart-complete-wrap">
         <div class="cart-complete">
             <h3>
                 <span class="iconfont icon-check-circle"></span>
@@ -9,15 +9,15 @@
             <div class="goods">
                 <div class="left-good">
                     <div class="left-pic">
-                        <img alt="" src="good.skuDefaultImg">
+                        <img :src="productDefaultImg" alt="">
                     </div>
                     <div class="right-info">
-                        <p class="title">小米红米 Redmi note8 手机 梦幻蓝 全网通(4GB+64GB)</p>
-                        <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：2</p>
+                        <p class="title">{{ productName }}</p>
+                        <p class="attr">{{ productChoseAttrs }}</p>
                     </div>
                 </div>
                 <div class="right-go-cart">
-                    <a class="sui-btn btn-xlarge" href="javascript:">查看商品详情</a>
+                    <a class="sui-btn btn-xlarge" href="javascript:" @click="$router.back()">查看商品详情</a>
                     <a class="btn-danger" href="javascript:">去购物车结算 > </a>
                 </div>
             </div>
@@ -30,6 +30,26 @@
     
     export default {
         name: 'AddCartSuccess',
+        computed: {
+            productName() {
+                return sessionStorage.getItem('productName');
+            },
+            productChoseAttrs() {
+                return sessionStorage.getItem('productChoseAttrs');
+            },
+            productDefaultImg() {
+                return sessionStorage.getItem('productDefaultImg');
+            },
+        },
+        beforeRouteEnter(to, from, next) {
+            if (sessionStorage.getItem('productName')) {
+                next();
+            } else {
+                // Redirect to home
+                next('/');
+            }
+        },
+        
     };
 </script>
 

@@ -18,9 +18,9 @@ export const reqProductDetail = (productId) => ajax(`/api/item/${productId}`);
 
 // 更新购物车
 // 虽然 url 中的是 addToCart，但其实即可以添加也可以删除
-export const reqUpdateCart = (productId, count) => ajax({
+export const reqUpdateCart = (productId, buyNum) => ajax({
     method: 'POST',
-    url: `/api/cart/addToCart/${productId}/${count}`
+    url: `/api/cart/addToCart/${productId}/${buyNum}`
 });
 
 

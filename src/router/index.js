@@ -7,13 +7,18 @@ import routes from './routes';
 Vue.use(VueRouter);
 
 
+const toTopRoutes = [
+    'detail',
+    'addCartSuccess',
+];
+
 // noinspection JSCheckFunctionSignatures
 const router = new VueRouter({
     mode: 'history',
     routes,
 
     scrollBehavior(to, from, savedPosition) {
-        if (to.name === 'detail') {
+        if (toTopRoutes.includes(to.name)) {
             return {x: 0, y: 0};
         }
         return savedPosition;
