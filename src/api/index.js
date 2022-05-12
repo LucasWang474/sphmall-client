@@ -25,6 +25,10 @@ export const reqUpdateCart = (productId, count) => ajax({
 // 获取购物车列表
 export const reqCartList = () => ajax('/api/cart/cartList');
 
+// 切换商品选中状态
+// isChecked: 商品选中状态，0 代表取消选中，1 代表选中
+export const reqChangeChecked = (productId, isChecked) => ajax(`/api/cart/checkCart/${productId}/${isChecked}`);
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
