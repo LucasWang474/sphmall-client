@@ -108,7 +108,8 @@
                                         <i class="command">已有<span>2000</span>人评价</i>
                                     </div>
                                     <div class="operate">
-                                        <a class="sui-btn btn-bordered btn-danger" href="javascript:">
+                                        <a class="sui-btn btn-bordered btn-danger" href="javascript:"
+                                           @click="addToCart(product.id, 1)">
                                             加入购物车
                                         </a>
                                         <a class="sui-btn btn-bordered" href="javascript:">收藏</a>
@@ -322,6 +323,10 @@
                     }
                 });
             },
+            
+            addToCart(productId, buyNum) {
+                this.$store.dispatch('addToCart', {productId, buyNum});
+            }
         },
         watch: {
             $route: {
