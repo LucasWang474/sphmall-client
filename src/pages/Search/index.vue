@@ -108,8 +108,9 @@
                                         <i class="command">已有<span>2000</span>人评价</i>
                                     </div>
                                     <div class="operate">
-                                        <a class="sui-btn btn-bordered btn-danger" href="success-cart.html"
-                                           target="_blank">加入购物车</a>
+                                        <a class="sui-btn btn-bordered btn-danger" href="javascript:">
+                                            加入购物车
+                                        </a>
                                         <a class="sui-btn btn-bordered" href="javascript:">收藏</a>
                                     </div>
                                 </div>

@@ -100,25 +100,27 @@
             </div>
         </div>
         <div class="cart-tool">
-            <div class="select-all">
-                <input class="chooseAll" type="checkbox">
-                <span>全选</span>
-            </div>
-            <div class="option">
-                <a href="javascript:">删除选中的商品</a>
-                <a href="javascript:">移到我的关注</a>
-                <a href="javascript:">清除下柜商品</a>
+            <div class="wrap">
+                <div class="select-all">
+                    <span>全选&nbsp;</span>
+                    <input class="chooseAll" type="checkbox">
+                </div>
+                <div class="option">
+                    <a href="javascript:">删除选中的商品</a>
+                    <a href="javascript:">移到我的关注</a>
+                    <a href="javascript:">清除下柜商品</a>
+                </div>
             </div>
             <div class="money-box">
-                <div class="chosen">已选择
-                    <span>0</span>件商品
+                <div class="chosen">
+                    已选择 <span>0</span> 件商品
                 </div>
                 <div class="sum-price">
-                    <em>总价（不含运费） ：</em>
+                    <em>总价（不含运费）：</em>
                     <i class="sum-money">0</i>
                 </div>
                 <div class="sum-btn">
-                    <a class="sum-btn" href="javascript:" target="_blank">结算</a>
+                    <a class="sum-btn" href="javascript:">结算</a>
                 </div>
             </div>
         </div>
@@ -154,7 +156,8 @@
                 }
                 
                 .cart-th1 {
-                    width: 25%;
+                    width: 4%;
+                    text-align: center;
                     
                     input {
                         vertical-align: middle;
@@ -166,7 +169,8 @@
                 }
                 
                 .cart-th2 {
-                    width: 25%;
+                    width: 46%;
+                    text-align: center;
                 }
                 
                 .cart-th3,
@@ -174,7 +178,7 @@
                 .cart-th5,
                 .cart-th6 {
                     width: 12.5%;
-                    
+                    text-align: center;
                 }
             }
             
@@ -187,6 +191,14 @@
                     border-bottom: 1px solid #ddd;
                     overflow: hidden;
                     
+                    display: flex;
+                    align-items: center;
+                    
+                    > * {
+                        text-align: center;
+                    }
+                    
+                    
                     & > li {
                         float: left;
                     }
@@ -197,6 +209,9 @@
                     
                     .cart-list-con2 {
                         width: 25%;
+                        
+                        display: flex;
+                        align-items: center;
                         
                         img {
                             width: 82px;
@@ -209,6 +224,8 @@
                             width: 150px;
                             margin: 0 10px;
                             line-height: 18px;
+                            
+                            text-align: left;
                         }
                     }
                     
@@ -223,10 +240,22 @@
                     .cart-list-con4 {
                         width: 12.5%;
                         
+                        text-align: center;
+                        
                     }
                     
                     .cart-list-con5 {
                         width: 12.5%;
+                        display: flex;
+                        justify-content: center;
+                        
+                        a {
+                            text-decoration: none;
+                        }
+                        
+                        a:hover {
+                            color: #e1251b !important;
+                        }
                         
                         .minus {
                             border: 1px solid #ddd;
@@ -241,7 +270,7 @@
                         input {
                             border: 1px solid #ddd;
                             width: 40px;
-                            height: 33px;
+                            height: 31.5px;
                             float: left;
                             text-align: center;
                             font-size: 14px;
@@ -256,6 +285,7 @@
                             text-align: center;
                             padding: 8px;
                         }
+                        
                     }
                     
                     .cart-list-con6 {
@@ -281,34 +311,47 @@
             overflow: hidden;
             border: 1px solid #ddd;
             
-            .select-all {
-                padding: 10px;
-                overflow: hidden;
-                float: left;
-                
-                span {
-                    vertical-align: middle;
-                }
-                
-                input {
-                    vertical-align: middle;
-                }
-            }
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             
-            .option {
-                padding: 10px;
-                overflow: hidden;
-                float: left;
+            .wrap {
+                display: flex;
+                align-items: center;
                 
-                a {
-                    float: left;
-                    padding: 0 10px;
-                    color: #666;
+                .select-all {
+                    padding: 5px 3px;
+                    overflow: hidden;
+                    
+                    display: flex;
+                    text-align: center;
+                    align-items: center;
+                    
+                    input {
+                        vertical-align: middle;
+                        margin-right: 5px;
+                    }
+                    
+                    span {
+                        vertical-align: middle;
+                    }
+                }
+                
+                .option {
+                    padding: 10px;
+                    overflow: hidden;
+                    
+                    a {
+                        float: left;
+                        padding: 0 10px;
+                        color: #666;
+                    }
                 }
             }
             
             .money-box {
-                float: right;
+                display: flex;
+                align-items: center;
                 
                 .chosen {
                     line-height: 26px;
@@ -321,6 +364,9 @@
                     line-height: 22px;
                     float: left;
                     padding: 0 10px;
+                    
+                    display: flex;
+                    align-items: center;
                     
                     .sum-money {
                         color: #c81623;

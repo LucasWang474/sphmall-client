@@ -52,6 +52,14 @@ const routes = [
         },
     },
     {
+        name: 'shopCart',
+        path: '/shopCart',
+        component: () => import('@/pages/ShopCart'),
+        meta: {
+            title: '我的购物车',
+        }
+    },
+    {
         // Redirect to / if no match
         path: '*',
         redirect: '/',

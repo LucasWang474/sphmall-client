@@ -18,7 +18,7 @@
                 </div>
                 <div class="right-go-cart">
                     <a class="sui-btn btn-xlarge" href="javascript:" @click="$router.back()">查看商品详情</a>
-                    <a class="btn-danger" href="javascript:">去购物车结算 > </a>
+                    <router-link class="btn-danger" href="javascript:" to="/shopCart">去购物车结算</router-link>
                 </div>
             </div>
         </div>
