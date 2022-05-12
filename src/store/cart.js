@@ -1,4 +1,4 @@
-import {reqCartList, reqChangeChecked, reqUpdateCart} from '@/api';
+import {reqCartList, reqChangeChecked, reqDeleteCart, reqUpdateCart} from '@/api';
 
 const state = {
     cartList: [],
@@ -40,6 +40,15 @@ const actions = {
             dispatch('updateCartList');
         } else {
             return Promise.reject('更新商品选中失败' + response.msg);
+        }
+    },
+
+    async deleteProduct({dispatch}, productId) {
+        const response = await reqDeleteCart(productId);
+        if (response.code === SUCCESS_CODE) {
+            dispatch('updateCartList');
+        } else {
+            return Promise.reject('删除商品失败 ' + response.msg);
         }
     }
 };

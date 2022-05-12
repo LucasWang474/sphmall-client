@@ -46,7 +46,10 @@
                         </span>
                     </li>
                     <li class="cart-list-con6">
-                        <a class="delete" href="javascript:">删除</a>
+                        <a class="delete" href="javascript:"
+                           @click="deleteProduct(productInfo.skuId)">
+                            删除
+                        </a>
                         <br>
                         <a href="javascript:">移到收藏</a>
                     </li>
@@ -61,7 +64,10 @@
                     <input v-model="allChecked" class="chooseAll" type="checkbox">
                 </div>
                 <div class="option">
-                    <a href="javascript:">删除选中的商品</a>
+                    <a href="javascript:"
+                       @click="deleteCheckedProducts">
+                        删除选中的商品
+                    </a>
                     <a href="javascript:">移到我的关注</a>
                     <a href="javascript:">清除下柜商品</a>
                 </div>
@@ -83,8 +89,6 @@
 </template>
 
 <script>
-    import {throttle} from 'lodash';
-    
     export default {
         name: 'ShopCart',
         computed: {
@@ -126,7 +130,7 @@
                 }
             },
             
-            addToCart: throttle(function (productId, oldBuyNum, buyNum) {
+            addToCart(productId, oldBuyNum, buyNum) {
                 if (this.lock) {
                     return;
                 }
@@ -142,11 +146,22 @@
                 }).finally(() => {
                     this.lock = false;
                 });
-            }, 500),
+            },
             
-            toggleIsChecked: function (productId) {
+            toggleIsChecked(productId) {
                 this.$store.dispatch('toggleIsChecked', productId);
             },
+            
+            deleteProduct(productId) {
+                this.$store.dispatch('deleteProduct', productId);
+            },
+            deleteCheckedProducts() {
+                this.cartList.forEach(item => {
+                    if (item.isChecked) {
+                        this.deleteProduct(item.skuId);
+                    }
+                });
+            }
         },
         mounted() {
             this.$store.dispatch('updateCartList');

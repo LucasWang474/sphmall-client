@@ -19,7 +19,7 @@ export const reqProductDetail = (productId) => ajax(`/api/item/${productId}`);
 // 虽然 url 中的是 addToCart，但其实即可以添加也可以删除
 export const reqUpdateCart = (productId, count) => ajax({
     method: 'POST',
-    url: `/api/cart/addToCart/${productId}/${count}`
+    url: `/api/cart/addToCart/${productId}/${count}`,
 });
 
 // 获取购物车列表
@@ -27,12 +27,14 @@ export const reqCartList = () => ajax('/api/cart/cartList');
 
 // 切换商品选中状态
 // isChecked: 商品选中状态，0 代表取消选中，1 代表选中
-export const reqChangeChecked = (productId, isChecked) => ajax(`/api/cart/checkCart/${productId}/${isChecked}`);
+export const reqChangeChecked = (productId, isChecked) => ajax({
+    url: `/api/cart/checkCart/${productId}/${isChecked}`
+});
 
 // 删除购物车中的商品
 export const reqDeleteCart = (productId) => ajax({
     method: 'DELETE',
-    path: `/api/cart/deleteCart/${productId}`
+    url: `/api/cart/deleteCart/${productId}`
 });
 
 
