@@ -16,7 +16,9 @@
                             <div v-for="cate1 in categoryList"
                                  :key="cate1.categoryId" class="item">
                                 <h3>
-                                    <a :data-category1id="cate1.categoryId" href="javascript:">
+                                    <a :class="{'implemented': cate1.categoryName === '手机'}"
+                                       :data-category1id="cate1.categoryId"
+                                       href="javascript:">
                                         {{ cate1.categoryName }}
                                     </a>
                                 </h3>
@@ -136,6 +138,10 @@
 </script>
 
 <style lang="less" scoped>
+    .implemented {
+        color: #e1251b !important;
+    }
+    
     .type-nav {
         border-bottom: 2px solid #e1251b;
         

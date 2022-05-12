@@ -7,13 +7,13 @@
                     <p>尚品汇欢迎您！</p>
                     <p>
                         <span>请 </span>
-                        <router-link to="/login">登录</router-link>
-                        <router-link class="register" to="/register">免费注册</router-link>
+                        <router-link class="implemented" to="/login">登录</router-link>
+                        <router-link class="register implemented" to="/register">免费注册</router-link>
                     </p>
                 </div>
                 <div class="typeList">
                     <a href="javascript:">我的订单</a>
-                    <router-link href="javascript:" to="/shopCart">我的购物车</router-link>
+                    <router-link class="implemented" href="javascript:" to="/shopCart">我的购物车</router-link>
                     <a href="javascript:">我的尚品汇</a>
                     <a href="javascript:">尚品汇会员</a>
                     <a href="javascript:">企业采购</a>
@@ -75,6 +75,11 @@
 </script>
 
 <style lang="less" scoped>
+    .implemented {
+        color: #ea4a36;
+    }
+    
+    
     header {
         & > .top {
             background-color: #eaeaea;
