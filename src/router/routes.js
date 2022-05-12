@@ -46,7 +46,7 @@ const routes = [
     {
         name: 'addCartSuccess',
         path: '/addCartSuccess',
-        component: () => import('@/components/AddCartSuccess'),
+        component: () => import('@/pages/AddCartSuccess'),
         meta: {
             title: '加入购物车成功',
         },

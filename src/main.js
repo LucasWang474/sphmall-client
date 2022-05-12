@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 Vue.component('TypeNav', () => import('@/components/TypeNav'));
 Vue.component('MySwiper', () => import('@/components/MySwiper'));
 Vue.component('Pagination', () => import('@/components/Pagination'));
-Vue.component('AddCartSuccess', () => import('@/components/AddCartSuccess'));
+Vue.component('AddCartSuccess', () => import('@/pages/AddCartSuccess'));
 
 
 new Vue({
