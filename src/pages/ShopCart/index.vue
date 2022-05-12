@@ -12,12 +12,12 @@
                 <div class="cart-th6">操作</div>
             </div>
             
-            <div class="cart-body">
+            <div ref="cartBody" class="cart-body">
                 <ul v-for="productInfo in cartList" :key="productInfo.id"
                     :data-product-id="productInfo.skuId" class="cart-list">
                     <li class="cart-list-con1">
                         <input :checked="+productInfo.isChecked" name="chk_list"
-                               type="checkbox">
+                               type="checkbox"/>
                     </li>
                     <li class="cart-list-con2">
                         <img :src="productInfo.imgUrl" alt="">
@@ -27,9 +27,16 @@
                         <span class="price">{{ productInfo.skuPrice }}</span>
                     </li>
                     <li class="cart-list-con4">
-                        <a class="minus" href="javascript:">-</a>
-                        <input :value="productInfo.skuNum" autocomplete="off" class="i-txt" type="text">
-                        <a class="plus" href="javascript:">+</a>
+                        <a class="minus" href="javascript:"
+                           @click="addToCart(productInfo.skuId, productInfo.skuNum, -1)">
+                            -
+                        </a>
+                        <input :value="productInfo.skuNum" autocomplete="off" class="i-txt" type="text"
+                               @change="handleBuyNumChange($event, productInfo.skuId, productInfo.skuNum)">
+                        <a class="plus" href="javascript:"
+                           @click="addToCart(productInfo.skuId, productInfo.skuNum, 1)">
+                            +
+                        </a>
                     </li>
                     <li class="cart-list-con5">
                         <span class="sum">
@@ -74,6 +81,8 @@
 </template>1
 
 <script>
+    import {throttle} from 'lodash';
+    
     export default {
         name: 'ShopCart',
         computed: {
@@ -93,6 +102,36 @@
                     return total + item.skuPrice * item.skuNum;
                 }, 0);
             },
+        },
+        methods: {
+            handleBuyNumChange({target}, productId, oldBuyNum) {
+                const newBuyNum = Number(target.value);
+                if (Number.isInteger(newBuyNum) && newBuyNum > 0 && newBuyNum !== oldBuyNum) {
+                    const diff = newBuyNum - oldBuyNum;
+                    this.addToCart(productId, oldBuyNum, diff);
+                    target.value = newBuyNum;
+                } else {
+                    target.value = oldBuyNum;
+                }
+            },
+            addToCart: throttle(function (productId, oldBuyNum, buyNum) {
+                if (this.lock) {
+                    return;
+                }
+                
+                this.lock = true;
+                if (buyNum === -1 && oldBuyNum <= 1) {
+                    this.lock = false;
+                    return;
+                }
+                
+                this.$store.dispatch('addToCart', {
+                    productId,
+                    buyNum,
+                }).finally(() => {
+                    this.lock = false;
+                });
+            }, 500),
         },
         mounted() {
             this.$store.dispatch('updateCartList');
@@ -209,10 +248,6 @@
                         
                         a {
                             text-decoration: none;
-                        }
-                        
-                        a:hover {
-                            color: #e1251b !important;
                         }
                         
                         .minus {
