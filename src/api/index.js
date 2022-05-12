@@ -16,6 +16,15 @@ export const reqSearchResults = (searchParams) => ajax({
 export const reqProductDetail = (productId) => ajax(`/api/item/${productId}`);
 
 
+// 更新购物车
+// 虽然 url 中的是 addToCart，但其实即可以添加也可以删除
+export const reqUpdateCart = (productId, count) => ajax({
+    method: 'POST',
+    url: `/api/cart/addToCart/${productId}/${count}`
+});
+
+
 export const reqBanners = () => mockAjax('/mock/banners');
 export const reqFloors = () => mockAjax('/mock/floors');
+
 // export const reqBaseCategoryListMock = () => mockAjax('/api/product/getBaseCategoryList');

@@ -1,7 +1,11 @@
 <template>
     <div class="cart-complete-wrap">
         <div class="cart-complete">
-            <h3><i class="sui-icon icon-pc-right"></i>商品已成功加入购物车！</h3>
+            <h3>
+                <span class="iconfont icon-check-circle"></span>
+                商品已成功加入购物车！
+            </h3>
+            
             <div class="goods">
                 <div class="left-good">
                     <div class="left-pic">
@@ -14,7 +18,7 @@
                 </div>
                 <div class="right-go-cart">
                     <a class="sui-btn btn-xlarge" href="javascript:">查看商品详情</a>
-                    <a href="javascript:">去购物车结算 > </a>
+                    <a class="btn-danger" href="javascript:">去购物车结算 > </a>
                 </div>
             </div>
         </div>
@@ -22,6 +26,8 @@
 </template>
 
 <script>
+    import './font/iconfont.css';
+    
     export default {
         name: 'AddCartSuccess',
     };
@@ -43,12 +49,11 @@
                 padding-bottom: 15px;
                 margin: 0;
                 
-                .icon-pc-right {
-                    background-color: #fff;
-                    border: 2px solid #6aaf04;
-                    padding: 3px;
-                    margin-right: 8px;
-                    border-radius: 15px;
+                display: flex;
+                align-items: center;
+                
+                .icon-check-circle {
+                    padding-right: 10px;
                 }
             }
             

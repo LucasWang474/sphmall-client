@@ -105,7 +105,7 @@
                                    @click="buyNum = Math.max(1, buyNum - 1)">-</a>
                             </div>
                             <div class="add">
-                                <a href="javascript:">加入购物车</a>
+                                <a href="javascript:" @click="addToCart">加入购物车</a>
                             </div>
                         </div>
                     </div>
@@ -363,6 +363,7 @@
     import ImageList from './ImageList/ImageList';
     import Zoom from './Zoom/Zoom';
     import {mapState} from 'vuex';
+    import {reqUpdateCart} from '@/api';
     
     export default {
         name: 'Detail',
@@ -408,6 +409,31 @@
                     target.parentNode.querySelector('dd.active')?.classList.remove('active');
                     target.classList.add('active');
                 }
+            },
+            
+            addToCart() {
+                reqUpdateCart(this.productInfo.id, this.buyNum)
+                    .then(res => {
+                        if (res.code === 200) {
+                            // this.$message.success('添加成功');
+                            // this.$store.commit('cart/updateCartNum', res.data);
+                            
+                            this.$router.push({
+                                name: 'addCartSuccess',
+                            });
+                        } else {
+                            // this.$message.error(res.msg);
+                            console.log(res.msg);
+                            console.log('添加失败');
+                            alert('添加失败');
+                        }
+                    })
+                    .catch(err => {
+                        // this.$message.error('添加失败');
+                        console.log(err);
+                        console.log('添加失败');
+                        alert('添加失败');
+                    });
             }
         },
         mounted() {
