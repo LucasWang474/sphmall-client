@@ -60,6 +60,7 @@
         .cart-complete {
             width: 1200px;
             margin: 0 auto;
+            padding-bottom: 60px;
             
             h3 {
                 font-weight: 400;
@@ -81,8 +82,15 @@
                 overflow: hidden;
                 padding: 10px 0;
                 
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                
                 .left-good {
                     float: left;
+                    
+                    display: flex;
+                    align-items: center;
                     
                     .left-pic {
                         border: 1px solid #dfdfdf;
@@ -99,6 +107,7 @@
                         color: #444;
                         float: left;
                         margin-left: 10px;
+                        max-width: 750px;
                         
                         .title {
                             width: 100%;
