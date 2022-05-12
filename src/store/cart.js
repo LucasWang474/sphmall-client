@@ -1,4 +1,4 @@
-import {reqCartList, reqUpdateCart} from '@/api';
+import {reqCartList, reqChangeChecked, reqUpdateCart} from '@/api';
 
 const state = {
     cartList: [],
@@ -28,6 +28,18 @@ const actions = {
             dispatch('updateCartList');
         } else {
             return Promise.reject('添加购物车失败' + response.msg);
+        }
+    },
+
+    async toggleIsChecked({dispatch, state}, productId) {
+        const target = state.cartList.find(item => item.skuId === productId);
+        target.isChecked = +target.isChecked ? 0 : 1;
+
+        const response = await reqChangeChecked(productId, target.isChecked);
+        if (response.code === SUCCESS_CODE) {
+            dispatch('updateCartList');
+        } else {
+            return Promise.reject('更新商品选中失败' + response.msg);
         }
     }
 };
