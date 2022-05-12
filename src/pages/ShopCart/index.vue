@@ -20,20 +20,17 @@
                         <div class="item-msg">米家 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强</div>
                     </li>
                     <li class="cart-list-con3">
-                        <div class="item-txt">语音升级款</div>
-                    </li>
-                    <li class="cart-list-con4">
                         <span class="price">399.00</span>
                     </li>
-                    <li class="cart-list-con5">
+                    <li class="cart-list-con4">
                         <a class="minus" href="javascript:">-</a>
                         <input autocomplete="off" class="i-txt" type="text" value="1">
                         <a class="plus" href="javascript:">+</a>
                     </li>
-                    <li class="cart-list-con6">
+                    <li class="cart-list-con5">
                         <span class="sum">399</span>
                     </li>
-                    <li class="cart-list-con7">
+                    <li class="cart-list-con6">
                         <a class="delete" href="javascript:">删除</a>
                         <br>
                         <a href="javascript:">移到收藏</a>
@@ -49,20 +46,17 @@
                         <div class="item-msg">华为 华为metaPRO 30 浴霸4摄像 超清晰</div>
                     </li>
                     <li class="cart-list-con3">
-                        <div class="item-txt">黑色版本</div>
-                    </li>
-                    <li class="cart-list-con4">
                         <span class="price">5622.00</span>
                     </li>
-                    <li class="cart-list-con5">
+                    <li class="cart-list-con4">
                         <a class="minus" href="javascript:">-</a>
                         <input autocomplete="off" class="i-txt" type="text" value="1">
                         <a class="plus" href="javascript:">+</a>
                     </li>
-                    <li class="cart-list-con6">
+                    <li class="cart-list-con5">
                         <span class="sum">5622</span>
                     </li>
-                    <li class="cart-list-con7">
+                    <li class="cart-list-con6">
                         <a class="delete" href="javascript:">删除</a>
                         <br>
                         <a href="javascript:">移到收藏</a>
@@ -78,20 +72,17 @@
                         <div class="item-msg">iphone 11 max PRO 苹果四摄 超清晰 超费电 超及好用</div>
                     </li>
                     <li class="cart-list-con3">
-                        <div class="item-txt">墨绿色</div>
-                    </li>
-                    <li class="cart-list-con4">
                         <span class="price">11399.00</span>
                     </li>
-                    <li class="cart-list-con5">
+                    <li class="cart-list-con4">
                         <a class="minus" href="javascript:">-</a>
                         <input autocomplete="off" class="i-txt" type="text" value="1">
                         <a class="plus" href="javascript:">+</a>
                     </li>
-                    <li class="cart-list-con6">
+                    <li class="cart-list-con5">
                         <span class="sum">11399</span>
                     </li>
-                    <li class="cart-list-con7">
+                    <li class="cart-list-con6">
                         <a class="delete" href="javascript:">删除</a>
                         <br>
                         <a href="javascript:">移到收藏</a>
@@ -136,7 +127,7 @@
 <style lang="less" scoped>
     .cart {
         width: 1200px;
-        margin: 0 auto;
+        margin: 0 auto 50px;
         
         h4 {
             margin: 9px 0;
@@ -153,11 +144,11 @@
                 
                 & > div {
                     float: left;
+                    text-align: center;
                 }
                 
                 .cart-th1 {
-                    width: 4%;
-                    text-align: center;
+                    width: 5%;
                     
                     input {
                         vertical-align: middle;
@@ -169,16 +160,14 @@
                 }
                 
                 .cart-th2 {
-                    width: 46%;
-                    text-align: center;
+                    width: 35%;
                 }
                 
                 .cart-th3,
                 .cart-th4,
                 .cart-th5,
                 .cart-th6 {
-                    width: 12.5%;
-                    text-align: center;
+                    width: 15%;
                 }
             }
             
@@ -204,11 +193,11 @@
                     }
                     
                     .cart-list-con1 {
-                        width: 4.1667%;
+                        width: 5%;
                     }
                     
                     .cart-list-con2 {
-                        width: 25%;
+                        width: 35%;
                         
                         display: flex;
                         align-items: center;
@@ -221,7 +210,8 @@
                         
                         .item-msg {
                             float: left;
-                            width: 150px;
+                            // width: 150px;
+                            width: calc(100% - 82px);
                             margin: 0 10px;
                             line-height: 18px;
                             
@@ -229,23 +219,15 @@
                         }
                     }
                     
-                    .cart-list-con3 {
-                        width: 20.8333%;
-                        
-                        .item-txt {
-                            text-align: center;
-                        }
+                    .cart-list-con3,
+                    .cart-list-con4,
+                    .cart-list-con5,
+                    .cart-list-con6 {
+                        width: 15%;
                     }
+                    
                     
                     .cart-list-con4 {
-                        width: 12.5%;
-                        
-                        text-align: center;
-                        
-                    }
-                    
-                    .cart-list-con5 {
-                        width: 12.5%;
                         display: flex;
                         justify-content: center;
                         
@@ -288,17 +270,13 @@
                         
                     }
                     
-                    .cart-list-con6 {
-                        width: 12.5%;
-                        
+                    .cart-list-con5 {
                         .sum {
                             font-size: 16px;
                         }
                     }
                     
-                    .cart-list-con7 {
-                        width: 12.5%;
-                        
+                    .cart-list-con6 {
                         a {
                             color: #666;
                         }
@@ -320,12 +298,13 @@
                 align-items: center;
                 
                 .select-all {
-                    padding: 5px 3px;
+                    width: 60px;
                     overflow: hidden;
                     
                     display: flex;
                     text-align: center;
                     align-items: center;
+                    justify-content: center;
                     
                     input {
                         vertical-align: middle;
