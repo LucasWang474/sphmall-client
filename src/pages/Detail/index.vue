@@ -427,8 +427,8 @@
                         alert('加入购物车失败');
                     });
             },
-            getProductChoseAttrs() {
-                const choseAttrs = [];
+            getProductChosenAttrs() {
+                const chosenAttrs = [];
                 
                 const attrDls = this.$refs.chooseArea.querySelectorAll('dl');
                 
@@ -438,24 +438,24 @@
                     const attrValues = attrDl.querySelectorAll('dd');
                     for (let value of attrValues) {
                         if (value.classList.contains('active')) {
-                            choseAttrs.push(
+                            chosenAttrs.push(
                                 `${attrName}: ${value.innerText} / `
                             );
                         }
                     }
                 }
                 
-                choseAttrs.push(`购买数量: ${this.buyNum}`);
-                return choseAttrs;
+                chosenAttrs.push(`购买数量: ${this.buyNum}`);
+                return chosenAttrs;
             },
-            saveProductChoseAttrs() {
-                const choseAttrs = this.getProductChoseAttrs();
-                const choseAttrsStr = choseAttrs.join('');
-                sessionStorage.setItem('productChoseAttrs', choseAttrsStr);
-                console.log(choseAttrsStr);
+            saveProductChosenAttrs() {
+                const chosenAttrs = this.getProductChosenAttrs();
+                const chosenAttrsStr = chosenAttrs.join('');
+                sessionStorage.setItem('productChosenAttrs', chosenAttrsStr);
+                console.log(chosenAttrsStr);
             },
             saveProductInfo() {
-                this.saveProductChoseAttrs();
+                this.saveProductChosenAttrs();
                 sessionStorage.setItem('productDefaultImg', this.productInfo.skuDefaultImg);
                 sessionStorage.setItem('productName', this.productInfo.skuName);
             }

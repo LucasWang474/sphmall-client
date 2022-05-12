@@ -13,7 +13,7 @@
                     </div>
                     <div class="right-info">
                         <p class="title">{{ productName }}</p>
-                        <p class="attr">{{ productChoseAttrs }}</p>
+                        <p class="attr">{{ productChosenAttrs }}</p>
                     </div>
                 </div>
                 <div class="right-go-cart">
@@ -34,8 +34,8 @@
             productName() {
                 return sessionStorage.getItem('productName');
             },
-            productChoseAttrs() {
-                return sessionStorage.getItem('productChoseAttrs');
+            productChosenAttrs() {
+                return sessionStorage.getItem('productChosenAttrs');
             },
             productDefaultImg() {
                 return sessionStorage.getItem('productDefaultImg');
