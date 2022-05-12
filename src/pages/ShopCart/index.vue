@@ -33,7 +33,7 @@
                     </li>
                     <li class="cart-list-con5">
                         <span class="sum">
-                            {{ productInfo.cartPrice }}
+                            {{ productInfo.skuPrice * productInfo.skuNum }}
                         </span>
                     </li>
                     <li class="cart-list-con6">
@@ -49,7 +49,7 @@
             <div class="wrap">
                 <div class="select-all">
                     <span>全选&nbsp;</span>
-                    <input class="chooseAll" type="checkbox">
+                    <input v-model="allChecked" class="chooseAll" type="checkbox">
                 </div>
                 <div class="option">
                     <a href="javascript:">删除选中的商品</a>
@@ -59,11 +59,11 @@
             </div>
             <div class="money-box">
                 <div class="chosen">
-                    已选择 <span>0</span> 件商品
+                    已选择 <span>{{ checkedNum }}</span> 件商品
                 </div>
                 <div class="sum-price">
                     <em>总价（不含运费）：</em>
-                    <i class="sum-money">0</i>
+                    <i class="sum-money">{{ totalPrice }}</i>
                 </div>
                 <div class="sum-btn">
                     <a class="sum-btn" href="javascript:">结算</a>
@@ -79,7 +79,20 @@
         computed: {
             cartList() {
                 return this.$store.state.cart.cartList;
-            }
+            },
+            allChecked() {
+                return this.cartList.every(item => item.isChecked);
+            },
+            checkedNum() {
+                return this.cartList
+                    .filter(item => item.isChecked)
+                    .reduce((total, item) => total + item.skuNum, 0);
+            },
+            totalPrice() {
+                return this.cartList.reduce((total, item) => {
+                    return total + item.skuPrice * item.skuNum;
+                }, 0);
+            },
         },
         mounted() {
             this.$store.dispatch('updateCartList');
