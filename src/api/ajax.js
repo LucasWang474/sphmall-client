@@ -2,11 +2,15 @@ import axios from 'axios';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import {getUserTempId} from '@/utils/aboutUser';
 
 
 const ajax = axios.create({
     baseURL: 'http://gmall-h5-api.atguigu.cn',
     timeout: 5000,
+    headers: {
+        userTempId: getUserTempId()
+    }
 });
 
 ajax.interceptors.request.use(

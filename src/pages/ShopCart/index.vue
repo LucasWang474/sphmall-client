@@ -1,6 +1,7 @@
 <template>
     <div class="cart">
         <h4>全部商品</h4>
+        
         <div class="cart-main">
             <div class="cart-th">
                 <div class="cart-th1">全部</div>
@@ -10,17 +11,18 @@
                 <div class="cart-th5">小计（元）</div>
                 <div class="cart-th6">操作</div>
             </div>
+            
             <div class="cart-body">
-                <ul class="cart-list">
+                <ul v-for="productInfo in cartList" :key="productInfo.id" class="cart-list">
                     <li class="cart-list-con1">
                         <input name="chk_list" type="checkbox">
                     </li>
                     <li class="cart-list-con2">
-                        <img alt="" src="./images/goods1.png">
-                        <div class="item-msg">米家 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强</div>
+                        <img :src="productInfo.imgUrl" alt="">
+                        <div class="item-msg">{{ productInfo.skuName }}</div>
                     </li>
                     <li class="cart-list-con3">
-                        <span class="price">399.00</span>
+                        <span class="price">{{ productInfo.skuPrice }}</span>
                     </li>
                     <li class="cart-list-con4">
                         <a class="minus" href="javascript:">-</a>
@@ -28,59 +30,9 @@
                         <a class="plus" href="javascript:">+</a>
                     </li>
                     <li class="cart-list-con5">
-                        <span class="sum">399</span>
-                    </li>
-                    <li class="cart-list-con6">
-                        <a class="delete" href="javascript:">删除</a>
-                        <br>
-                        <a href="javascript:">移到收藏</a>
-                    </li>
-                </ul>
-                
-                <ul class="cart-list">
-                    <li class="cart-list-con1">
-                        <input name="chk_list" type="checkbox" value="">
-                    </li>
-                    <li class="cart-list-con2">
-                        <img alt="" src="./images/goods2.png">
-                        <div class="item-msg">华为 华为metaPRO 30 浴霸4摄像 超清晰</div>
-                    </li>
-                    <li class="cart-list-con3">
-                        <span class="price">5622.00</span>
-                    </li>
-                    <li class="cart-list-con4">
-                        <a class="minus" href="javascript:">-</a>
-                        <input autocomplete="off" class="i-txt" type="text" value="1">
-                        <a class="plus" href="javascript:">+</a>
-                    </li>
-                    <li class="cart-list-con5">
-                        <span class="sum">5622</span>
-                    </li>
-                    <li class="cart-list-con6">
-                        <a class="delete" href="javascript:">删除</a>
-                        <br>
-                        <a href="javascript:">移到收藏</a>
-                    </li>
-                </ul>
-                
-                <ul class="cart-list">
-                    <li class="cart-list-con1">
-                        <input id="" name="chk_list" type="checkbox" value="">
-                    </li>
-                    <li class="cart-list-con2">
-                        <img alt="" src="./images/goods3.png">
-                        <div class="item-msg">iphone 11 max PRO 苹果四摄 超清晰 超费电 超及好用</div>
-                    </li>
-                    <li class="cart-list-con3">
-                        <span class="price">11399.00</span>
-                    </li>
-                    <li class="cart-list-con4">
-                        <a class="minus" href="javascript:">-</a>
-                        <input autocomplete="off" class="i-txt" type="text" value="1">
-                        <a class="plus" href="javascript:">+</a>
-                    </li>
-                    <li class="cart-list-con5">
-                        <span class="sum">11399</span>
+                        <span class="sum">
+                            {{ productInfo.cartPrice }}
+                        </span>
                     </li>
                     <li class="cart-list-con6">
                         <a class="delete" href="javascript:">删除</a>
@@ -90,6 +42,7 @@
                 </ul>
             </div>
         </div>
+        
         <div class="cart-tool">
             <div class="wrap">
                 <div class="select-all">
@@ -121,6 +74,14 @@
 <script>
     export default {
         name: 'ShopCart',
+        computed: {
+            cartList() {
+                return this.$store.state.cart.cartList;
+            }
+        },
+        mounted() {
+            this.$store.dispatch('updateCartList');
+        }
     };
 </script>
 

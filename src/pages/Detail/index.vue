@@ -363,7 +363,6 @@
     import ImageList from './ImageList/ImageList';
     import Zoom from './Zoom/Zoom';
     import {mapState} from 'vuex';
-    import {reqUpdateCart} from '@/api';
     
     export default {
         name: 'Detail',
@@ -412,20 +411,17 @@
             },
             
             addToCart() {
-                reqUpdateCart(this.productInfo.id, this.buyNum)
-                    .then(res => {
-                        if (res.code === 200) {
-                            this.saveProductInfo();
-                            this.$router.push({
-                                name: 'addCartSuccess',
-                            });
-                        } else {
-                            alert('加入购物车失败');
-                        }
-                    })
-                    .catch(() => {
-                        alert('加入购物车失败');
+                this.$store.dispatch('addToCart', {
+                    productId: this.productInfo.id,
+                    buyNum: this.buyNum,
+                }).then(() => {
+                    this.saveProductInfo();
+                    this.$router.push({
+                        name: 'addCartSuccess',
                     });
+                }).catch(() => {
+                    alert('加入购物车失败');
+                });
             },
             getProductChosenAttrs() {
                 const chosenAttrs = [];
@@ -452,7 +448,6 @@
                 const chosenAttrs = this.getProductChosenAttrs();
                 const chosenAttrsStr = chosenAttrs.join('');
                 sessionStorage.setItem('productChosenAttrs', chosenAttrsStr);
-                console.log(chosenAttrsStr);
             },
             saveProductInfo() {
                 this.saveProductChosenAttrs();
