@@ -32,8 +32,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             commit('SET_CATEGORY_LIST', response.data);
         } else {
-            console.log('获取分类列表失败，状态码', response.code);
-            return new Promise(() => undefined);
+            return Promise.reject('获取分类列表失败，状态码 ' + response.code);
         }
     },
     async getBannerList({commit}) {
@@ -41,8 +40,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             commit('SET_BANNER_LIST', response.data);
         } else {
-            console.log('获取轮播图列表失败，状态码', response.code);
-            return new Promise(() => undefined);
+            return Promise.reject('获取轮播图列表失败，状态码 ' + response.code);
         }
     },
     async getFloorList({commit}) {
@@ -50,8 +48,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             commit('SET_FLOOR_LIST', response.data);
         } else {
-            console.log('获取楼层列表失败，状态码', response.code);
-            return new Promise(() => undefined);
+            return Promise.reject('获取楼层列表失败，状态码 ' + response.code);
         }
     },
 };

@@ -36,7 +36,7 @@ const actions = {
             const {skuImageList} = skuInfo;
             commit('SET_PRODUCT_IMAGE_LIST', skuImageList);
         } else {
-            throw new Error('获取商品详情失败，状态码：' + response.code + '，错误信息：' + response.msg);
+            return Promise.reject('获取商品详情失败，状态码：' + response.code + '，错误信息：' + response.msg);
         }
     }
 };

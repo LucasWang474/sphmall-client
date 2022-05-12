@@ -421,18 +421,7 @@
                             this.$router.push({
                                 name: 'addCartSuccess',
                             });
-                        } else {
-                            // this.$message.error(res.msg);
-                            console.log(res.msg);
-                            console.log('添加失败');
-                            alert('添加失败');
                         }
-                    })
-                    .catch(err => {
-                        // this.$message.error('添加失败');
-                        console.log(err);
-                        console.log('添加失败');
-                        alert('添加失败');
                     });
             }
         },
