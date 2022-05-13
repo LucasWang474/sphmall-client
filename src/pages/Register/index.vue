@@ -8,7 +8,10 @@
         </h3>
         <div class="content">
             <label>手机号:</label>
-            <input v-model.trim.number="phone" placeholder="请输入你的手机号" type="tel">
+            <input v-model.trim.number="phone"
+                   autocomplete name="phone"
+                   placeholder="请输入你的手机号"
+                   type="tel">
             <span v-show="phone && !phoneReg.test(phone)"
                   class="error-msg">
                 请输入中国大陆 11 位数字手机号
@@ -22,7 +25,10 @@
         </div>
         <div class="content">
             <label>登录密码:</label>
-            <input v-model="password" placeholder="请输入你的登录密码" type="password">
+            <input v-model="password"
+                   autocomplete name="password"
+                   placeholder="请输入你的登录密码"
+                   type="password">
             <span v-show="password && !passwordReg.test(password)"
                   class="error-msg">
                 请输入密码，长度至少为 9 位，必须包括且只能包括大小写字母和数字

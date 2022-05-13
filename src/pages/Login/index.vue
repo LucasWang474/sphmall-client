@@ -16,7 +16,10 @@
                         
                         <div class="input-text clearFix">
                             <i></i>
-                            <input v-model.trim.number="phone" placeholder="请输入你的手机号" type="tel">
+                            <input v-model.trim.number="phone"
+                                   autocomplete name="phone"
+                                   placeholder="请输入你的手机号"
+                                   type="tel">
                             <span v-show="phone && !phoneReg.test(phone)"
                                   class="error-msg">
                                 请输入中国大陆 11 位数字手机号
@@ -25,7 +28,10 @@
                         
                         <div class="input-text clearFix">
                             <i class="pwd"></i>
-                            <input v-model="password" placeholder="请输入你的登录密码" type="password">
+                            <input v-model="password"
+                                   autocomplete name="password"
+                                   placeholder="请输入你的登录密码"
+                                   type="password">
                         </div>
                         
                         <div class="setting clearFix">
