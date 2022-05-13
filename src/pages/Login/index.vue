@@ -42,7 +42,7 @@
                             <a class="forget" href="javascript:">忘记密码？</a>
                         </div>
                         <button :disabled="!phone || !phoneReg.test(phone) || !password"
-                                class="btn" @click="login">
+                                class="btn" @click.prevent="login">
                             登&nbsp;&nbsp;录
                         </button>
                     
