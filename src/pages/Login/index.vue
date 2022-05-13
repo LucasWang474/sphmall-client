@@ -16,14 +16,16 @@
                         
                         <div class="input-text clearFix">
                             <i></i>
-                            <input placeholder="手机号" type="text">
-                            <span class="error-msg">错误提示信息</span>
+                            <input v-model.trim.number="phone" placeholder="请输入你的手机号" type="tel">
+                            <span v-show="phone && !phoneReg.test(phone)"
+                                  class="error-msg">
+                                请输入中国大陆 11 位数字手机号
+                            </span>
                         </div>
                         
                         <div class="input-text clearFix">
                             <i class="pwd"></i>
-                            <input placeholder="请输入密码" type="text">
-                            <span class="error-msg">错误提示信息</span>
+                            <input v-model="password" placeholder="请输入你的登录密码" type="password">
                         </div>
                         
                         <div class="setting clearFix">
@@ -31,9 +33,12 @@
                                 <input checked="" name="m1" type="checkbox" value="2">
                                 自动登录
                             </label>
-                            <span class="forget">忘记密码？</span>
+                            <a class="forget" href="javascript:">忘记密码？</a>
                         </div>
-                        <button class="btn">登&nbsp;&nbsp;录</button>
+                        <button :disabled="!phone || !phoneReg.test(phone) || !password"
+                                class="btn" @click="toLogin">
+                            登&nbsp;&nbsp;录
+                        </button>
                     
                     </form>
                     <div class="call clearFix">
@@ -52,8 +57,24 @@
 </template>
 
 <script>
+    import {passwordReg, phoneReg} from '@/utils/aboutUser';
+    
     export default {
-        name: 'Login'
+        name: 'Login',
+        data() {
+            return {
+                phone: '',
+                password: '',
+                
+                phoneReg,
+                passwordReg
+            };
+        },
+        methods: {
+            toLogin() {
+            
+            }
+        }
     };
 </script>
 
@@ -162,6 +183,8 @@
                         }
                         
                         .setting {
+                            margin-top: 25px;
+                            
                             label {
                                 float: left;
                             }
@@ -184,6 +207,15 @@
                             height: 36px;
                             margin-top: 25px;
                             outline: none;
+                        }
+                        
+                        button {
+                            cursor: pointer;
+                            
+                            &[disabled] {
+                                cursor: not-allowed;
+                                border: none;
+                            }
                         }
                     }
                     
