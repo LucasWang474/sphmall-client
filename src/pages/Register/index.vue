@@ -68,6 +68,8 @@
                 passwordAgain: '',
                 confirmation: false,
                 
+                registeredPhones: JSON.parse(localStorage.getItem('registeredPhones')) || [],
+                
                 phoneReg,
                 passwordReg
             };
@@ -115,13 +117,11 @@
                     });
             },
             isRegistered() {
-                const registeredPhones = JSON.parse(localStorage.getItem('registeredPhones')) || [];
-                return registeredPhones.includes(this.phone);
+                return this.registeredPhones.includes(this.phone);
             },
             savePhone() {
-                const registeredPhones = JSON.parse(localStorage.getItem('registeredPhones')) || [];
-                registeredPhones.push(this.phone);
-                localStorage.setItem('registeredPhones', JSON.stringify(registeredPhones));
+                this.registeredPhones.push(this.phone);
+                localStorage.setItem('registeredPhones', JSON.stringify(this.registeredPhones));
             },
             getCaptcha() {
                 if (!this.phone) {
