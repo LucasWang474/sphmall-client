@@ -26,10 +26,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    // 解决 Vue Router 数组由 2 => 1 时值会从数组变成字符串的 bug
-    const {props} = to.query;
-    if (typeof props === 'string') {
-        to.query.props = [props];
+    if (to.name === 'search') {
+        // 解决 Vue Router 数组由 2 => 1 时值会从数组变成字符串的 bug
+        const {props} = to.query;
+        if (typeof props === 'string') {
+            to.query.props = [props];
+        }
     }
 
     next();
