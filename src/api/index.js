@@ -37,6 +37,30 @@ export const reqDeleteCart = (productId) => ajax({
     url: `/api/cart/deleteCart/${productId}`
 });
 
+// 获取注册验证码
+export const reqGetCaptcha = (phone) => ajax(`/api/user/passport/sendCode/${phone}`);
+
+// 注册用户
+export const reqRegister = ({phone, password, code}) => ajax({
+    method: 'POST',
+    url: '/api/user/passport/register',
+    data: {
+        phone,
+        password,
+        code
+    }
+});
+
+// 用户登录
+export const reqLogin = ({phone, password}) => ajax({
+    method: 'POST',
+    url: '/api/user/passport/login',
+    data: {
+        phone,
+        password
+    }
+});
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数

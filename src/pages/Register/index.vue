@@ -19,9 +19,8 @@
         </div>
         <div class="content">
             <label>验证码:</label>
-            <input v-model.number.trim="verificationCode"
-                   placeholder="请输入验证码（随便输入什么都行）"
-                   type="text">
+            <input v-model="captcha" placeholder="请点击右侧按钮自动获取验证码" type="text">
+            <button class="getCaptcha" @click="getCaptcha">获取验证码</button>
         </div>
         <div class="content">
             <label>登录密码:</label>
@@ -48,7 +47,7 @@
         </div>
         <div class="btn">
             <button :disabled="!readyToRegister"
-                    @click="toRegister">
+                    @click="register">
                 注册
             </button>
         </div>
@@ -57,13 +56,14 @@
 
 <script>
     import {passwordReg, phoneReg} from '@/utils/aboutUser';
+    import {reqGetCaptcha, reqRegister} from '@/api';
     
     export default {
         name: 'Register',
         data() {
             return {
                 phone: '',
-                verificationCode: '',
+                captcha: '',
                 password: '',
                 passwordAgain: '',
                 confirmation: false,
@@ -77,12 +77,69 @@
                 return this.phoneReg.test(this.phone) &&
                     this.passwordReg.test(this.password) &&
                     this.password === this.passwordAgain &&
+                    this.captcha &&
                     this.confirmation;
             },
         },
         methods: {
-            toRegister() {
-            
+            register() {
+                if (this.isRegistered()) {
+                    alert('该手机号已注册，请直接登录');
+                    return;
+                }
+                
+                if (!this.readyToRegister) {
+                    alert('请填写完整信息');
+                    return;
+                }
+                
+                const userInfo = {
+                    phone: this.phone,
+                    password: this.password,
+                    code: this.captcha
+                };
+                
+                reqRegister(userInfo)
+                    .then(res => {
+                        if (res.code === 200) {
+                            this.savePhone();
+                            if (confirm('注册成功，是否立即登录？')) {
+                                this.$router.push('/login');
+                            }
+                        } else {
+                            throw new Error(res.msg);
+                        }
+                    })
+                    .catch(() => {
+                        alert('注册失败，请稍后重试（可能是该手机已被注册）');
+                    });
+            },
+            isRegistered() {
+                const registeredPhones = JSON.parse(localStorage.getItem('registeredPhones')) || [];
+                return registeredPhones.includes(this.phone);
+            },
+            savePhone() {
+                const registeredPhones = JSON.parse(localStorage.getItem('registeredPhones')) || [];
+                registeredPhones.push(this.phone);
+                localStorage.setItem('registeredPhones', JSON.stringify(registeredPhones));
+            },
+            getCaptcha() {
+                if (!this.phone) {
+                    alert('请先输入手机号');
+                    return;
+                }
+                if (!this.phoneReg.test(this.phone)) {
+                    alert('请先输入正确的手机号');
+                    return;
+                }
+                
+                reqGetCaptcha(this.phone)
+                    .then(({data}) => {
+                        this.captcha = data;
+                    })
+                    .catch(() => {
+                        alert('获取验证码失败');
+                    });
             }
         }
     };
@@ -149,6 +206,11 @@
                 top: 100%;
                 left: 495px;
                 color: red;
+            }
+            
+            .getCaptcha {
+                height: 38px;
+                width: 100px;
             }
         }
         
