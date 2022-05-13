@@ -7,21 +7,17 @@ import routes from './routes';
 Vue.use(VueRouter);
 
 
-const toTopRoutes = [
-    'detail',
-    'addCartSuccess',
-];
-
 // noinspection JSCheckFunctionSignatures
 const router = new VueRouter({
     mode: 'history',
     routes,
 
     scrollBehavior(to, from, savedPosition) {
-        if (toTopRoutes.includes(to.name)) {
-            return {x: 0, y: 0};
+        if (to.name === 'search' && from.name === 'search') {
+            // 只有 search 支持保存页面跳转时保持视线位置
+            return savedPosition;
         }
-        return savedPosition;
+        return {x: 0, y: 0};
     }
 });
 

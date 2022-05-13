@@ -15,6 +15,7 @@ const ajax = axios.create({
 
 ajax.interceptors.request.use(
     config => {
+        config.headers.token = localStorage.getItem('token') || '';
         NProgress.start();
         return config;
     }

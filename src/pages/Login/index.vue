@@ -64,6 +64,7 @@
 
 <script>
     import {passwordReg, phoneReg} from '@/utils/aboutUser';
+    import {reqLogin} from '@/api';
     
     export default {
         name: 'Login',
@@ -78,7 +79,20 @@
         },
         methods: {
             login() {
-            
+                reqLogin(this.phone, this.password)
+                    .then(response => {
+                        if (response.code === 200) {
+                            console.log(response);
+                            localStorage.setItem('token', response.data.token);
+                            alert('登录成功！');
+                            this.$router.push('/');
+                        } else {
+                            throw new Error('登录失败，状态码：' + response.code);
+                        }
+                    })
+                    .catch(() => {
+                        alert('登录失败');
+                    });
             }
         }
     };

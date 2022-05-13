@@ -41,7 +41,7 @@ export const reqDeleteCart = (productId) => ajax({
 export const reqGetCaptcha = (phone) => ajax(`/api/user/passport/sendCode/${phone}`);
 
 // 注册用户
-export const reqRegister = ({phone, password, code}) => ajax({
+export const reqRegister = (phone, password, code) => ajax({
     method: 'POST',
     url: '/api/user/passport/register',
     data: {
@@ -52,7 +52,7 @@ export const reqRegister = ({phone, password, code}) => ajax({
 });
 
 // 用户登录
-export const reqLogin = ({phone, password}) => ajax({
+export const reqLogin = (phone, password) => ajax({
     method: 'POST',
     url: '/api/user/passport/login',
     data: {

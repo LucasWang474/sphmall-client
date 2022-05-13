@@ -82,10 +82,13 @@
                     this.captcha &&
                     this.confirmation;
             },
+            isRegistered() {
+                return this.registeredPhones.includes(this.phone);
+            },
         },
         methods: {
             register() {
-                if (this.isRegistered()) {
+                if (this.isRegistered) {
                     alert('该手机号已注册，请直接登录');
                     return;
                 }
@@ -95,13 +98,7 @@
                     return;
                 }
                 
-                const userInfo = {
-                    phone: this.phone,
-                    password: this.password,
-                    code: this.captcha
-                };
-                
-                reqRegister(userInfo)
+                reqRegister(this.phone, this.password, this.captcha)
                     .then(res => {
                         if (res.code === 200) {
                             this.savePhone();
@@ -115,9 +112,6 @@
                     .catch(() => {
                         alert('注册失败，请稍后重试（可能是该手机已被注册）');
                     });
-            },
-            isRegistered() {
-                return this.registeredPhones.includes(this.phone);
             },
             savePhone() {
                 this.registeredPhones.push(this.phone);
