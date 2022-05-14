@@ -61,6 +61,10 @@ export const reqLogin = (phone, password) => ajax({
     }
 });
 
+// 获取用户信息
+// 这个请求能成功发送的前提是用户已经登录，即 token 已经存在
+export const reqUserInfo = () => ajax('/api/user/passport/auth/getUserInfo');
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
