@@ -15,7 +15,7 @@
                 <div v-else class="loginList">
                     <p>尚品汇欢迎您！</p>
                     <p>
-                        <span class="implemented">{{ userInfo.name }}</span>
+                        <span>{{ userInfo.name }}</span>
                         <span> | </span>
                         <a class="implemented" href="javascript:" @click="logout">退出</a>
                     </p>
