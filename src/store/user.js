@@ -29,8 +29,9 @@ const actions = {
     async getUserInfo({commit}) {
         const response = await reqUserInfo();
         if (response.code === 200) {
-            const userInfo = response.data;
-            commit('SET_USERINFO', userInfo);
+            // 以后需要更多的属性就在这里加上，不要直接存储一整个对象
+            const {name, phone} = response.data;
+            commit('SET_USERINFO', {name, phone});
         } else {
             throw new Error('获取用户信息失败');
         }
