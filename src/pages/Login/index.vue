@@ -16,8 +16,9 @@
                         
                         <div class="input-text clearFix">
                             <i></i>
-                            <input v-model.trim.number="phone"
-                                   autocomplete name="phone"
+                            <input id="phone"
+                                   v-model.trim.number="phone" autocomplete
+                                   name="phone"
                                    placeholder="请输入你的手机号"
                                    type="tel">
                             <span v-show="phone && !phoneReg.test(phone)"
@@ -28,8 +29,9 @@
                         
                         <div class="input-text clearFix">
                             <i class="pwd"></i>
-                            <input v-model="password"
-                                   autocomplete name="password"
+                            <input id="password"
+                                   v-model="password" autocomplete
+                                   name="password"
                                    placeholder="请输入你的登录密码"
                                    type="password">
                         </div>
@@ -83,7 +85,6 @@
                     password: this.password
                 })
                     .then(() => {
-                        alert('登录成功！');
                         this.$router.push('/');
                     })
                     .catch(() => {

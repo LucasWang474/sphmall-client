@@ -1,8 +1,8 @@
-import {reqLogin, reqUserInfo} from '@/api';
+import {reqLogin, reqUserInfo, reqUserLogout} from '@/api';
 
 const state = {
     token: localStorage.getItem('token'),
-    userInfo: {},
+    userInfo: null,
 };
 
 const mutations = {
@@ -11,6 +11,11 @@ const mutations = {
     },
     SET_USERINFO(state, userInfo) {
         state.userInfo = userInfo;
+    },
+    RESET_TOKEN_AND_USERINFO(state) {
+        state.token = null;
+        state.userInfo = null;
+        localStorage.removeItem('token');
     },
 };
 
@@ -30,12 +35,23 @@ const actions = {
         const response = await reqUserInfo();
         if (response.code === 200) {
             // 以后需要更多的属性就在这里加上，不要直接存储一整个对象
-            const {name, phone} = response.data;
+            const {name, phoneNum: phone} = response.data;
             commit('SET_USERINFO', {name, phone});
         } else {
             throw new Error('获取用户信息失败');
         }
     },
+
+    logout({commit}) {
+        reqUserLogout().then(
+            () => {
+                commit('RESET_TOKEN_AND_USERINFO');
+            },
+            (error) => {
+                throw new Error('退出登录失败 ' + error.message);
+            }
+        );
+    }
 };
 
 

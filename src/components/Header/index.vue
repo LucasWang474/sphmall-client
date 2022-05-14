@@ -3,7 +3,7 @@
         <!-- 头部的第一行 -->
         <div class="top">
             <div class="container">
-                <div class="loginList">
+                <div v-if="!isLoggedIn" class="loginList">
                     <p>尚品汇欢迎您！</p>
                     <p>
                         <span>请 </span>
@@ -11,6 +11,16 @@
                         <router-link class="register implemented" to="/register">免费注册</router-link>
                     </p>
                 </div>
+                
+                <div v-else class="loginList">
+                    <p>尚品汇欢迎您！</p>
+                    <p>
+                        <span class="implemented">{{ userInfo.name }}</span>
+                        <span> | </span>
+                        <a class="implemented" href="javascript:" @click="logout">退出</a>
+                    </p>
+                </div>
+                
                 <div class="typeList">
                     <a href="javascript:">我的订单</a>
                     <router-link class="implemented" to="/shopCart">我的购物车</router-link>
@@ -51,6 +61,14 @@
                 keyword: '',
             };
         },
+        computed: {
+            userInfo() {
+                return this.$store.state.user.userInfo;
+            },
+            isLoggedIn() {
+                return this.userInfo;
+            },
+        },
         methods: {
             searchByKeyword() {
                 if (this.keyword) {
@@ -64,6 +82,17 @@
                 } else {
                     this.$router.push('/search');
                 }
+            },
+            
+            logout() {
+                this.$store.dispatch('logout').then(
+                    () => {
+                        this.$router.push('/');
+                    },
+                    () => {
+                        alert('退出失败，请重试');
+                    },
+                );
             }
         },
         mounted() {

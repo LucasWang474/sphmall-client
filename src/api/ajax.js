@@ -3,6 +3,7 @@ import axios from 'axios';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import {getUserTempId} from '@/utils/aboutUser';
+import store from '@/store';
 
 
 const ajax = axios.create({
@@ -10,13 +11,13 @@ const ajax = axios.create({
     timeout: 5000,
     headers: {
         userTempId: getUserTempId(),
-        token: localStorage.getItem('token') || undefined,
     }
 });
 
 ajax.interceptors.request.use(
     config => {
         NProgress.start();
+        config.headers.token = store.state.user.token;
         return config;
     }
 );
