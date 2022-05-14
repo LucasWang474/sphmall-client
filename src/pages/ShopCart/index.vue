@@ -21,7 +21,8 @@
                                @change="toggleIsChecked(productInfo.skuId)"/>
                     </li>
                     <li class="cart-list-con2">
-                        <img :src="productInfo.imgUrl" alt="">
+                        <img :src="productInfo.imgUrl" alt=""
+                             @click="goToDetailPage(productInfo.skuId)">
                         <div class="item-msg">{{ productInfo.skuName }}</div>
                     </li>
                     <li class="cart-list-con3">
@@ -162,7 +163,13 @@
                         this.deleteProduct(item.skuId);
                     }
                 });
-            }
+            },
+            
+            goToDetailPage(productId) {
+                this.$router.push({
+                    path: '/detail/' + productId,
+                });
+            },
         },
         mounted() {
             this.$store.dispatch('updateCartList');
@@ -257,6 +264,8 @@
                             width: 82px;
                             height: 82px;
                             float: left;
+                            
+                            cursor: pointer;
                         }
                         
                         .item-msg {
