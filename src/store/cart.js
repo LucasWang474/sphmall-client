@@ -18,7 +18,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             commit('SET_CART_LIST', response.data[0]?.cartInfoList || []);
         } else {
-            return Promise.reject('获取购物车列表失败' + response.msg);
+            throw new Error('获取购物车列表失败' + response.msg);
         }
     },
 
@@ -27,7 +27,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             dispatch('updateCartList');
         } else {
-            return Promise.reject('添加购物车失败' + response.msg);
+            throw new Error('添加购物车失败' + response.msg);
         }
     },
 
@@ -39,7 +39,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             dispatch('updateCartList');
         } else {
-            return Promise.reject('更新商品选中失败' + response.msg);
+            throw new Error('更新商品选中失败' + response.msg);
         }
     },
 
@@ -48,7 +48,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             dispatch('updateCartList');
         } else {
-            return Promise.reject('删除商品失败 ' + response.msg);
+            throw new Error('删除商品失败 ' + response.msg);
         }
     }
 };

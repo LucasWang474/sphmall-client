@@ -19,7 +19,7 @@ const actions = {
         if (response.code === SUCCESS_CODE) {
             commit('SET_SEARCH_RESULTS', response.data);
         } else {
-            return Promise.reject('获取搜索结果失败，状态码：' + response.code);
+            throw new Error('获取搜索结果失败，状态码：' + response.code);
         }
     }
 };

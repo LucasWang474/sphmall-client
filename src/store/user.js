@@ -1,16 +1,16 @@
-import {reqLogin} from '@/api';
+import {reqLogin, reqUserInfo} from '@/api';
 
 const state = {
-    phone: '',
     token: localStorage.getItem('token'),
+    userInfo: {},
 };
 
 const mutations = {
-    SET_PHONE: (state, phone) => {
-        state.phone = phone;
-    },
-    SET_TOKEN: (state, token) => {
+    SET_TOKEN(state, token) {
         state.token = token;
+    },
+    SET_USERINFO(state, userInfo) {
+        state.userInfo = userInfo;
     },
 };
 
@@ -21,12 +21,20 @@ const actions = {
             const token = response.data.token;
             commit('SET_TOKEN', token);
             localStorage.setItem('token', token);
-
-            commit('SET_PHONE', phone);
         } else {
             throw new Error(phone + ' 登录失败 ' + response.message);
         }
-    }
+    },
+
+    async getUserInfo({commit}) {
+        const response = await reqUserInfo();
+        if (response.code === 200) {
+            const userInfo = response.data;
+            commit('SET_USERINFO', userInfo);
+        } else {
+            throw new Error('获取用户信息失败');
+        }
+    },
 };
 
 
