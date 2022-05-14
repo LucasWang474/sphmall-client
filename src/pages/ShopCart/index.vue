@@ -113,9 +113,10 @@
                     .reduce((total, item) => total + item.skuNum, 0);
             },
             totalPrice() {
-                return this.cartList.reduce((total, item) => {
-                    return total + item.skuPrice * item.skuNum;
-                }, 0);
+                // return total price of selected products
+                return this.cartList
+                    .filter(item => item.isChecked)
+                    .reduce((total, item) => total + item.skuPrice * item.skuNum, 0);
             },
         },
         methods: {
