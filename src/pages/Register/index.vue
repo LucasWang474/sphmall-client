@@ -19,6 +19,7 @@
         </div>
         <div class="content">
             <label>验证码:</label>
+            <!--<input v-model="captcha" placeholder="请点击右侧按钮自动获取验证码" type="text">-->
             <input v-model="captcha" placeholder="请点击右侧按钮自动获取验证码" type="text">
             <button class="getCaptcha" @click="getCaptcha">获取验证码</button>
         </div>
@@ -56,7 +57,7 @@
 
 <script>
     import {passwordReg, phoneReg} from '@/utils/aboutUser';
-    import {reqGetCaptcha, reqRegister} from '@/api';
+    import {reqRegister} from '@/api';
     
     export default {
         name: 'Register',
@@ -71,7 +72,7 @@
                 registeredPhones: JSON.parse(localStorage.getItem('registeredPhones')) || [],
                 
                 phoneReg,
-                passwordReg
+                passwordReg,
             };
         },
         computed: {
@@ -127,9 +128,9 @@
                     return;
                 }
                 
-                reqGetCaptcha(this.phone)
-                    .then(({data}) => {
-                        this.captcha = data;
+                this.$store.dispatch('getCaptcha', this.phone)
+                    .then(() => {
+                        this.captcha = this.$store.state.user.captcha;
                     })
                     .catch(() => {
                         alert('获取验证码失败');
