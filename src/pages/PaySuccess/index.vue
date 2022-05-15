@@ -40,6 +40,10 @@
                 font-size: 20px;
                 line-height: 30px;
                 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
                 img {
                     max-width: 100%;
                     vertical-align: middle;
@@ -49,8 +53,11 @@
             }
             
             .pay-detail {
-                margin-left: 66px;
                 font-size: 15px;
+                
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 
                 .button {
                     margin: 30px 0;
