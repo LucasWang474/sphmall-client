@@ -82,6 +82,12 @@ export const reqSubmitOrder = (data) => ajax({
     data
 });
 
+// 获取订单支付信息
+export const reqPayInfo = (orderId) => ajax(`/api/payment/weixin/createNative/${orderId}`);
+
+// 查询订单支付状态
+export const reqPayStatus = (orderId) => ajax(`/api/payment/weixin/queryPayStatus/${orderId}`);
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
