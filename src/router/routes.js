@@ -65,6 +65,25 @@ const routes = [
         component: () => import('@/pages/Order'),
         meta: {
             title: '我的订单',
+            needLogin: true,
+        }
+    },
+    {
+        name: 'pay',
+        path: '/pay',
+        component: () => import('@/pages/Pay'),
+        meta: {
+            title: '支付',
+            needLogin: true,
+        }
+    },
+    {
+        name: 'paySuccess',
+        path: '/paySuccess',
+        component: () => import('@/pages/PaySuccess'),
+        meta: {
+            title: '支付成功',
+            needLogin: true,
         }
     },
     {
