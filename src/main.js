@@ -3,6 +3,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 import '@/mock';
+import '@/ui/element';
 import * as API from '@/api';
 
 import '@/assets/css/reset.css';
