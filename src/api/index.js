@@ -68,6 +68,9 @@ export const reqUserInfo = () => ajax('/api/user/passport/auth/getUserInfo');
 // 用户退出
 export const reqUserLogout = () => ajax('/api/user/passport/logout');
 
+// 获取订单交易页信息
+export const reqOrderInfo = () => ajax('/api/order/auth/trade');
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
