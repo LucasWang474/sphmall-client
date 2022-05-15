@@ -453,6 +453,7 @@
                 this.saveProductChosenAttrs();
                 sessionStorage.setItem('productDefaultImg', this.productInfo.skuDefaultImg);
                 sessionStorage.setItem('productName', this.productInfo.skuName);
+                sessionStorage.setItem('productId', this.productInfo.id);
             }
         },
         mounted() {

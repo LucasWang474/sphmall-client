@@ -17,7 +17,10 @@
                     </div>
                 </div>
                 <div class="right-go-cart">
-                    <a class="sui-btn btn-xlarge" href="javascript:" @click="$router.back()">查看商品详情</a>
+                    <a class="sui-btn btn-xlarge" href="javascript:"
+                       @click="$router.push('/detail/' + productId)">
+                        查看商品详情
+                    </a>
                     <router-link class="btn-danger" to="/shopCart">去购物车结算</router-link>
                 </div>
             </div>
@@ -40,16 +43,19 @@
             productDefaultImg() {
                 return sessionStorage.getItem('productDefaultImg');
             },
+            productId() {
+                return sessionStorage.getItem('productId');
+            }
         },
         beforeRouteEnter(to, from, next) {
-            if (sessionStorage.getItem('productName')) {
+            // 防止用户直接通过 URL 进入该页面
+            if (from.name === 'detail' && from.params.id) {
+                // 只能从 detail 页面进入
                 next();
             } else {
-                // Redirect to home
                 next('/');
             }
         },
-        
     };
 </script>
 
