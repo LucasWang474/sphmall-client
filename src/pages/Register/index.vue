@@ -3,7 +3,7 @@
         <h3>注册新用户
             <span class="go">
                 我已有账号，去
-                <router-link to="/login">登陆</router-link>
+                <router-link to="/login">登录</router-link>
             </span>
         </h3>
         <div class="content">
