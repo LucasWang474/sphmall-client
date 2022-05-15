@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import {reqAddressList, reqOrderInfo, reqSubmitOrder} from '@/api';
 
 const state = {
@@ -24,7 +25,7 @@ const actions = {
         if (response.code === 200) {
             commit('SET_ORDER_INFO', response.data);
         } else {
-            alert('获取订单信息失败，请重试');
+            Vue.prototype.$message.error('获取订单信息失败，请重试');
             throw new Error(response.message);
         }
     },
@@ -34,7 +35,7 @@ const actions = {
         if (response.code === 200) {
             commit('SET_ADDRESS_LIST', response.data);
         } else {
-            alert('获取地址列表失败，请重试');
+            Vue.prototype.$message.error('获取地址列表失败，请重试');
             throw new Error(response.message);
         }
     },
@@ -43,9 +44,9 @@ const actions = {
         const response = await reqSubmitOrder(data);
         if (response.code === 200) {
             commit('SET_ORDER_ID', response.data);
-            alert('提交订单成功');
+            Vue.prototype.$message.success('提交订单成功');
         } else {
-            alert('提交订单失败，请重试');
+            Vue.prototype.$message.error('提交订单失败，请重试');
             throw new Error(response.message);
         }
     },

@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import {reqPayInfo} from '@/api';
 
 const state = {
@@ -16,7 +17,7 @@ const actions = {
         if (response.code === 200) {
             commit('SET_PAY_INFO', response.data);
         } else {
-            alert('获取支付信息失败，请重试');
+            Vue.prototype.$message.error('获取支付信息失败，请重试');
             throw new Error(response.message);
         }
     },

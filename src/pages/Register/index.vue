@@ -88,12 +88,12 @@
         methods: {
             register() {
                 if (this.isRegistered) {
-                    alert('该手机号已注册，请直接登录');
+                    this.$message.warning('该手机号已注册，请直接登录');
                     return;
                 }
                 
                 if (!this.readyToRegister) {
-                    alert('请填写完整信息');
+                    this.$message.warning('请填写完整信息');
                     return;
                 }
                 
@@ -101,15 +101,21 @@
                     .then(res => {
                         if (res.code === 200) {
                             this.savePhone();
-                            if (confirm('注册成功，是否立即登录？')) {
-                                this.$router.push('/login');
-                            }
+                            this.$msgbox.confirm('注册成功，是否跳转到登录页面？', '提示',
+                                {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                    type: 'warning'
+                                })
+                                .then(() => {
+                                    this.$router.push('/login');
+                                });
                         } else {
                             throw new Error(res.msg);
                         }
                     })
                     .catch(() => {
-                        alert('注册失败，请稍后重试（可能是该手机已被注册）');
+                        this.$message.error('注册失败，请稍后重试（可能是该手机已被注册）');
                     });
             },
             savePhone() {
@@ -118,11 +124,11 @@
             },
             getCaptcha() {
                 if (!this.phone) {
-                    alert('请先输入手机号');
+                    this.$message.warning('请先输入手机号');
                     return;
                 }
                 if (!this.phoneReg.test(this.phone)) {
-                    alert('请先输入正确的手机号');
+                    this.$message.warning('请先输入正确的手机号');
                     return;
                 }
                 
@@ -131,7 +137,7 @@
                         this.captcha = data;
                     })
                     .catch(() => {
-                        alert('获取验证码失败');
+                        this.$message.error('获取验证码失败，请稍后重试');
                     });
             }
         }

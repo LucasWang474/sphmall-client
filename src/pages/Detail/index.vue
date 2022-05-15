@@ -420,7 +420,7 @@
                         name: 'addCartSuccess',
                     });
                 }).catch(() => {
-                    alert('加入购物车失败');
+                    this.$message.error('加入购物车失败');
                 });
             },
             getProductChosenAttrs() {

@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
         }
     } else if (to.meta.needLogin) {
         // 如果需要登录，但是没有登录，则跳转到登录页
-        alert('请先登录');
+        Vue.prototype.$message.warning('请先登录');
         next({name: 'login', query: {fromFullPath: to.fullPath}});
     }
 

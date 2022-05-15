@@ -89,7 +89,7 @@
                         this.$router.push(this.$route.query.fromFullPath || '/');
                     })
                     .catch(() => {
-                        alert('登录失败，帐号或密码错误！');
+                        this.$message.error('登录失败，帐号或密码错误！');
                     });
             }
         },
