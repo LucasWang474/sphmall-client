@@ -85,12 +85,17 @@
                     password: this.password
                 })
                     .then(() => {
-                        this.$router.push('/');
+                        // noinspection JSCheckFunctionSignatures
+                        this.$router.push(this.$route.query.fromFullPath || '/');
                     })
                     .catch(() => {
                         alert('登录失败，帐号或密码错误！');
                     });
             }
+        },
+        beforeRouteLeave(to, from, next) {
+            console.log(to, from);
+            next();
         }
     };
 </script>
