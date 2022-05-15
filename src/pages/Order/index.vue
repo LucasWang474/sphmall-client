@@ -43,43 +43,33 @@
                     <p>配送时间：预计8月10日（周三）09:00-15:00送达</p>
                 </div>
             </div>
+            
+            <!--主体部分 开始-->
             <div class="detail">
                 <h5>商品清单</h5>
-                <ul class="list clearFix">
+                <ul v-for="item in detailArrayList" :key="item.skuId" class="list clearFix">
                     <li>
-                        <img alt="" src="./images/goods.png">
+                        <img :src="item.imgUrl" alt="">
                     </li>
                     <li>
                         <p>
-                            Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</p>
+                            {{ item.skuName }}
+                        </p>
                         <h4>7天无理由退货</h4>
                     </li>
                     <li>
-                        <h3>￥5399.00</h3>
+                        <h3>￥ {{ item.orderPrice }}</h3>
                     </li>
-                    <li>X1</li>
-                    <li>有货</li>
-                </ul>
-                <ul class="list clearFix">
-                    <li>
-                        <img alt="" src="./images/goods.png">
-                    </li>
-                    <li>
-                        <p>
-                            Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</p>
-                        <h4>7天无理由退货</h4>
-                    </li>
-                    <li>
-                        <h3>￥5399.00</h3>
-                    </li>
-                    <li>X1</li>
+                    <li>X{{ item.skuNum }}</li>
                     <li>有货</li>
                 </ul>
             </div>
+            <!--主体部分 结束-->
+            
+            
             <div class="bbs">
                 <h5>买家留言：</h5>
-                <textarea class="remarks-cont" placeholder="建议留言前先与商家沟通确认"></textarea>
-            
+                <textarea class="remarks-cont">建议留言前先与商家沟通确认</textarea>
             </div>
             <div class="line"></div>
             <div class="bill">
@@ -91,8 +81,8 @@
         <div class="money clearFix">
             <ul>
                 <li>
-                    <b><i>1</i>件商品，总商品金额</b>
-                    <span>¥5399.00</span>
+                    <b><i>{{ totalNum }}</i>&nbsp;件商品，总商品金额</b>
+                    <span>¥ {{ originalTotalAmount }}</span>
                 </li>
                 <li>
                     <b>返现：</b>
@@ -105,7 +95,7 @@
             </ul>
         </div>
         <div class="trade">
-            <div class="price">应付金额: <span>¥5399.00</span></div>
+            <div class="price">应付金额: <span>¥ {{ totalAmount }}</span></div>
             <div class="receiveInfo">
                 寄送至:
                 <span>北京市昌平区宏福科技园综合楼6层</span>
@@ -120,8 +110,22 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+    
     export default {
         name: 'Order',
+        mounted() {
+            this.$store.dispatch('getOrderInfo');
+        },
+        computed: {
+            ...mapGetters([
+                'detailArrayList',
+                'originalTotalAmount',
+                'totalAmount',
+                'totalNum',
+                'tradeNo',
+            ])
+        }
     };
 </script>
 
@@ -265,13 +269,20 @@
                 .list {
                     display: flex;
                     justify-content: space-between;
+                    margin-top: 20px;
+                    
                     
                     li {
                         line-height: 30px;
                         
                         p {
+                            width: 484px;
+                            height: 60px;
+                            // margin-bottom: 20px;
+                            box-sizing: border-box;
                             
-                            margin-bottom: 20px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                         
                         h4 {
@@ -282,6 +293,11 @@
                         h3 {
                             
                             color: #e12228;
+                        }
+                        
+                        img {
+                            width: 82px;
+                            height: 82px;
                         }
                     }
                 }
