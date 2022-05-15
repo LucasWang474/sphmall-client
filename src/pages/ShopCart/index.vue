@@ -155,7 +155,13 @@
             },
             
             deleteProduct(productId) {
-                this.$store.dispatch('deleteProduct', productId);
+                this.$store.dispatch('deleteProduct', productId)
+                    .then(() => {
+                        this.$message.success('删除成功');
+                    })
+                    .catch(() => {
+                        this.$message.error('删除失败');
+                    });
             },
             deleteCheckedProducts() {
                 this.cartList.forEach(item => {

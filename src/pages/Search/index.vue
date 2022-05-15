@@ -325,7 +325,13 @@
             },
             
             addToCart(productId, buyNum) {
-                this.$store.dispatch('addToCart', {productId, buyNum});
+                this.$store.dispatch('addToCart', {productId, buyNum})
+                    .then(() => {
+                        this.$message.success('加入购物车成功');
+                    })
+                    .catch(() => {
+                        this.$message.error('加入购物车失败');
+                    });
             }
         },
         watch: {
