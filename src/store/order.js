@@ -3,6 +3,7 @@ import {reqAddressList, reqOrderInfo} from '@/api';
 const state = {
     orderInfo: {},
     addressList: [],
+    paymentID: undefined,
 };
 
 const mutations = {
@@ -11,6 +12,9 @@ const mutations = {
     },
     SET_ADDRESS_LIST: (state, addressList) => {
         state.addressList = addressList;
+    },
+    SET_PAYMENT_ID: (state, paymentID) => {
+        state.paymentID = paymentID;
     },
 };
 
@@ -28,11 +32,19 @@ const actions = {
     async getAddressList({commit}) {
         const response = await reqAddressList();
         if (response.code === 200) {
-            console.log(response);
-            console.log(response.data);
             commit('SET_ADDRESS_LIST', response.data);
         } else {
             alert('获取地址列表失败，请重试');
+            throw new Error(response.message);
+        }
+    },
+
+    async submitOrder(_, data) {
+        const response = await reqOrderInfo(data);
+        if (response.code === 200) {
+            alert('提交订单成功');
+        } else {
+            alert('提交订单失败，请重试');
             throw new Error(response.message);
         }
     },
