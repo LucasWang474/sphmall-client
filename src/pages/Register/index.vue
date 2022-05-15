@@ -56,7 +56,6 @@
 
 <script>
     import {passwordReg, phoneReg} from '@/utils/aboutUser';
-    import {reqGetCaptcha, reqRegister} from '@/api';
     
     export default {
         name: 'Register',
@@ -98,7 +97,7 @@
                     return;
                 }
                 
-                reqRegister(this.phone, this.password, this.captcha)
+                this.$API.reqRegister(this.phone, this.password, this.captcha)
                     .then(res => {
                         if (res.code === 200) {
                             this.savePhone();
@@ -127,7 +126,7 @@
                     return;
                 }
                 
-                reqGetCaptcha(this.phone)
+                this.$API.reqGetCaptcha(this.phone)
                     .then(({data}) => {
                         this.captcha = data;
                     })
