@@ -22,7 +22,7 @@
                 </div>
                 
                 <div class="typeList">
-                    <a href="javascript:">我的订单</a>
+                    <router-link class="implemented" to="/order">我的订单</router-link>
                     <router-link class="implemented" to="/shopCart">我的购物车</router-link>
                     <a href="javascript:">我的尚品汇</a>
                     <a href="javascript:">尚品汇会员</a>
