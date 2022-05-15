@@ -60,6 +60,14 @@ const routes = [
         }
     },
     {
+        name: 'order',
+        path: '/order',
+        component: () => import('@/pages/Order'),
+        meta: {
+            title: '我的订单',
+        }
+    },
+    {
         // Redirect to / if no match
         path: '*',
         redirect: '/',
