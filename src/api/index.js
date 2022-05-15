@@ -71,6 +71,10 @@ export const reqUserLogout = () => ajax('/api/user/passport/logout');
 // 获取订单交易页信息
 export const reqOrderInfo = () => ajax('/api/order/auth/trade');
 
+// 获取用户的收货地址列表
+// 目前这个接口没返回数据
+export const reqAddressList = () => ajax('/api/user/userAddress/auth/findUserAddressList');
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
