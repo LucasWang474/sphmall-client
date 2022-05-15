@@ -3,6 +3,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 import '@/mock';
+import * as API from '@/api';
 
 import '@/assets/css/reset.css';
 
@@ -17,6 +18,7 @@ Vue.component('AddCartSuccess', () => import('@/pages/AddCartSuccess'));
 new Vue({
     beforeCreate() {
         Vue.prototype.$bus = this;
+        Vue.prototype.$API = API;
     },
     el: '#app',
     render: h => h(App),
