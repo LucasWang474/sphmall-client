@@ -75,6 +75,13 @@ export const reqOrderInfo = () => ajax('/api/order/auth/trade');
 // 目前这个接口没返回数据
 export const reqAddressList = () => ajax('/api/user/userAddress/auth/findUserAddressList');
 
+// 提交订单
+export const reqSubmitOrder = (data) => ajax({
+    method: 'POST',
+    url: '/api/order/auth/submitOrder?tradeNo=' + data.tradeNo,
+    data
+});
+
 
 // -------------------------------------------------------------
 // Mock 数据请求函数
