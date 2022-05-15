@@ -1,20 +1,20 @@
-import {reqAddressList, reqOrderInfo} from '@/api';
+import {reqAddressList, reqOrderInfo, reqSubmitOrder} from '@/api';
 
 const state = {
     orderInfo: {},
     addressList: [],
-    paymentID: undefined,
+    orderID: undefined,
 };
 
 const mutations = {
-    SET_ORDER_INFO: (state, orderInfo) => {
+    SET_ORDER_INFO(state, orderInfo) {
         state.orderInfo = orderInfo;
     },
-    SET_ADDRESS_LIST: (state, addressList) => {
+    SET_ADDRESS_LIST(state, addressList) {
         state.addressList = addressList;
     },
-    SET_PAYMENT_ID: (state, paymentID) => {
-        state.paymentID = paymentID;
+    SET_ORDER_ID(state, orderID) {
+        state.orderID = orderID;
     },
 };
 
@@ -39,9 +39,10 @@ const actions = {
         }
     },
 
-    async submitOrder(_, data) {
-        const response = await reqOrderInfo(data);
+    async submitOrder({commit}, data) {
+        const response = await reqSubmitOrder(data);
         if (response.code === 200) {
+            commit('SET_ORDER_ID', response.data);
             alert('提交订单成功');
         } else {
             alert('提交订单失败，请重试');

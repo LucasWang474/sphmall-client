@@ -156,7 +156,7 @@
         },
         methods: {
             submitOrder() {
-                this.$API.reqSubmitOrder({
+                this.$store.dispatch('submitOrder', {
                     // 下面的数据由于地址数据接口不完善，暂时写死
                     'consignee': 'admin',
                     'consigneeTel': '15011111111',
@@ -166,19 +166,8 @@
                     
                     orderDetailList: this.detailArrayList,
                     tradeNo: this.tradeNo,
-                }).then(response => {
-                    if (response.code === 200) {
-                        alert('提交订单成功');
-                        this.$router.push('/pay');
-                        this.$store.commit('SET_PAYMENT_ID', response.data);
-                    } else {
-                        console.log(response);
-                        throw new Error(response.message);
-                    }
-                }).catch((err) => {
-                    console.log(err);
-                    alert('提交订单失败，请稍后重试');
-                    throw new Error('提交订单失败');
+                }).then(() => {
+                    this.$router.push('/pay');
                 });
             },
         }
