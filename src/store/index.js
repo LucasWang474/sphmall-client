@@ -7,6 +7,7 @@ import detail from './detail';
 import cart from './cart';
 import user from './user';
 import order from './order';
+import pay from './pay';
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         detail,
         cart,
         user,
-        order
+        order,
+        pay
     }
 });

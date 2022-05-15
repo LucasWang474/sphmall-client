@@ -6,9 +6,17 @@
                     <span class="success-icon"></span>
                     <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
                 </h4>
-                <div class="paymark">
-                    <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>145687</em></span>
-                    <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+                <div class="pay-mark">
+                    <span class="fl">
+                        请您在提交订单
+                        <em class="orange time">4小时</em>
+                        之内完成支付，超时订单会自动取消。
+                        订单号：<em>{{ orderID }}</em>
+                    </span>
+                    <span class="fr">
+                        <em class="lead">应付金额：</em>
+                        <em class="orange money">￥ {{ totalFee }}</em>
+                    </span>
                 </div>
             </div>
             <div class="checkout-info">
@@ -38,7 +46,7 @@
                 </div>
                 <div class="hr"></div>
                 
-                <div class="payshipInfo">
+                <div class="pay-ship-info">
                     <div class="step-tit">
                         <h5>支付网银</h5>
                     </div>
@@ -65,14 +73,14 @@
                 <div class="hr"></div>
                 
                 <div class="submit">
-                    <router-link class="btn" to="/paysuccess">立即支付</router-link>
+                    <router-link class="btn" to="/paySuccess">立即支付</router-link>
                 </div>
-                <div class="otherpay">
+                <div class="other-pay">
                     <div class="step-tit">
                         <h5>其他支付方式</h5>
                     </div>
                     <div class="step-cont">
-                        <span><a href="weixinpay.html" target="_blank">微信支付</a></span>
+                        <span><a href="javascript:" target="_blank">微信支付</a></span>
                         <span>中国银联</span>
                     </div>
                 </div>
@@ -82,8 +90,17 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+    
     export default {
         name: 'Pay',
+        beforeMount() {
+            this.orderID = this.$route.query.orderID;
+            this.$store.dispatch('getPayInfo', this.orderID);
+        },
+        computed: {
+            ...mapGetters(['totalFee'])
+        }
     };
 </script>
 
@@ -133,7 +150,7 @@
                     }
                 }
                 
-                .paymark {
+                .pay-mark {
                     overflow: hidden;
                     line-height: 26px;
                     text-indent: 38px;

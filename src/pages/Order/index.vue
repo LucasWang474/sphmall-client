@@ -167,7 +167,12 @@
                     orderDetailList: this.detailArrayList,
                     tradeNo: this.tradeNo,
                 }).then(() => {
-                    this.$router.push('/pay');
+                    this.$router.push({
+                        path: '/pay',
+                        query: {
+                            orderID: this.$store.state.order.orderID,
+                        },
+                    });
                 });
             },
         }
