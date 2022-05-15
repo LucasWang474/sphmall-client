@@ -121,7 +121,7 @@
 
 <script>
     export default {
-        name: 'Trade',
+        name: 'Order',
     };
 </script>
 
