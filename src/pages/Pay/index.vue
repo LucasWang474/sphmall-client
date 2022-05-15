@@ -73,7 +73,7 @@
                 <div class="hr"></div>
                 
                 <div class="submit">
-                    <router-link class="btn" to="/paySuccess">立即支付</router-link>
+                    <el-button class="btn" type="text" @click="open">立即支付</el-button>
                 </div>
                 <div class="other-pay">
                     <div class="step-tit">
@@ -91,6 +91,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
+    import QRCode from 'qrcode';
     
     export default {
         name: 'Pay',
@@ -99,7 +100,54 @@
             this.$store.dispatch('getPayInfo', this.orderID);
         },
         computed: {
-            ...mapGetters(['totalFee'])
+            ...mapGetters(['totalFee', 'codeUrl'])
+        },
+        methods: {
+            checkPaymentCompleted() {
+                this.paymentInterval = setInterval(() => {
+                    this.$API.reqPayStatus(this.orderID).then(res => {
+                        if (res.code === 200) {
+                            // 一定要确保 paymentInterval 会被清除
+                            clearInterval(this.paymentInterval);
+                            this.$router.push('/paySuccess');
+                        }
+                    });
+                }, 1500);
+            },
+            
+            showConfirmationBox(paymentQRCode) {
+                this.checkPaymentCompleted();
+                
+                this.$confirm(
+                    `<img src="${paymentQRCode}" alt="">`,
+                    '请使用微信扫码支付',
+                    {
+                        distinguishCancelAndClose: true,
+                        dangerouslyUseHTMLString: true,
+                        confirmButtonText: '我已成功支付',
+                        cancelButtonText: '取消支付',
+                        center: true,
+                    })
+                    .then(() => {
+                        this.$router.push('/paySuccess');
+                    })
+                    .finally(() => {
+                        // 一定要确保 paymentInterval 会被清除
+                        clearInterval(this.paymentInterval);
+                    });
+            },
+            
+            async open() {
+                try {
+                    const paymentQRCode = await QRCode.toDataURL(this.codeUrl);
+                    this.showConfirmationBox(paymentQRCode);
+                } catch {
+                    this.$message({
+                        type: 'error',
+                        message: '生成二维码失败'
+                    });
+                }
+            }
         }
     };
 </script>

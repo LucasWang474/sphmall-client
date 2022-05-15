@@ -1,15 +1,15 @@
 <template>
-    <div class="paysuccess">
+    <div class="pay-success">
         
         <div class="success">
             <h3>
                 <img alt="" src="./images/right.png">
                 恭喜您，支付成功啦！
             </h3>
-            <div class="paydetail">
+            <div class="pay-detail">
                 <p class="button">
                     <router-link class="btn-look" to="/center">查看订单</router-link>
-                    <router-link class="btn-goshop" to="/">继续购物</router-link>
+                    <router-link class="btn-go-shop" to="/">继续购物</router-link>
                 </p>
             </div>
         </div>
@@ -24,7 +24,7 @@
 </script>
 
 <style lang="less" scoped>
-    .paysuccess {
+    .pay-success {
         margin: 20px auto;
         padding: 25px;
         border: 1px solid rgb(211, 211, 211);
@@ -48,7 +48,7 @@
                 }
             }
             
-            .paydetail {
+            .pay-detail {
                 margin-left: 66px;
                 font-size: 15px;
                 
@@ -76,7 +76,7 @@
                             border: 1px solid #e1251b;
                         }
                         
-                        &.btn-goshop {
+                        &.btn-go-shop {
                             color: #666;
                             background-color: #eee;
                             border: 1px solid #e1e1e1;

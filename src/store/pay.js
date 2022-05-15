@@ -26,6 +26,9 @@ const getters = {
     totalFee(state) {
         return state.payInfo.totalFee;
     },
+    codeUrl(state) {
+        return state.payInfo.codeUrl;
+    },
 };
 
 export default {
