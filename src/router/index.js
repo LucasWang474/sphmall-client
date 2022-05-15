@@ -33,7 +33,6 @@ function fixProps(to) {
     }
 }
 
-
 router.beforeEach((to, from, next) => {
     fixProps(to);
 
@@ -47,6 +46,10 @@ router.beforeEach((to, from, next) => {
                 store.commit('RESET_TOKEN_AND_USERINFO');
             });
         }
+    } else if (to.meta.needLogin) {
+        // 如果需要登录，但是没有登录，则跳转到登录页
+        alert('请先登录');
+        next({name: 'login', query: {fromFullPath: to.fullPath}});
     }
 
     next();
