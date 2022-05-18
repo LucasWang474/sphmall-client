@@ -87,6 +87,15 @@ const routes = [
         }
     },
     {
+        name: 'center',
+        path: '/center',
+        component: () => import('@/pages/Center'),
+        meta: {
+            title: '我的订单列表',
+            needLogin: true,
+        }
+    },
+    {
         // Redirect to / if no match
         path: '*',
         redirect: '/',
