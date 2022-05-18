@@ -1,4 +1,4 @@
-# sphmall-client
+# sphmall-client (商城前台项目，已完成)
 
 项目上线地址：http://lucaswang474.natapp1.cc/
 
