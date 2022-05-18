@@ -19,8 +19,8 @@ const mutations = {
 const actions = {
     async getAllOrdersInfo({commit}, {page, limit}) {
         const response = await reqOrderList(page, limit);
+        console.log(response);
         if (response.code === 200) {
-            console.log(response);
             commit('SET_ALL_ORDERS_INFO', response.data);
             commit('SET_ORDER_LIST', response.data.records);
         } else {
