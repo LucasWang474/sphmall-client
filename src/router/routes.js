@@ -115,7 +115,15 @@ const routes = [
         meta: {
             title: '支付成功',
             needLogin: true,
-        }
+        },
+        beforeEnter(to, from, next) {
+            // 只有从 pay 才能进入 paySuccess
+            if (from.name === 'pay') {
+                next();
+            } else {
+                next('/');
+            }
+        },
     },
     {
         name: 'center',
