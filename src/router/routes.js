@@ -105,11 +105,10 @@ const routes = [
                 path: 'groupOrder',
                 component: () => import('@/pages/Center/GroupOrder'),
             },
-            {
-                path: '',
-                redirect: 'myOrder',
-            }
-        ]
+        ],
+        redirect: {
+            name: 'myOrder',
+        }
     },
     {
         // Redirect to / if no match

@@ -68,8 +68,15 @@
 <script>
     export default {
         name: 'Center',
+        data() {
+            return {
+                page: 1,
+                limit: 10,
+            };
+        },
         mounted() {
-            this.$store.dispatch('getAllOrdersInfo', 1, 10);
+            const {page, limit} = this;
+            this.$store.dispatch('getAllOrdersInfo', {page, limit});
         },
     };
 </script>
