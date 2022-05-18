@@ -351,20 +351,6 @@
                             &.prev {
                                 border-right-color: #28a3ef;
                             }
-                            
-                            &.page {
-                                border-color: #28a3ef;
-                                border-left: 0;
-                                
-                                &.active {
-                                    background-color: #28a3ef;
-                                    
-                                    a {
-                                        color: #fff;
-                                    }
-                                    
-                                }
-                            }
                         }
                     }
                     

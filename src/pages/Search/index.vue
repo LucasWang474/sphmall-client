@@ -88,7 +88,8 @@
                                 <div class="list-wrap">
                                     <div class="p-img">
                                         <a href="javascript:">
-                                            <img :data-id="product.id" :src="product.defaultImg"
+                                            <!--suppress HtmlUnknownAttribute, RequiredAttributes -->
+                                            <img v-lazy="product.defaultImg" :data-id="product.id"
                                                  alt="" class="to-detail"/>
                                         </a>
                                     </div>
@@ -105,7 +106,9 @@
                                         </a>
                                     </div>
                                     <div class="commit">
-                                        <i class="command">已有<span>2000</span>人评价</i>
+                                        <i class="command">已有
+                                            <span>2000</span>
+                                            人评价</i>
                                     </div>
                                     <div class="operate">
                                         <a class="sui-btn btn-bordered btn-danger" href="javascript:"
