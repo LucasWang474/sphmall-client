@@ -104,6 +104,10 @@ const routes = [
                 name: 'groupOrder',
                 path: 'groupOrder',
                 component: () => import('@/pages/Center/GroupOrder'),
+            },
+            {
+                path: '',
+                redirect: 'myOrder',
             }
         ]
     },

@@ -67,13 +67,6 @@
         mounted() {
             this.$store.dispatch('getAllOrdersInfo', 1, 10);
         },
-        beforeRouteEnter(to, from, next) {
-            if (to.name === 'center') {
-                next('/center/myOrder');
-            } else {
-                next();
-            }
-        },
     };
 </script>
 
