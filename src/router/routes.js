@@ -98,7 +98,15 @@ const routes = [
         meta: {
             title: '支付',
             needLogin: true,
-        }
+        },
+        beforeEnter(to, from, next) {
+            // 只有从 order 才能进入 pay
+            if (from.name === 'order') {
+                next();
+            } else {
+                next('/');
+            }
+        },
     },
     {
         name: 'paySuccess',
