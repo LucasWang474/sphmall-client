@@ -80,7 +80,16 @@ const routes = [
         meta: {
             title: '我的订单',
             needLogin: true,
-        }
+        },
+        beforeEnter(to, from, next) {
+            // 只有从 shopCart 才能进入 order
+            console.log(from);
+            if (from.name === 'shopCart') {
+                next();
+            } else {
+                next('/');
+            }
+        },
     },
     {
         name: 'pay',
