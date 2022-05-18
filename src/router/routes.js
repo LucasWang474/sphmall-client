@@ -94,13 +94,17 @@ const routes = [
             title: '我的订单列表',
             needLogin: true,
         },
-
         children: [
             {
                 name: 'myOrder',
                 path: 'myOrder',
                 component: () => import('@/pages/Center/MyOrder'),
             },
+            {
+                name: 'groupOrder',
+                path: 'groupOrder',
+                component: () => import('@/pages/Center/GroupOrder'),
+            }
         ]
     },
     {
