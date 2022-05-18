@@ -10,10 +10,11 @@ import '@/assets/css/reset.css';
 
 
 Vue.config.productionTip = false;
+
+// 全局注册公共组件
 Vue.component('TypeNav', () => import('@/components/TypeNav'));
 Vue.component('MySwiper', () => import('@/components/MySwiper'));
 Vue.component('Pagination', () => import('@/components/Pagination'));
-Vue.component('AddCartSuccess', () => import('@/pages/AddCartSuccess'));
 
 
 new Vue({
