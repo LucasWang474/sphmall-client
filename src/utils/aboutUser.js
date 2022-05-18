@@ -16,4 +16,4 @@ export function getUserTempId() {
 export const phoneReg = /^1\d{10}$/;
 
 // 长度至少为 9 位，必须包括且只能包括大小写字母和数字
-export const passwordReg = /^(?=.*[a-zA-Z\d])(?=.*\d)[a-zA-Z\d]{9,}$/;
+export const passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{9,}$/;
