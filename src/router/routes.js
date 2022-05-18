@@ -1,3 +1,7 @@
+import store from '@/store';
+import Vue from 'vue';
+
+
 const routes = [
     {
         name: 'index',
@@ -16,7 +20,17 @@ const routes = [
         meta: {
             title: '登录',
             showShortFooter: true,
-        }
+        },
+        beforeEnter(to, from, next) {
+            store.dispatch('getUserInfo')
+                .then(() => {
+                    Vue.prototype.$message.error('您已经登录，请勿重复登录');
+                    next('/');
+                })
+                .catch(() => {
+                    next();
+                });
+        },
     },
     {
         name: 'register',

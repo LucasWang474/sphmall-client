@@ -93,9 +93,6 @@
                     });
             }
         },
-        beforeRouteLeave(to, from, next) {
-            next();
-        }
     };
 </script>
 
