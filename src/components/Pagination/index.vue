@@ -1,7 +1,8 @@
 <template>
     <div ref="pagination" class="pagination">
         <button :disabled="pageNo === 1" @click="changePageNo(pageNo - 1)">
-            <span class="iconfont icon-arrow-left"></span>上一页
+            <span class="iconfont icon-arrow-left"></span>
+            上一页
         </button>
         
         <!--数字按钮 开始-->
@@ -17,7 +18,8 @@
         <!--数字按钮 结束-->
         
         <button :disabled="pageNo === totalPages" @click="changePageNo(pageNo + 1)">
-            下一页<span class="iconfont icon-arrow-right"></span>
+            下一页
+            <span class="iconfont icon-arrow-right"></span>
         </button>
         
         <span class="info">
@@ -33,7 +35,9 @@
             </select>
             
             <span class="total-wrap">
-                共<span class="total"> {{ totalPages }} </span>页
+                共
+                <span class="total"> {{ totalPages }}</span>
+                页
             </span>
             
             <span class="jump">
@@ -82,7 +86,7 @@
         },
         data() {
             return {
-                allPageSizes: [5, 10, 15, 20],
+                allPageSizes: [1, 5, 10, 15, 20],
             };
         },
         computed: {

@@ -17,9 +17,8 @@ const mutations = {
 };
 
 const actions = {
-    async getAllOrdersInfo({commit}, {page, limit}) {
-        const response = await reqOrderList(page, limit);
-        console.log(response);
+    async getAllOrdersInfo({commit}, {pageNo, pageSize}) {
+        const response = await reqOrderList(pageNo, pageSize);
         if (response.code === 200) {
             commit('SET_ALL_ORDERS_INFO', response.data);
             commit('SET_ORDER_LIST', response.data.records);
@@ -30,7 +29,17 @@ const actions = {
     },
 };
 
-const getters = {};
+const getters = {
+    pageNo(state) {
+        return state.allOrdersInfo.current;
+    },
+    pageSize(state) {
+        return state.allOrdersInfo.size;
+    },
+    total(state) {
+        return state.allOrdersInfo.total;
+    },
+};
 
 export default {
     state,

@@ -89,8 +89,8 @@ export const reqPayInfo = (orderId) => ajax(`/api/payment/weixin/createNative/${
 export const reqPayStatus = (orderId) => ajax(`/api/payment/weixin/queryPayStatus/${orderId}`);
 
 // 获取用户的订单列表
-// page: 页码, limit: 每页显示的数量
-export const reqOrderList = (page, limit) => ajax(`/api/order/auth/${page}/${limit}`);
+// pageNo: 页码, pageSize: 每页显示的数量
+export const reqOrderList = (pageNo, pageSize) => ajax(`/api/order/auth/${pageNo}/${pageSize}`);
 
 
 // -------------------------------------------------------------

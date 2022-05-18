@@ -99,11 +99,17 @@ const routes = [
                 name: 'myOrder',
                 path: 'myOrder',
                 component: () => import('@/pages/Center/MyOrder'),
+                meta: {
+                    needLogin: true,
+                }
             },
             {
                 name: 'groupOrder',
                 path: 'groupOrder',
                 component: () => import('@/pages/Center/GroupOrder'),
+                meta: {
+                    needLogin: true,
+                }
             },
         ],
         redirect: {

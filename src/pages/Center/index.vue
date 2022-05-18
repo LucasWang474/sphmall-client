@@ -70,13 +70,15 @@
         name: 'Center',
         data() {
             return {
-                page: 1,
-                limit: 10,
+                defaultPageNo: 1,
+                defaultPageSize: 1,
             };
         },
         mounted() {
-            const {page, limit} = this;
-            this.$store.dispatch('getAllOrdersInfo', {page, limit});
+            this.$store.dispatch('getAllOrdersInfo', {
+                pageNo: this.defaultPageNo,
+                pageSize: this.defaultPageSize,
+            });
         },
     };
 </script>
