@@ -294,6 +294,9 @@
                         }
                         
                         .typographic {
+                            display: flex;
+                            align-items: center;
+                            
                             img {
                                 float: left;
                                 margin-right: 10px;
@@ -319,7 +322,6 @@
                                 max-width: 250px;
                                 text-align: center;
                             }
-                            
                         }
                     }
                     
