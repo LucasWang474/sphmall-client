@@ -1,8 +1,6 @@
 # sphmall-client
 
-> 商城前台部分
->
-> API 根路径: http://gmall-h5-api.atguigu.cn/
+项目上线地址：http://lucaswang474.natapp1.cc/
 
 ## 项目初始化
 
