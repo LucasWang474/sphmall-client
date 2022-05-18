@@ -7,7 +7,7 @@
                     <dl>
                         <dt><i>·</i> 订单中心</dt>
                         <dd>
-                            我的订单
+                            <router-link :to="{name: 'myOrder'}">我的订单</router-link>
                         </dd>
                         <dd>
                             团购订单
@@ -56,7 +56,7 @@
                 <!-- 右侧内容 -->
                 <div class="order-right">
                     <!--MyOrder 部分-->
-                    <MyOrder/>
+                    <router-view/>
                     
                     <!--猜你喜欢-->
                     <div class="like">
@@ -125,11 +125,8 @@
 </template>
 
 <script>
-    import MyOrder from '@/pages/Center/MyOrder';
-    
     export default {
         name: 'Center',
-        components: {MyOrder},
         mounted() {
             this.$store.dispatch('getAllOrdersInfo', 1, 10);
         }
