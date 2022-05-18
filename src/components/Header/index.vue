@@ -7,8 +7,8 @@
                     <p>尚品汇欢迎您！</p>
                     <p>
                         <span>请 </span>
-                        <router-link class="implemented" to="/login">登录</router-link>
-                        <router-link class="register implemented" to="/register">免费注册</router-link>
+                        <router-link active-class="implemented" to="/login">登录</router-link>
+                        <router-link active-class="implemented" class="register" to="/register">免费注册</router-link>
                     </p>
                 </div>
                 
@@ -22,8 +22,8 @@
                 </div>
                 
                 <div class="typeList">
-                    <router-link class="implemented" to="/center">我的订单</router-link>
-                    <router-link class="implemented" to="/shopCart">我的购物车</router-link>
+                    <router-link active-class="implemented" to="/center">我的订单</router-link>
+                    <router-link active-class="implemented" to="/shopCart">我的购物车</router-link>
                     <a href="javascript:">我的尚品汇</a>
                     <a href="javascript:">尚品汇会员</a>
                     <a href="javascript:">企业采购</a>

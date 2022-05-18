@@ -7,10 +7,14 @@
                     <dl>
                         <dt><i>·</i> 订单中心</dt>
                         <dd>
-                            <router-link :to="{name: 'myOrder'}" class="implemented">我的订单</router-link>
+                            <router-link :to="{name: 'myOrder'}" active-class="implemented">
+                                我的订单
+                            </router-link>
                         </dd>
                         <dd>
-                            <router-link :to="{name: 'groupOrder'}">团购订单</router-link>
+                            <router-link :to="{name: 'groupOrder'}" active-class="implemented">
+                                团购订单
+                            </router-link>
                         </dd>
                         <dd>本地生活订单</dd>
                         <dd>我的预售</dd>
